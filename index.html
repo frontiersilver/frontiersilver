@@ -8,20 +8,27 @@
     <title>Frontier Sliver</title>
     <script>
         (function() {
-            var isGithub = window.location.hostname.includes("github.io");
-            var basePath = isGithub ? "/frontiersilver/" : "";
+          var isGithub = window.location.hostname.includes("github.io");
+          var basePath = isGithub ? "/frontiersilver/" : "";
 
-            // 載入 CSS
-            var link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = basePath + "css/indexstyle.css";
-            document.head.appendChild(link);
+          // 載入 CSS
+          var link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = basePath + "css/indexstyle.css";
+          document.head.appendChild(link);
 
-            // 載入 JS
-            var script = document.createElement("script");
-            script.src = basePath + "js/indexscript.js";
-            document.head.appendChild(script);
-        })();
+          // 設定圖片 & Favicon
+          document.addEventListener("DOMContentLoaded", function() {
+              document.querySelectorAll("img[data-src]").forEach(img => {
+                  img.src = basePath + img.dataset.src;
+              });
+
+              var favicon = document.createElement("link");
+              favicon.rel = "icon";
+              favicon.href = basePath + "favicon.ico";
+              document.head.appendChild(favicon);
+          });
+          })();
     </script>
     <!-- 先載入 jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
