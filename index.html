@@ -7,14 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frontier Sliver</title>
     <script>
-    (function() {
-        var isGithub = window.location.hostname.includes("github.io");
-        var cssPath = isGithub ? "/frontiersilver/css/indexstyle.css" : "css/indexstyle.css";
+        (function() {
+            var isGithub = window.location.hostname.includes("github.io");
+            var basePath = isGithub ? "/frontiersilver/" : "";
 
-        var link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = cssPath;
-        document.head.appendChild(link);
+            // 載入 CSS
+            var link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = basePath + "css/indexstyle.css";
+            document.head.appendChild(link);
+
+            // 載入 JS
+            var script = document.createElement("script");
+            script.src = basePath + "js/indexscript.js";
+            document.head.appendChild(script);
         })();
     </script>
     <!-- 先載入 jQuery -->
