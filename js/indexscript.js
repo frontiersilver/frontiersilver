@@ -7,10 +7,12 @@ $(document).ready(function () {
     $('.perspective-container').paroller();
 
 });
+
 document.addEventListener("scroll", function () {
   let scrollValue = window.scrollY;
   document.documentElement.style.setProperty("--scroll-y", `${scrollValue}px`);
 });
+
 document.addEventListener("DOMContentLoaded", function() {
     $(".tilt-box").tilt({
       maxTilt: 10,
@@ -91,6 +93,8 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("animated-text").innerHTML += text.charAt(index);
             index++;
             setTimeout(typeWriter, speed);
+        } else {
+            document.getElementById("animated-text").classList.remove("blink"); // 移除游標閃爍
         }
     }
 

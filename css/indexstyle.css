@@ -170,29 +170,27 @@ header {
     text-align: center;
     color: white;
 }
+#animated-text {
+    animation: blink 0.8s step-end infinite alternate;
+}
 .animated-text{
     text-decoration: none;
     color: #E2E2E2;
-    border: none;
-    padding: 10px 20px;
-    font-size: 50px;
-    cursor: pointer;
+    font-size: 60px;
     font-family: "Barrio", serif;
     font-weight: 100;
     font-style: normal;
-    font-size: 50px;
     overflow: hidden;
     display: inline-block;
     white-space: nowrap;
-    animation: handwriting 3s steps(30) forwards;
+    animation: typing 3s steps(30) forwards;
     margin:-20px auto;
-
+    overflow: hidden;
 }
 
 .animated-text:hover {
     cursor: pointer; /* 讓滑鼠變成手指，表示可以點擊 */
     color: #DADAD;
-    transform: scale(1.05);
 }
 
 .perspective-container {
@@ -232,6 +230,7 @@ header {
 }
 
 /* 導覽列 */
+
 nav ul {
     list-style: none;
     padding: 0;
@@ -246,8 +245,7 @@ nav ul li {
 
 nav ul li a {
     text-decoration: none;
-    color: white;
-    font-weight: narrow;
+    color: #BBBBBB;
 }
 nav ul li a:hover {
     opacity: 50%;
