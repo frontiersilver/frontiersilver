@@ -17,6 +17,11 @@
           link.href = basePath + "css/indexstyle.css";
           document.head.appendChild(link);
 
+          var link = document.createElement("link");
+          link.rel = "script";
+          link.href = basePath + "/js/indexscript.js";
+          document.head.appendChild(link);
+
           // 設定圖片 & Favicon
           document.addEventListener("DOMContentLoaded", function() {
               document.querySelectorAll("img[data-src]").forEach(img => {
@@ -165,7 +170,7 @@
 
     <!-- 絕對路徑 JS -->
 
-    <script src="/js/indexscript.js"></script>
+    <script rel="script" src="/js/indexscript.js"></script>
 
 </body>
 
