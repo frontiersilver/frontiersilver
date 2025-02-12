@@ -8,32 +8,35 @@
     <title>Frontier Sliver</title>
     <script>
         (function() {
-          var isGithub = window.location.hostname.includes("github.io");
-          var basePath = isGithub ? "/frontiersilver/" : "";
+            var isGithub = window.location.hostname.includes("github.io");
+            var basePath = isGithub ? "/frontiersilver/" : "";
 
-          // 載入 CSS
-          var link = document.createElement("link");
-          link.rel = "stylesheet";
-          link.href = basePath + "css/indexstyle.css";
-          document.head.appendChild(link);
+            // 載入 CSS
+            var link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = basePath + "css/indexstyle.css";
+            document.head.appendChild(link);
 
-          var script = document.createElement("script"); // 創建 <script> 元素
-          script.src = basePath + "js/indexscript.js";
-          script.defer = true; // 確保 script 不會阻塞頁面加載
-          document.head.appendChild(script); // 正確添加到 <head>
+            // 載入 favicon 讓它更早出現在瀏覽器標籤
+            var favicon = document.createElement("link");
+            favicon.rel = "icon";
+            favicon.href = basePath + "favicon.ico";
+            document.head.appendChild(favicon);
 
-          // 設定圖片 & Favicon
-          document.addEventListener("DOMContentLoaded", function() {
-              document.querySelectorAll("img[data-src]").forEach(img => {
-                  img.src = basePath + img.dataset.src;
-              });
+            // 載入 JavaScript
+            var script = document.createElement("script");
+            script.src = basePath + "js/indexscript.js";
+            script.defer = true;
+            document.head.appendChild(script);
 
-              var favicon = document.createElement("link");
-              favicon.rel = "icon";
-              favicon.href = basePath + "favicon.ico";
-              document.head.appendChild(favicon);
-          });
-          })();
+            // 設定圖片
+            document.addEventListener("DOMContentLoaded", function() {
+                document.querySelectorAll("img[data-src]").forEach(img => {
+                    img.src = basePath + img.dataset.src;
+                });
+            });
+
+        })();
     </script>
     <!-- 先載入 jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
