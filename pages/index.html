@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontier Sliver</title>
+    <!-- 先載入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- 然後載入 paroller.js -->
+    <script src="https://cdn.jsdelivr.net/npm/paroller.js@1.4.6/dist/jquery.paroller.min.js"></script>
+
+    <!-- 再載入 tilt.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+
+
+    <!-- 引入 Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <!-- 絕對路徑 CSS -->
+    <link rel="stylesheet" href="/css/indexstyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bahiana&family=Barrio&family=Noto+Sans+TC:wght@100..900&family=Rubik+Distressed&display=swap" rel="stylesheet">
+
+
+</head>
+
+
+<body>
+
+    <div class="containerhead">
+        <header>
+          <div class="headerdiv">
+            <div class="header-typewriter">
+              <span id="typewriter-text">
+              </span>
+            </div>
+
+
+            <!-- 側邊選單按鈕 -->
+            <div class="btncontainer">
+              <button class="menu-btn" onclick="toggleMenu()">
+                ☰
+              </button>
+            </div>
+
+
+            <div class="perspective-container">
+              <div class="parallax-content">
+
+
+                <h1 class="animated-text" id="animated-text">
+                  <a href="/pages/index.html">
+                  </a>
+                </h1>
+                <nav>
+                    <ul>
+                        <li><a href="/pages/index.html">
+                          NEW ARRIVALS</a>
+                        </li>
+                        <li><a href="/pages/about.html">
+                          ABOUT
+                        </a>
+                        </li>
+                        <li>
+                          <a href="/pages/contact.html">
+                          CONTACT
+                          </a>
+                        </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+
+            </div>
+            <!-- 側邊選單按鈕 -->
+
+            <!-- 側邊選單 -->
+            <div id="sidebar" class="sidebar">
+                <button class="close-btn" onclick="toggleMenu()">×</button>
+                <a href="/pages/index.html">首頁</a>
+                <a href="/pages/about.html">關於我們</a>
+                <a href="/pages/services.html">服務</a>
+                <a href="/pages/contact.html">聯絡我們</a>
+            </div>
+
+            <!-- 增加一個透明背景層（點擊時會關閉側邊欄） -->
+            <div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+
+
+
+
+        </header>
+    </div>
+    <div class="container2">
+      <div class="jumbotron">
+        <img src="https://unsplash.it/1920/800?image=152" alt="test">
+      </div>
+    </div>
+
+    <div class="container">
+
+        <section class="text">
+            <div class="text1">
+              <p>邊界，兩個世界之間的邊境地帶，兩個空間的邊緣互相碰觸的地方。</p>
+            </div>
+            <div class="tilt-box">
+                <span data-tilt></span>
+             </div>
+            <div class="tex2">
+              <p>肉體是靈魂的邊界，大腦是思想的邊界，我們都是孤獨的一個世界，沒有人能真正碰觸到那道邊界的另一端，另一個人的靈魂，另一個人完整的面貌，所以我們孤獨。</p>
+            </div>
+            <div class="tex1">
+              <p>邊界誕生的銀飾，邊境的產物，展現邊界另一端靈魂的模樣，讓我們認出彼此，讓我們的邊界互相交融，不再孤獨。</p>
+            </div>
+
+        </section>
+    </div>
+
+    <div class="container2">
+        <div class="jumbotron">
+          <img src="https://unsplash.it/1920/800?image=152" alt="test">
+        </div>
+    </div>
+        <footer>
+          <div >
+            <p class="containerfoot">
+              Frontier Sliver | All Rights Reserved
+              <br>Peresentative: TYH
+              <br>CS: +886 987654321
+              <br>
+              <br>Terms of use | Privacy
+            </p>
+          </div>
+        </footer>
+
+
+    <!-- 絕對路徑 JS -->
+
+    <script src="/js/indexscript.js"></script>
+
+</body>
+
+</html>
