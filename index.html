@@ -17,10 +17,10 @@
           link.href = basePath + "css/indexstyle.css";
           document.head.appendChild(link);
 
-          var script = document.createElement("link");
-          script.rel = "script";
+          var script = document.createElement("script"); // 創建 <script> 元素
           script.src = basePath + "js/indexscript.js";
-          document.head.appendChild(link);
+          script.defer = true; // 確保 script 不會阻塞頁面加載
+          document.head.appendChild(script); // 正確添加到 <head>
 
           // 設定圖片 & Favicon
           document.addEventListener("DOMContentLoaded", function() {
@@ -170,7 +170,7 @@
 
     <!-- 絕對路徑 JS -->
 
-    <script rel="script" src="/js/indexscript.js"></script>
+    <script src="/js/indexscript.js"></script>
 
 </body>
 
