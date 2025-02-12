@@ -6,6 +6,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frontier Sliver</title>
+    <script>
+    (function() {
+        var isGithub = window.location.hostname.includes("github.io");
+        var cssPath = isGithub ? "/frontiersilver/css/indexstyle.css" : "css/indexstyle.css";
+
+        var link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = cssPath;
+        document.head.appendChild(link);
+        })();
+    </script>
     <!-- 先載入 jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -20,6 +31,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <!-- 絕對路徑 CSS -->
     <link rel="stylesheet" href="/css/indexstyle.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bahiana&family=Barrio&family=Noto+Sans+TC:wght@100..900&family=Rubik+Distressed&display=swap" rel="stylesheet">
