@@ -35,6 +35,27 @@
             favicon.href = basePath + "favicon.ico";
             document.head.appendChild(favicon);
 
+            var favicon = document.createElement("link");
+            link.rel = "index";
+            link.href = basePath + "index.html";
+            document.head.appendChild(favicon);
+
+            var favicon = document.createElement("link");
+            link.rel = "about";
+            link.href = basePath + "pages/about.html";
+            document.head.appendChild(favicon);
+
+            var favicon = document.createElement("link");
+            link.rel = "contact";
+            link.href = basePath + "pages/contact.html";
+            document.head.appendChild(favicon);
+
+            var favicon = document.createElement("link");
+            link.rel = "service";
+            link.href = basePath + "pages/service.html";
+            document.head.appendChild(favicon);
+
+
             // 載入 JavaScript
             var script = document.createElement("script");
             script.src = basePath + "js/indexscript.js";
@@ -95,7 +116,7 @@
 
 
                 <h1 class="animated-text" id="animated-text">
-                  <a href="/index.html">
+                  <a rel="index" href="/index.html">
                   </a>
                 </h1>
                 <nav>
@@ -137,10 +158,10 @@
             <!-- 側邊選單 -->
             <div id="sidebar" class="sidebar">
                 <button class="close-btn" onclick="toggleMenu()">×</button>
-                <a href="/index.html">首頁</a>
-                <a href="/pages/about.html">Frontier</a>
-                <a href="/pages/service.html">服務</a>
-                <a href="/pages/contact.html">聯絡</a>
+                <a rel="index" href="/index.html">首頁</a>
+                <a rel="about" href="/pages/about.html">Frontier</a>
+                <a rel="service" href="/pages/service.html">服務</a>
+                <a rel="contact" href="/pages/contact.html">聯絡</a>
             </div>
 
             <!-- 增加一個透明背景層（點擊時會關閉側邊欄） -->
