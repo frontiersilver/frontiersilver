@@ -13,6 +13,13 @@ document.addEventListener("scroll", function () {
   document.documentElement.style.setProperty("--scroll-y", `${scrollValue}px`);
 });
 
+document.addEventListener("scroll", function () {
+    let scrollValue = window.scrollY;
+    document.documentElement.style.setProperty("--scroll-y", `${scrollValue}px`);
+});
+$(document).ready(function() {
+    $('.parallaxtext').paroller(); // 啟動視差滾動
+});
 document.addEventListener("DOMContentLoaded", function() {
     $(".tilt-box").tilt({
       maxTilt: 10,
@@ -57,6 +64,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let delayBetweenCycles = 1000; // 刪除完畢後等待時間
     let textElement = document.getElementById("typewriter-text");
 
+
+
     function typeEffect() {
         if (isDeleting) {
             // 從左到右刪除
@@ -84,17 +93,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    let text = "Frontier Sliver";
+    let text = "FRONTIER SLIVER";
     let index = 0;
-    let speed = 100; // 文字出現速度
+    let speed = 150; // 文字出現速度
+    let animatedText = document.getElementById("animated-text");
+
+    animatedText.style.fontFamily = "'LXGW WenKai Regular', sans-serif";
+    animatedText.style.fontWeight = "200";
+    animatedText.style.fontStyle = "normal";
 
     function typeWriter() {
         if (index < text.length) {
-            document.getElementById("animated-text").innerHTML += text.charAt(index);
+            animatedText.innerHTML = `<span style="font-family: 'LXGW WenKai Regular', sans-serif; font-weight: 200;">${text.substring(0, index + 1)}</span><span class='cursor'>|</span>`;
             index++;
             setTimeout(typeWriter, speed);
         } else {
-            document.getElementById("animated-text").classList.remove("blink"); // 移除游標閃爍
+            setTimeout(() => {
+                index = 0; // 重置動畫
+                typeWriter();
+            }, 2000);
         }
     }
 

@@ -25,43 +25,71 @@
 
     <div class="containerhead">
         <header>
-          <div class="headerdiv">
             <div class="header-typewriter">
               <span id="typewriter-text">
               </span>
             </div>
 
-            <h1 class="animated-text" id="animated-text">
-              <a href="/pages/index.html">
-              </a>
-            </h1>
-            <nav>
-                <ul>
-                    <li><a href="/pages/index.html">
-                      NEW ARRIVALS</a>
-                    </li>
-                    <li><a href="/pages/about.html">
-                      about</a>
-                    </li>
-                    <li><a href="/pages/contact.html">
-                      contact</a>
-                    </li>
-                </ul>
-              </nav>
 
-
-            </div>
             <!-- 側邊選單按鈕 -->
-            <button class="menu-btn" onclick="toggleMenu()">
-              ☰
-            </button>
+            <div class="btncontainer">
+              <button class="menu-btn" onclick="toggleMenu()">
+                ☰
+              </button>
+            </div>
+
+
+            <div class="perspective-container">
+              <div class="parallax-content">
+
+
+                <h1 class="animated-text" id="animated-text">
+                  <a href="/index.html">
+                  </a>
+                </h1>
+                <nav>
+                    <ul>
+                        <li><a href="/index.html">
+                          NEW ARRIVALS</a>
+                        </li>
+                        <li><a href="/pages/about.html">
+                          ABOUT
+                        </a>
+                        </li>
+                        <li>
+                          <a href="/pages/contact.html">
+                          CONTACT
+                          </a>
+                        </li>
+                    </ul>
+                  </nav>
+              </div>
+
+              <div class="parallax">
+                <img class="parallax-bg" src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg" alt="">
+              </div>
+
+              <!--
+              <div class="parallaxbolck" >
+                <div class="parallaxtext"
+                style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') repeat center;
+                background-size: cover;"
+                data-paroller-factor="-0.4">
+
+                </div>
+              </div>
+                -->
+            </div>
+
+
+
             <!-- 側邊選單 -->
             <div id="sidebar" class="sidebar">
                 <button class="close-btn" onclick="toggleMenu()">×</button>
-                <a href="/pages/index.html">首頁</a>
-                <a href="/pages/about.html">關於我們</a>
-                <a href="/pages/services.html">服務</a>
-                <a href="/pages/contact.html">聯絡我們</a>
+                <a href="/index.html">首頁</a>
+                <a href="/pages/about.html">Frontier</a>
+                <a href="/pages/service.html">服務</a>
+                <a href="/pages/contact.html">聯絡</a>
             </div>
 
             <!-- 增加一個透明背景層（點擊時會關閉側邊欄） -->
@@ -69,8 +97,9 @@
 
 
 
-        </header>
 
+
+        </header>
     </div>
 
     <div class="container">
@@ -98,7 +127,7 @@
     <div class="container2">
 
     </div>
-        <footer>
+    <footer>
           <div >
             <p class="containerfoot">
               Frontier Sliver | All Rights Reserved
