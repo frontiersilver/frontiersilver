@@ -13,28 +13,117 @@
   display: table-cell;
   margin: 0;
 }
-.series{
-  margin-top: 100px;
-  padding: 0px 10px;
+.asidedrop{
+    padding: 10px ;
 }
-ul{
-  margin:0;
-  padding:0;
+.dropdown2 {
+    position: relative;
+    display: block;
 }
-.seriesa{
-  padding: 5px 20px;
-  background: transparent;
-  border: none;
-  text-decoration: none;
-  font-family: 'LXGW WenKai Regular', sans-serif;
-  text-align: justify;
-  font-size: 18px;
-  font-weight: 300;
-  color: black;
-  display: block;
-  transition: 0.1s;
-  text-align: left;
+/* 設定按鈕 */
+.dropdown-btn2 {
+    padding: 5px 20px;
+    background: transparent;
+    border: none;
+    text-decoration: none;
+    font-family: 'LXGW WenKai Regular', sans-serif;
+    text-align: justify;
+    font-size: 18px;
+    font-weight: 300;
+    color: black;
+    display: block;
+    transition: 0.1s;
+    text-align: left;
 }
+.dropdown-btn2:hover{
+    cursor: pointer;
+    color: linear-gradient(90deg, #005bea, #00c6fb);
+    transform: scale(0.95);
+}
+
+/* 設定選單初始狀態（隱藏） */
+.dropdown-content2 {
+    font-family: 'LXGW WenKai Regular', sans-serif;
+    text-align: justify;
+    font-size: 16px;
+    font-weight: 300;
+    margin: auto 40px auto 30px;
+    display: none;
+    position: static;
+    background-color: transparent;
+    overflow: hidden;
+    transition: height 0.3s ease-out;
+    max-width: 100%;
+}
+.dropdown-content3 {
+    font-family: 'LXGW WenKai Regular', sans-serif;
+    text-align: justify;
+    font-size: 16px;
+    font-weight: 300;
+    margin: auto 40px auto 30px;
+    display: none;
+    position: static;
+    background-color: transparent;
+    overflow: hidden;
+    transition: height 0.3s ease-out;
+    max-width: 100%;
+}
+.dropdown-content4 {
+    font-family: 'LXGW WenKai Regular', sans-serif;
+    text-align: justify;
+    font-size: 16px;
+    font-weight: 300;
+    margin: auto 40px auto 30px;
+    display: none;
+    position: static;
+    background-color: transparent;
+    overflow: hidden;
+    transition: height 0.3s ease-out;
+    max-width: 100%;
+}
+
+/* 選單內的選項 */
+.dropdown-content2 a {
+    display: inline-block;
+    padding: 10px 0px;
+    color: black;
+    text-decoration: none;
+}
+.dropdown-content3 a {
+    display: block;
+    padding: 10px 0px;
+    color: black;
+    text-decoration: none;
+}
+.dropdown-content4 a {
+    display: block;
+    padding: 10px 0px;
+    color: black;
+    text-decoration: none;
+}
+
+/* 滑鼠移動到選項時的效果 */
+.dropdown-content2 a:hover {
+    display: inline-block;
+    white-space: nowrap;
+    margin-left: 5px;
+    cursor: pointer;
+    color: linear-gradient(90deg, #005bea, #00c6fb);
+    transform: scale(0.95);
+}
+.dropdown-content3 a:hover {
+    margin-left: 5px;
+    cursor: pointer;
+    color: linear-gradient(90deg, #005bea, #00c6fb);
+    transform: scale(0.95);
+}
+.dropdown-content4 a:hover {
+    margin-left: 5px;
+    cursor: pointer;
+    color: linear-gradient(90deg, #005bea, #00c6fb);
+    transform: scale(0.95);
+}
+
 .container{
   width:100%;
   background-color: transparent;

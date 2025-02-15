@@ -1,0 +1,265 @@
+/* 基本樣式 */
+body {
+    text-align: left;
+    margin: 20px;
+    background-color: #f4f4f4;
+    font-family: 'LXGW WenKai Light';
+    src: url('/fonts/LXGWWenKai-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'LXGW WenKai Light';
+    src: url('/fonts/LXGWWenKai-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'LXGW WenKai Regular';
+    src: url('/fonts/LXGWWenKai-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+header {
+    font-family: 'LXGW WenKai Light', sans-serif;
+    color: white;
+    background-color: black;
+}
+.containerhead{
+    max-width:100%;
+    height:auto;
+    background-color:black;
+}
+.containerspace {
+  width: 100%;
+  height: auto;
+  padding:20px 10px 0px;
+}
+/* 頁首打字機效果 */
+.header-typewriter {
+    position: fixed;
+    left: -0;
+    width: 100%;
+    max-height: 36px;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 70px;
+    transform: scaleX(1);
+}
+
+#typewriter-text {
+    font-family: 'LXGW WenKai Light', sans-serif;
+    font-weight: 100;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+    border-right: 2px solid white;
+    padding-right: 5px;
+    animation: blinkCursor 0.6s infinite alternate;
+}
+
+
+/* 漢堡按鈕 */
+.menu-btn {
+    position: fixed;
+    top: -7px;
+    left: 10px;
+    background: transparent;
+    border: none;
+    font-size: 36px;
+    color: white;
+    cursor: pointer;
+    z-index: 1001;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* 按鈕點擊時旋轉 */
+.menu-btn.active {
+    transform: rotate(90deg);
+    color: #f0a500;
+}
+
+/* 主要容器 */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: left;
+    background: white;
+    padding:0px 20px;
+}
+
+/* 標題 */
+h2, h3 {
+    text-align: center;
+    color: #333;
+}
+
+/* 輸入框 & 按鈕 */
+textarea, input {
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+textarea {
+    height: 80px;
+    resize: none;
+}
+
+.button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.button:hover {
+    background-color: #2980b9;
+}
+.login{
+  display:table;
+  white-space: nowrap;
+  width: 100%;
+  align-content: left;
+  margin-bottom: 10px;
+}
+.space{
+  position:relative;
+  width: 10px;
+  height:40px;
+  display: inline-block;
+    float:left;
+}
+
+#authorEmail{
+  max-width:40%;
+  position:relative;
+  border: none;
+  border-radius:0px;
+  border-bottom: 2px solid #EFEFEF;
+  display: inline-block;
+  float:left;
+}
+#authorPassword{
+  max-width:40%;
+  position:relative;
+  border: none;
+  border-bottom: 2px solid #EFEFEF;
+  border-radius:0px;
+  display: inline-block;
+    float:left;
+}
+/* 🔹 登入/登出按鈕 */
+#login-container {
+    margin: 15px;
+    width: 100%;
+}
+#loginBtn{
+  width: 60px;
+  height:26px;
+  color: #EFEFEF;
+  font-family: 'LXGW WenKai Light', sans-serif;
+  background-color: black;
+  opacity:70%;
+  border: none;
+  border-radius:0px;
+  float: left;
+}
+#loginBtn:hover{
+  cursor: pointer;
+}
+
+#logoutBtn {
+  width: 60px;
+  height:26px;
+  color: #EFEFEF;
+  font-family: 'LXGW WenKai Light', sans-serif;
+  background-color: black;
+  opacity:70%;
+  border: none;
+  border-radius:0px;
+  float: left;
+}
+
+#logoutBtn:hover {
+    background-color: transparent;
+    border: none;
+}
+#message{
+  border-radius:0px;
+  border:none;
+  margin:10px 15px;
+  width: 100%;
+  border-bottom: 2px solid #EFEFEF;
+}
+#title{
+  border-radius:0px;
+  border:none;
+  margin:5px 15px;
+    border-bottom: 2px solid #EFEFEF;
+}
+
+
+#submitMessage{
+  width: 80px;
+  height:26px;
+  color: #EFEFEF;
+  font-family: 'LXGW WenKai Light', sans-serif;
+  background-color: black;
+  opacity:70%;
+  border: none;
+  border-radius:0px;
+  float: left;
+}
+/* 🔹 留言列表 */
+.message-list {
+    margin-top: 20px;
+    border-top: 2px solid #ccc;
+    padding-top: 10px;
+}
+
+/* 🔹 留言標題（所有人可見） */
+.message-item {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border-left: 5px solid #3498db;
+}
+
+/* 🔹 留言詳細內容（只有登入作者可見） */
+.admin-message-item {
+    background: #e8f4fc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* 🔹 響應式設計 */
+@media (max-width: 480px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .button {
+        font-size: 14px;
+        padding: 8px;
+    }
+}

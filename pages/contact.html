@@ -5,24 +5,77 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 設定網站描述（對 SEO 搜尋引擎優化有幫助） -->
+    <meta name="description" content="frontiersilverwebsite">
+
     <title>Frontier Sliver</title>
+
+        <!-- 設定作者名稱 -->
+    <meta name="author" content="CHEN">
+
+    <!-- 網站 favicon（瀏覽器標籤的小圖示） -->
+    <link rel="icon" href="favicon.ico" type="image/index_main">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        (function() {
+            var isGithub = window.location.hostname.includes("github.io");
+            var basePath = isGithub ? "/frontiersilver/" : "";
+
+            // 載入 CSS
+            var link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = basePath + "css/indexstyle.css";
+            document.head.appendChild(link);
+
+            // 載入 favicon 讓它更早出現在瀏覽器標籤
+            var favicon = document.createElement("link");
+            favicon.rel = "icon";
+            favicon.href = basePath + "favicon.ico";
+            document.head.appendChild(favicon);
+
+
+
+            // 載入 JavaScript
+            var script = document.createElement("script");
+            script.src = basePath + "js/indexscript.js";
+            script.defer = true;
+            document.head.appendChild(script);
+
+            // 設定圖片
+            document.addEventListener("DOMContentLoaded", function() {
+                document.querySelectorAll("img[data-src]").forEach(img => {
+                    img.src = basePath + img.dataset.src;
+                });
+            });
+
+        })();
+    </script>
+    <!-- 先載入 jQuery -->
+
+
+    <!-- 然後載入 paroller.js -->
     <script src="https://cdn.jsdelivr.net/npm/paroller.js@1.4.6/dist/jquery.paroller.min.js"></script>
+
+    <!-- 再載入 tilt.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+
+
     <!-- 引入 Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <!-- 絕對路徑 CSS -->
     <link rel="stylesheet" href="/css/indexstyle.css">
-    <!-- jQuery 3.6.4（最新版，可改成最新版本）-->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="/css/allworks.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bahiana&family=Barrio&family=Noto+Sans+TC:wght@100..900&family=Rubik+Distressed&display=swap" rel="stylesheet">
-
-
+    <link rel="preconnect" href="https://raw.githubusercontent.com/lxgw/LxgwWenKai/main/fonts/TTF/LXGWWenKai-Light.ttf">
 </head>
 
 
 <body>
-
     <div class="containerhead">
         <header>
             <div class="header-typewriter">
@@ -38,111 +91,88 @@
               </button>
             </div>
 
-
-            <div class="perspective-container">
-              <div class="parallax-content">
-
-
-                <h1 class="animated-text" id="animated-text">
-                  <a href="/index.html">
-                  </a>
-                </h1>
-                <nav>
-                    <ul>
-                        <li><a href="/index.html">
-                          NEW ARRIVALS</a>
-                        </li>
-                        <li><a href="/pages/about.html">
-                          ABOUT
-                        </a>
-                        </li>
-                        <li>
-                          <a href="/pages/contact.html">
-                          CONTACT
-                          </a>
-                        </li>
-                    </ul>
-                  </nav>
-              </div>
-
-              <div class="parallax">
-                <img class="parallax-bg" src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg" alt="">
-              </div>
-
-              <!--
-              <div class="parallaxbolck" >
-                <div class="parallaxtext"
-                style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') repeat center;
-                background-size: cover;"
-                data-paroller-factor="-0.4">
-
-                </div>
-              </div>
-                -->
-            </div>
-
-
-
             <!-- 側邊選單 -->
             <div id="sidebar" class="sidebar">
                 <button class="close-btn" onclick="toggleMenu()">×</button>
-                <a href="/index.html">首頁</a>
-                <a href="/pages/about.html">Frontier</a>
-                <a href="/pages/service.html">服務</a>
-                <a href="/pages/contact.html">聯絡</a>
+                <a rel="index" href="/index.html">首頁</a>
+                <a rel="about" href="/pages/about.html">Frontier</a>
+                <div class="dropdown">
+                    <button class="dropdown-btn" onclick="toggleMenu2()">All WORKS <span class="arrow"></span> </button>
+                    <div class="dropdown-content">
+                        <a href="#">系列</a>
+                        <a href="#">品項</a>
+                        <a href="#">用途</a>
+                    </div>
+                </div>
+                <a rel="service" href="/pages/service.html">訂製</a>
+                <a rel="contact" href="/pages/contact.html">聯絡</a>
+
             </div>
 
             <!-- 增加一個透明背景層（點擊時會關閉側邊欄） -->
             <div id="overlay" class="overlay" onclick="closeMenu()"></div>
-
-
-
-
+            <div class="container2">
+              <div class="jumbotron">
+                <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index3_kjdfto.jpg" alt="test">
+              </div>
+            </div>
 
         </header>
     </div>
 
-    <div class="container">
-
-        <section class="text">
-            <div class="text1">
-              <p>
-                <br>
-              </p>
-            </div>
-            <div class="tex2">
-              <p>
-                <br>
-              </p>
-            </div>
-            <div class="tex1">
-              <p>
-                <br>
-              </p>
-            </div>
-
-        </section>
-    </div>
-
-    <div class="container2">
-
-    </div>
-    <footer>
-          <div >
-            <p class="containerfoot">
-              Frontier Sliver | All Rights Reserved
-              <br>Peresentative: TYH
-              <br>CS: +886 987654321
-              <br>
-              <br>Terms of use | Privacy
-            </p>
+    <section class="content">
+        <h2>訂製</h2>
+        <div class="text1">
+          <p>於邊界之上，遊走於孤獨與連結之間，尋找自我的平衡。</p>
+        </div>
+        <div class="d-flex">
+          <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg')no-repeat center;background-size: cover;"
+              data-paroller-factor="0.5"
+              data-paroller-factor-md="0.3"
+              data-paroller-factor-sm="0.2"
+              data-paroller-factor-xs="0.1">
           </div>
-        </footer>
+          <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') repeat center; background-size: cover;"
+                data-paroller-factor="-0.4">
+          </div>
+          <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') no-repeat center;background-size: cover;"
+                data-paroller-factor="-0.2">
+          </div>
+        </div>
+
+        <div class="text1">
+          <p>既不淹沒於人群，也不被孤獨吞噬，在邊界之間尋找平衡。</p>
+        </div>
+        <div class="tilt-box">
+            <span data-tilt></span>
+         </div>
+        <div class="tex2">
+          <p>邊界——兩個世界的交匯處，靈魂與現實的分界線。</p>
+          <p>肉體是靈魂的邊界，大腦是思想的邊界，而我們都是孤獨的世界。</p>
+          <p>沒有人能真正觸及他人的靈魂，但我們仍渴望被理解——希望自己獨特，卻不想與世界脫節，希望展現態度，卻不想被標籤。
+          </p>
+        </div>
+        <div class="tex1">
+          <p>邊界誕生的銀飾，邊境的產物，展現邊界另一端靈魂的模樣，讓我們認出彼此，讓我們的邊界互相交融，不再孤獨。</p>
+        </div>
+
+    </section>
+    <footer>
+      <div >
+        <div class="containerfoot">
+          Frontier Sliver | All Rights Reserved
+          <br>Peresentative: TYH
+          <br>CS: +886 987654321
+          <br>
+          <br>Terms of use | Privacy
+        </div>
+      </div>
+    </footer>
 
 
     <!-- 絕對路徑 JS -->
-
-    <script src="/js/indexscript.js"></script>
+  <script src="/js/indexscript.js"></script>
+  <script src="/js/allworks.js"></script>
 
 </body>
 

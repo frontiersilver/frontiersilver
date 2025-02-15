@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言系統（作者登入 & 回覆）</title>
+    <link rel="stylesheet" href="/css/private.css">
+    <link rel="stylesheet" href="/css/indexstyle.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <!-- 然後載入 paroller.js -->
+    <script src="https://cdn.jsdelivr.net/npm/paroller.js@1.4.6/dist/jquery.paroller.min.js"></script>
+
+    <!-- 再載入 tilt.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="/js/firebase.js" defer></script>
+    <script src="/js/app.js" defer></script>
+    <script src="/js/indexscript.js"></script>
+</head>
+<body>
+    <div class="containerhead" style="height:200px;">
+        <header style="height:200px;overflow: hidden;">
+            <div class="header-typewriter">
+              <span id="typewriter-text">
+              </span>
+            </div>
+
+
+            <!-- 側邊選單按鈕 -->
+            <button class="menu-btn" onclick="toggleMenu()">
+              ☰
+            </button>
+
+
+            <div class="perspective-container">
+              <div class="parallax-content">
+
+
+                <h1 class="animated-text" id="animated-text">
+                  <a rel="index" href="/index.html">
+                  </a>
+                </h1>
+              </div>
+
+              <div class="parallax">
+                <img class="parallax-bg" src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg" alt="">
+              </div>
+            </div>
+
+            <!-- 側邊選單 -->
+            <div id="sidebar" class="sidebar">
+                <button class="close-btn" onclick="toggleMenu()">×</button>
+                <a rel="index" href="/index.html">首頁</a>
+                <a rel="about" href="/pages/about.html">Frontier</a>
+                <div class="dropdown">
+                    <button class="dropdown-btn" onclick="toggleMenu2()">All WORKS <span class="arrow"></span> </button>
+                    <div class="dropdown-content">
+                        <a href="/pages/allworks.html">系列</a>
+                        <a href="/pages/allworks.html">品項</a>
+                        <a href="/pages/allworks.html">用途</a>
+                    </div>
+                </div>
+                <a rel="service" href="/pages/service.html">訂製</a>
+                <a rel="contact" href="/pages/privatecontact.html">聯絡</a>
+
+            </div>
+
+            <!-- 增加一個透明背景層（點擊時會關閉側邊欄） -->
+            <div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+
+
+
+
+        </header>
+    </div>
+
+    <div class="container" style="background-color: transparent;">
+
+      <div class="containerspace">
+          <p style="margin:0px;">1:1諮詢</p>
+      </div>
+        <!-- 🔹 登入區 -->
+        <div id="login-container">
+          <div class="login">
+            <input type="email" id="authorEmail" placeholder="id">
+            <div class="space">
+
+            </div>
+            <input type="password" id="authorPassword" placeholder="password">
+          </div>
+          <button style="" id="loginBtn">
+              登入
+          </button>
+          <button id="logoutBtn" style="display:none;">登出</button>
+        </div>
+
+        <!-- 🔹 新增留言 -->
+        <textarea id="message" placeholder="輸入留言..."></textarea>
+        <input type="text" id="title" placeholder="留言標題">
+        <div style="width:100%;height:26px;margin:5px 15px;">
+          <button class="botton" id="submitMessage">發送留言</button>
+        </div>
+
+
+        <!-- 🔹 所有人可見留言標題 -->
+        <p style="width:100%;height:26px;margin:20px 15px;">留言列表</p>
+        <div id="publicMessageList"></div>
+
+        <!-- 🔹 只有作者能查看詳細內容 -->
+        <p style="width:100%;height:26px;margin:5px 15px;">--------</p>
+        <div id="adminMessageList"></div>
+    </div>
+
+    <footer>
+      <div >
+        <p class="containerfoot">
+          Frontier Sliver | All Rights Reserved
+          <br>Peresentative: TYH
+          <br>CS: +886 987654321
+          <br>
+          <br>Terms of use | Privacy
+        </p>
+      </div>
+    </footer>
+    <script src="/js/indexscript.js"></script>
+</body>
+</html>
