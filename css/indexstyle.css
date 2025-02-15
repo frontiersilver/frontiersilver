@@ -55,7 +55,29 @@ body {
 p{
   margin: 5px;
 }
+h2{
+  font-family: 'LXGW WenKai Light', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  text-align: center;
+}
+.d-flex{
+    display: flex;
+    justify-content: center;
+    white-space: nowrap;
+    height:auto;
+    margin: 0 auto;
+}
+.image{
+    display: inline-block;
+    min-height: 300px;
+    min-width: 20%;
+    padding: 3em;
+    margin: 0.5em;
+    display: inline-block;
+    position: relative;
 
+}
 /* -------------------- 主要容器 -------------------- */
 
 header {
@@ -207,11 +229,23 @@ nav ul li a:hover {
 
 
 /*--------------------------- */
-.text{
+.content{
     max-width: 90%;
     margin: 20px auto;
     padding: 10px;
 }
+.text1{
+    font-family: 'LXGW WenKai Regular', sans-serif;
+    text-align: center;
+    font-size: 16px;
+    color: black;
+    display: block;
+    transition: 0.1s;
+}
+.text2{
+
+}
+
 
 .containerhead{
     width:100%;
@@ -289,14 +323,14 @@ nav ul li a:hover {
     overflow-x: hidden;
     transition: 0.4s;
     padding-top: 60px;
-    z-index: 1000;
+    z-index: 1002;
 }
 
 /* 側邊欄連結樣式 */
 .sidebar a {
     padding: 5px 20px;
     text-decoration: none;
-    font-family: "Noto Sans TC", serif;
+    font-family: 'LXGW WenKai Regular', sans-serif;
     text-align: justify;
     font-size: 18px;
     font-weight: 300;
@@ -312,6 +346,77 @@ nav ul li a:hover {
     color: linear-gradient(90deg, #005bea, #00c6fb);
     transform: scale(0.95);
 }
+
+/* 確保 .dropdown 是相對定位 */
+.dropdown {
+    position: relative;
+    display: block;
+}
+
+/* 設定按鈕 */
+.dropdown-btn {
+    padding: 5px 20px;
+    background: transparent;
+    border: none;
+    text-decoration: none;
+    font-family: 'LXGW WenKai Regular', sans-serif;
+    text-align: justify;
+    font-size: 18px;
+    font-weight: 300;
+    color: black;
+    display: block;
+    transition: 0.1s;
+    text-align: left;
+}
+.dropdown-btn:hover{
+    cursor: pointer;
+    color: linear-gradient(90deg, #005bea, #00c6fb);
+    transform: scale(0.95);
+}
+/* 設定選單初始狀態（隱藏） */
+.dropdown-content {
+    margin: auto 40px auto 30px;
+    display: none;
+    position: static;
+    background-color: transparent;
+    min-width: 150px;
+    overflow: hidden;
+    transition: height 0.3s ease-out;
+}
+
+/* 選單內的選項 */
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+}
+
+/* 滑鼠移動到選項時的效果 */
+.dropdown-content a:hover {
+    margin-left: 10px;
+    cursor: pointer;
+    color: linear-gradient(90deg, #005bea, #00c6fb);
+    transform: scale(0.95);
+}
+/* 初始向下 */
+.arrow {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid white;
+    transition: transform 0.3s ease;
+}
+/* 旋轉 180 度，變成向上箭頭 */
+.dropdown.active .arrow {
+    transform: rotate(180deg);
+}
+.dropdown.active .dropdown-content {
+    display: block; /* 展開時顯示 */
+}
+
+
 
 .overlay.open {
     display: block;
@@ -348,6 +453,7 @@ nav ul li a:hover {
     height: 300px;
     background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index_main_bho0av.jpg');
     background-size: cover;
+    margin:20px 0px;
     background-position: center;
     background-repeat: no-repeat;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) ;

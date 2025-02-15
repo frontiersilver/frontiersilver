@@ -20,6 +20,7 @@ document.addEventListener("scroll", function () {
 $(document).ready(function() {
     $('.parallaxtext').paroller(); // 啟動視差滾動
 });
+
 document.addEventListener("DOMContentLoaded", function() {
     $(".tilt-box").tilt({
       maxTilt: 10,
@@ -28,6 +29,8 @@ document.addEventListener("DOMContentLoaded", function() {
       scale: 1.02
     });
 });
+$('.image').paroller();
+
 function toggleMenu() {
     let sidebar = document.getElementById("sidebar");
     if (sidebar.style.width === "250px") {
@@ -47,6 +50,19 @@ function toggleMenu() {
         sidebar.classList.add("open");
         overlay.classList.add("open");
     }
+}
+
+function toggleMenu2() {
+    var dropdown = document.querySelector(".dropdown");
+    var menu = document.querySelector(".dropdown-content");
+
+    var isOpen = menu.style.display === "block";
+
+    // 切換顯示/隱藏
+    menu.style.display = isOpen ? "none" : "block";
+
+    // 切換 active 狀態來旋轉箭頭
+    dropdown.classList.toggle("active", !isOpen);
 }
 
 function closeMenu() {
