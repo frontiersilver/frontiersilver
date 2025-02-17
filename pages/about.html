@@ -23,7 +23,7 @@
             // **檢測是否運行於 GitHub Pages**
             const isGithubPages = window.location.hostname.includes("github.io");
             const repoName = "frontiersilver"; // ✅ **GitHub Repo 名稱**
-            const baseURL = `https://frontiersilver.github.io/${repoName}/`;
+            const baseURL = `https://frontiersilver.github.io/frontiersilver/`;
 
             // ✅ **此頁面預設在 `/pages/`**
             let basePath = isGithubPages ? `/frontiersilver/` : "/";
@@ -45,10 +45,10 @@
 
             // ✅ 修正內部連結
             document.querySelectorAll("a[data-link]").forEach(link => {
-                link.href = basePath + link.getAttribute("data-link").replace(/^\/+/, "");
+                link.href = baseURL + link.getAttribute("data-link").replace(/^\/+/, "");
             });
 
-            console.log(`🔍 目前運行於 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已修正所有路徑：${basePath}`);
+            console.log(`🔍 目前運行於 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已修正所有路徑：${baseURL}`);
         })();
     </script>
 
