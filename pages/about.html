@@ -19,37 +19,33 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        (function() {
-            var isGithub = window.location.hostname.includes("github.io");
-            var basePath = isGithub ? "/frontiersilver/" : "";
+        (function () {
+            // **檢測是否運行於 GitHub Pages**
+            const isGithubPages = window.location.hostname.includes("github.io");
+            const repoName = "frontiersilver";  // ✅ **手動設定 GitHub 專案名稱**
+            const basePath = isGithubPages ? `/${repoName}/` : "/";
 
-            // 載入 CSS
-            var link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = basePath + "css/indexstyle.css";
-            document.head.appendChild(link);
+            function updateAttribute(element, attr) {
+                let originalPath = element.getAttribute(attr);
+                if (originalPath && !originalPath.startsWith("http")) {
+                    // **修正 GitHub Pages 中 CSS、JS、圖片的載入**
+                    element.setAttribute(attr, basePath + originalPath.replace(/^\/+/, ""));
+                }
+            }
 
-            // 載入 favicon 讓它更早出現在瀏覽器標籤
-            var favicon = document.createElement("link");
-            favicon.rel = "icon";
-            favicon.href = basePath + "favicon.ico";
-            document.head.appendChild(favicon);
+            // **✅ 修正 CSS 連結**
+            document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
+
+            // **✅ 修正 JS 連結**
+            document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
 
 
-
-            // 載入 JavaScript
-            var script = document.createElement("script");
-            script.src = basePath + "js/indexscript.js";
-            script.defer = true;
-            document.head.appendChild(script);
-
-            // 設定圖片
-            document.addEventListener("DOMContentLoaded", function() {
-                document.querySelectorAll("img[data-src]").forEach(img => {
-                    img.src = basePath + img.dataset.src;
-                });
+            // **✅ 修正內部連結 `data-link`**
+            document.querySelectorAll("a[data-link]").forEach(link => {
+                link.href = basePath + link.getAttribute("data-link").replace(/^\/+/, "");
             });
 
+            console.log(`🔍 已偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已自動調整所有路徑：${basePath}`);
         })();
     </script>
     <!-- 先載入 jQuery -->
@@ -65,8 +61,8 @@
     <!-- 引入 Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <!-- 絕對路徑 CSS -->
-    <link rel="stylesheet" href="/css/indexstyle.css">
-    <link rel="stylesheet" href="/css/allworks.css">
+    <link rel="stylesheet" href="css/indexstyle.css">
+    <link rel="stylesheet" href="css/allworks.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -99,18 +95,18 @@
             <!-- 側邊選單 -->
             <div id="sidebar" class="sidebar">
                 <button class="close-btn" onclick="toggleMenu()">×</button>
-                <a rel="index" href="/index.html">首頁</a>
-                <a rel="about" href="/pages/about.html">Frontier</a>
+                <a rel="index" href="index.html">首頁</a>
+                <a rel="about" href="pages/about.html">Frontier</a>
                 <div class="dropdown">
                     <button class="dropdown-btn" onclick="toggleMenu2()">All WORKS <span class="arrow"></span> </button>
                     <div class="dropdown-content">
-                        <a href="#">系列</a>
-                        <a href="#">品項</a>
-                        <a href="#">用途</a>
+                        <a href="pages/allworks.html">系列</a>
+                        <a href="pages/allworks.html">品項</a>
+                        <a href="pages/allworks.html">用途</a>
                     </div>
                 </div>
-                <a rel="service" href="/pages/service.html">訂製</a>
-                <a rel="contact" href="/pages/contact.html">聯絡</a>
+                <a rel="service" href="pages/service.html">訂製</a>
+                <a rel="contact" href="pages/contact.html">聯絡</a>
 
             </div>
 
@@ -175,8 +171,8 @@
 
 
     <!-- 絕對路徑 JS -->
-  <script src="/js/indexscript.js"></script>
-  <script src="/js/allworks.js"></script>
+  <script src="js/indexscript.js"></script>
+  <script src="js/allworks.js"></script>
 
 </body>
 
