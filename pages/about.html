@@ -19,36 +19,32 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    (function () {
-        // ✅ 檢測是否運行於 GitHub Pages
-        const isGithubPages = window.location.hostname.includes("github.io");
-        const repoName = "frontiersilver";  // ✅ 手動設定 GitHub Repo 名稱
-        const baseURL = `https://frontiersilver.github.io/${repoName}/`; // 🔹 這是所有資源的根路徑
+        (function () {
+            const isGithubPages = window.location.hostname.includes("github.io");
+            const baseURL = "https://frontiersilver.github.io/frontiersilver/";
 
-        function updateAttribute(element, attr) {
-            let originalPath = element.getAttribute(attr);
-            if (originalPath && !originalPath.startsWith("http")) {
-                element.setAttribute(attr, baseURL + originalPath.replace(/^\/+/, ""));
+            if (isGithubPages) {
+                function updateLinks(selector, attr) {
+                    document.querySelectorAll(selector).forEach(element => {
+                        let originalPath = element.getAttribute(attr);
+                        if (originalPath && !originalPath.startsWith("http")) {
+                            element.setAttribute(attr, baseURL + originalPath.replace(/^\/+/, ""));
+                        }
+                    });
+                }
+
+                // ✅ 只在 GitHub Pages 上加上 `baseURL`
+                updateLinks("link[rel='stylesheet']", "href");  // CSS
+                updateLinks("script[src]", "src");  // JS
+                updateLinks("img", "src");  // 圖片
+                updateLinks("a", "href");  // 內部連結
+
+                console.log(`🔍 已偵測到 GitHub Pages，所有資源路徑已加上前綴：${baseURL}`);
+            } else {
+                console.log("✅ 本地運行，保持原本的路徑");
             }
-        }
-
-        // ✅ 修正 CSS 連結
-        document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
-
-        // ✅ 修正 JS 連結
-        document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
-
-        });
-
-        // ✅ 修正內部連結
-        document.querySelectorAll("a[data-link]").forEach(link => {
-            link.href = baseURL + link.getAttribute("data-link").replace(/^\/+/, "");
-        });
-
-        console.log(`🔍 目前運行於 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已修正所有路徑：${baseURL}`);
-    })();
-</script>
-
+        })();
+    </script>
     <!-- 先載入 jQuery -->
 
 
