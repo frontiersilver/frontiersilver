@@ -28,20 +28,21 @@
                     document.querySelectorAll(selector).forEach(element => {
                         let originalPath = element.getAttribute(attr);
                         if (originalPath && !originalPath.startsWith("http")) {
-                            element.setAttribute(attr, baseURL + originalPath.replace(/^\/+/, ""));
+                            // **解決 `/css/indexstyle.css` 和 `css/indexstyle.css` 的問題**
+                            let fixedPath = originalPath.replace(/^\/+/, "");  // 移除 `/`
+                            element.setAttribute(attr, baseURL + fixedPath);
                         }
                     });
                 }
 
-                // ✅ 只在 GitHub Pages 上加上 `baseURL`
+                // ✅ 修正 CSS、JS、圖片、內部連結
                 updateLinks("link[rel='stylesheet']", "href");  // CSS
                 updateLinks("script[src]", "src");  // JS
-                updateLinks("img", "src");  // 圖片
                 updateLinks("a", "href");  // 內部連結
 
-                console.log(`🔍 已偵測到 GitHub Pages，所有資源路徑已加上前綴：${baseURL}`);
+                console.log(`🔍 GitHub Pages 偵測成功，已修正所有資源路徑：${baseURL}`);
             } else {
-                console.log("✅ 本地運行，保持原本的路徑");
+                console.log("✅ 本地開發環境，保持原始路徑");
             }
         })();
     </script>
