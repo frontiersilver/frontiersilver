@@ -5,9 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FRONTIER SILVER 1:1諮詢</title>
 
+  <script>
+      (function () {
+          // **檢測是否運行於 GitHub Pages**
+          const isGithubPages = window.location.hostname.includes("github.io");
+          const repoName = "frontiersilver";  // ✅ **手動設定 GitHub 專案名稱**
+          const basePath = isGithubPages ? `/${repoName}/` : "/";
+
+          function updateAttribute(element, attr) {
+              let originalPath = element.getAttribute(attr);
+              if (originalPath && !originalPath.startsWith("http")) {
+                  // **修正 GitHub Pages 中 CSS、JS、圖片的載入**
+                  element.setAttribute(attr, basePath + originalPath.replace(/^\/+/, ""));
+              }
+          }
+
+          // **✅ 修正 CSS 連結**
+          document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
+
+          // **✅ 修正 JS 連結**
+          document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
+
+
+          // **✅ 修正內部連結 `data-link`**
+          document.querySelectorAll("a[data-link]").forEach(link => {
+              link.href = basePath + link.getAttribute("data-link").replace(/^\/+/, "");
+          });
+
+          console.log(`🔍 已偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已自動調整所有路徑：${basePath}`);
+      })();
+  </script>
+
   <!-- 🔹 CSS -->
-  <link rel="stylesheet" href="/css/private.css">
-  <link rel="stylesheet" href="/css/indexstyle.css">
+  <link rel="stylesheet" href="css/private.css">
+  <link rel="stylesheet" href="css/indexstyle.css">
 
   <!-- 🔹 jQuery & paroller.js -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -48,8 +79,8 @@
   </script>
 
   <!-- 🔹 其他 JavaScript -->
-  <script type="module" src="/js/app.js"></script>
-  <script src="/js/indexscript.js"></script>
+  <script type="module" src="js/app.js"></script>
+  <script src="js/indexscript.js"></script>
 
 </head>
 <body>
