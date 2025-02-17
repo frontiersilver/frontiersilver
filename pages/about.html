@@ -21,24 +21,29 @@
     <script>
         (function () {
             const isGithubPages = window.location.hostname.includes("github.io");
-            const baseURL = "https://frontiersilver.github.io/frontiersilver/";
+            const repoName = "frontiersilver"; // ✅ **GitHub Repo 名稱**
+            const baseURL = `https://frontiersilver.github.io/${repoName}/`;
 
             if (isGithubPages) {
-                function updateLinks(selector, attr) {
+                function updateAttribute(selector, attr) {
                     document.querySelectorAll(selector).forEach(element => {
                         let originalPath = element.getAttribute(attr);
                         if (originalPath && !originalPath.startsWith("http")) {
-                            // **解決 `/css/indexstyle.css` 和 `css/indexstyle.css` 的問題**
+                            // **✅ 修正 `/css/indexstyle.css` 和 `css/indexstyle.css` 問題**
                             let fixedPath = originalPath.replace(/^\/+/, "");  // 移除 `/`
-                            element.setAttribute(attr, baseURL + fixedPath);
+                            if (!fixedPath.startsWith(repoName + "/")) {
+                                fixedPath = repoName + "/" + fixedPath;  // **強制加上 repo 名稱**
+                            }
+                            element.setAttribute(attr, `https://frontiersilver.github.io/` + fixedPath);
                         }
                     });
                 }
 
                 // ✅ 修正 CSS、JS、圖片、內部連結
-                updateLinks("link[rel='stylesheet']", "href");  // CSS
-                updateLinks("script[src]", "src");  // JS
-                updateLinks("a", "href");  // 內部連結
+                updateAttribute("link[rel='stylesheet']", "href");  // CSS
+                updateAttribute("script[src]", "src");  // JS
+                updateAttribute("img", "src");  // 圖片
+                updateAttribute("a[href]", "href");  // 內部連結
 
                 console.log(`🔍 GitHub Pages 偵測成功，已修正所有資源路徑：${baseURL}`);
             } else {
