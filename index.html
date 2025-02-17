@@ -19,37 +19,36 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        (function() {
-            var isGithub = window.location.hostname.includes("github.io");
-            var basePath = isGithub ? "/frontiersilver/" : "";
+        (function () {
+            // 檢測是否運行於 GitHub Pages
+            const isGithubPages = window.location.hostname.includes("github.io");
+            const basePath = isGithubPages ? "/frontiersilver/" : "/";
 
-            // 載入 CSS
-            var link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = basePath + "css/indexstyle.css";
-            document.head.appendChild(link);
-
-            // 載入 favicon 讓它更早出現在瀏覽器標籤
-            var favicon = document.createElement("link");
-            favicon.rel = "icon";
-            favicon.href = basePath + "favicon.ico";
-            document.head.appendChild(favicon);
-
-
-
-            // 載入 JavaScript
-            var script = document.createElement("script");
-            script.src = basePath + "js/indexscript.js";
-            script.defer = true;
-            document.head.appendChild(script);
-
-            // 設定圖片
-            document.addEventListener("DOMContentLoaded", function() {
-                document.querySelectorAll("img[data-src]").forEach(img => {
-                    img.src = basePath + img.dataset.src;
-                });
+            // ✅ 自動修正 CSS 連結
+            document.querySelectorAll("link[rel='stylesheet']").forEach(link => {
+                if (!link.href.startsWith("http")) {
+                    link.href = basePath + link.getAttribute("href").replace(/^\/+/, "");
+                }
             });
 
+            // ✅ 自動修正 JS 連結
+            document.querySelectorAll("script[src]").forEach(script => {
+                if (!script.src.startsWith("http")) {
+                    script.src = basePath + script.getAttribute("src").replace(/^\/+/, "");
+                }
+            });
+
+            // ✅ 自動修正圖片 (需使用 `data-src` 屬性)
+            document.querySelectorAll("img[data-src]").forEach(img => {
+                img.src = basePath + img.dataset.src.replace(/^\/+/, "");
+            });
+
+            // ✅ 自動修正內部連結 (需使用 `data-link` 屬性)
+            document.querySelectorAll("a[data-link]").forEach(link => {
+                link.href = basePath + link.getAttribute("data-link").replace(/^\/+/, "");
+            });
+
+            console.log(`🔍 已偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已自動調整所有路徑`);
         })();
     </script>
     <!-- 先載入 jQuery -->
