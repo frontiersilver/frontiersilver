@@ -58,7 +58,7 @@
             // **檢測是否運行於 GitHub Pages**
             const isGithubPages = window.location.hostname.includes("github.io");
             const repoName = "frontiersilver";  // ✅ **手動設定 GitHub 專案名稱**
-            const basePath = isGithubPages ? `/${repoName}/` : "/";
+            const basePath = isGithubPages ? `/${repoName}` : "/";
 
             function updateAttribute(element, attr) {
                 let originalPath = element.getAttribute(attr);
@@ -100,7 +100,7 @@
     <!-- 引入 Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <!-- 絕對路徑 CSS -->
-    <link rel="stylesheet" href="css/indexstyle.css">
+    <link rel="stylesheet" href="/css/indexstyle.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
