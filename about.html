@@ -5,100 +5,183 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 設定網站描述（對 SEO 搜尋引擎優化有幫助） -->
     <meta name="description" content="frontiersilverwebsite">
 
-    <title>Frontier Silver</title>
+    <title>Frontier Sliver</title>
 
+        <!-- 設定作者名稱 -->
     <meta name="author" content="CHEN">
 
-    <!-- 網站 favicon -->
-    <link rel="icon" href="{{ site.baseurl }}/favicon.ico" type="image/x-icon">
+    <!-- 網站 favicon（瀏覽器標籤的小圖示） -->
+    <link rel="icon" href="favicon.ico" type="image/index_main">
 
-    <!-- 先載入 jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        (function () {
+            // **檢測是否運行於 GitHub Pages**
+            const isGithubPages = window.location.hostname.includes("github.io");
+            const repoName = "frontiersilver"; // ✅ **GitHub 專案名稱**
+            const rootPath = isGithubPages ? `/${repoName}/` : "/";
 
-    <!-- 先載入 paroller.js -->
+            // **計算當前 HTML 檔案的相對位置**
+            const currentPath = window.location.pathname;
+            const depth = (currentPath.match(/\//g) || []).length - 1; // 計算 URL 深度
+            const relativeBasePath = "../".repeat(depth); // 生成相對路徑
+
+            function updateAttribute(element, attr, useRoot = false) {
+                let originalPath = element.getAttribute(attr);
+                if (originalPath && !originalPath.startsWith("http")) {
+                    // **如果是 GitHub Pages，使用 rootPath**
+                    // **如果是本地端，使用相對路徑（避免 /pages/ 影響）**
+                    let fixedPath = isGithubPages
+                        ? rootPath + originalPath.replace(/^\/+/, "")
+                        : (useRoot ? rootPath : relativeBasePath) + originalPath.replace(/^\/+/, "");
+
+                    element.setAttribute(attr, fixedPath);
+                }
+            }
+
+            // **✅ 修正 CSS 連結**
+            document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href", true));
+
+            // **✅ 修正 JS 連結**
+            document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src", true));
+
+            // **✅ 修正內部連結 `data-link`**
+            document.querySelectorAll("a[data-link]").forEach(link => {
+                updateAttribute(link, "href");
+            });
+
+            console.log(`🔍 偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已自動調整路徑：${rootPath}`);
+        })();
+    </script>
+    <!-- 先載入 jQuery -->
+
+
+    <!-- 然後載入 paroller.js -->
     <script src="https://cdn.jsdelivr.net/npm/paroller.js@1.4.6/dist/jquery.paroller.min.js"></script>
 
     <!-- 再載入 tilt.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
 
+
     <!-- 引入 Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <!-- 絕對路徑 CSS -->
+    <link rel="stylesheet" href="css/indexstyle.css">
+    <link rel="stylesheet" href="css/allworks.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bahiana&family=Barrio&family=Noto+Sans+TC:wght@100..900&family=Rubik+Distressed&display=swap" rel="stylesheet">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/css/indexstyle.css">
-    <link rel="stylesheet" href="{{ site.baseurl }}/css/allworks.css">
-
+    <link rel="preconnect" href="https://raw.githubusercontent.com/lxgw/LxgwWenKai/main/fonts/TTF/LXGWWenKai-Light.ttf">
 </head>
 
-<body>
 
+<body>
     <div class="containerhead">
-        <header>
-            <div class="header-typewriter">
-                <span id="typewriter-text"></span>
+        <header style="top:-0px;">
+            <div class="header-typewriter" >
+              <span id="typewriter-text">
+              </span>
             </div>
+
 
             <!-- 側邊選單按鈕 -->
             <div class="btncontainer">
-                <button class="menu-btn" onclick="toggleMenu()">☰</button>
+              <button class="menu-btn" onclick="toggleMenu()">
+                ☰
+              </button>
             </div>
+
+
+
+
+
 
             <!-- 側邊選單 -->
             <div id="sidebar" class="sidebar">
                 <button class="close-btn" onclick="toggleMenu()">×</button>
-                <a href="{{ site.baseurl }}/index.html">首頁</a>
-                <a href="{{ site.baseurl }}/pages/about.html">Frontier</a>
+                <a rel="index" href="index.html">首頁</a>
+                <a rel="about" href="pages/about.html">Frontier</a>
                 <div class="dropdown">
-                    <button class="dropdown-btn" onclick="toggleMenu2()">All WORKS <span class="arrow"></span></button>
+                    <button class="dropdown-btn" onclick="toggleMenu2()">All WORKS <span class="arrow"></span> </button>
                     <div class="dropdown-content">
-                        <a href="{{ site.baseurl }}/pages/allworks.html">系列</a>
-                        <a href="{{ site.baseurl }}/pages/allworks.html">品項</a>
-                        <a href="{{ site.baseurl }}/pages/allworks.html">用途</a>
+                        <a href="pages/allworks.html">系列</a>
+                        <a href="pages/allworks.html">品項</a>
+                        <a href="pages/allworks.html">用途</a>
                     </div>
                 </div>
-                <a href="{{ site.baseurl }}/pages/service.html">訂製</a>
-                <a href="{{ site.baseurl }}/pages/contact.html">聯絡</a>
+                <a rel="service" href="pages/service.html">訂製</a>
+                <a rel="contact" href="pages/contact.html">聯絡</a>
+
             </div>
 
+            <!-- 增加一個透明背景層（點擊時會關閉側邊欄） -->
             <div id="overlay" class="overlay" onclick="closeMenu()"></div>
-
             <div class="container2">
-                <div class="jumbotron">
-                    <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index3_kjdfto.jpg" alt="test">
-                </div>
+              <div class="jumbotron">
+                <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index3_kjdfto.jpg" alt="test">
+              </div>
             </div>
+
         </header>
     </div>
-
     <section class="content">
         <h2>FRONTIER</h2>
         <div class="text1">
-            <p>於邊界之上，遊走於孤獨與連結之間，尋找自我的平衡。</p>
+          <p>於邊界之上，遊走於孤獨與連結之間，尋找自我的平衡。</p>
+        </div>
+        <div class="d-flex">
+          <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg')no-repeat center;background-size: cover;"
+              data-paroller-factor="0.5"
+              data-paroller-factor-md="0.3"
+              data-paroller-factor-sm="0.2"
+              data-paroller-factor-xs="0.1">
+          </div>
+          <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') repeat center; background-size: cover;"
+                data-paroller-factor="-0.4">
+          </div>
+          <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') no-repeat center;background-size: cover;"
+                data-paroller-factor="-0.2">
+          </div>
         </div>
 
-        <div class="text2">
-            <p>邊界——兩個世界的交匯處，靈魂與現實的分界線。</p>
-            <p>肉體是靈魂的邊界，大腦是思想的邊界，而我們都是孤獨的世界。</p>
+        <div class="text1">
+          <p>既不淹沒於人群，也不被孤獨吞噬，在邊界之間尋找平衡。</p>
         </div>
+        <div class="tilt-box">
+            <span data-tilt></span>
+         </div>
+        <div class="tex2">
+          <p>邊界——兩個世界的交匯處，靈魂與現實的分界線。</p>
+          <p>肉體是靈魂的邊界，大腦是思想的邊界，而我們都是孤獨的世界。</p>
+          <p>沒有人能真正觸及他人的靈魂，但我們仍渴望被理解——希望自己獨特，卻不想與世界脫節，希望展現態度，卻不想被標籤。
+          </p>
+        </div>
+        <div class="tex1">
+          <p>邊界誕生的銀飾，邊境的產物，展現邊界另一端靈魂的模樣，讓我們認出彼此，讓我們的邊界互相交融，不再孤獨。</p>
+        </div>
+
     </section>
-
     <footer>
+      <div >
         <div class="containerfoot">
-            Frontier Silver | All Rights Reserved
-            <br>Representative: TYH
-            <br>CS: +886 987654321
-            <br><br>Terms of use | Privacy
+          Frontier Sliver | All Rights Reserved
+          <br>Peresentative: TYH
+          <br>CS: +886 987654321
+          <br>
+          <br>Terms of use | Privacy
         </div>
+      </div>
     </footer>
 
-    <!-- JS -->
-    <script src="{{ site.baseurl }}/js/indexscript.js"></script>
-    <script src="{{ site.baseurl }}/js/allworks.js"></script>
+
+    <!-- 絕對路徑 JS -->
+  <script src="js/indexscript.js"></script>
+  <script src="js/allworks.js"></script>
 
 </body>
 
