@@ -4,46 +4,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FRONTIER SILVER 1:1諮詢</title>
+  <script>
+        (function () {
+            // **檢測是否運行於 GitHub Pages**
+            const isGithubPages = window.location.hostname.includes("github.io");
+            const repoName = "frontiersilver"; // ✅ **GitHub Repo 名稱**
 
+            // ✅ **此頁面預設在 `/pages/`**
+            let basePath = isGithubPages ? `/${repoName}/` : "/";
+            basePath += "../"; // **回到上一層，確保 CSS & JS 正確引用**
+
+            function updateAttribute(element, attr) {
+                let originalPath = element.getAttribute(attr);
+                if (originalPath && !originalPath.startsWith("http")) {
+                    element.setAttribute(attr, basePath + originalPath.replace(/^\/+/, ""));
+                }
+            }
+
+            // ✅ 修正 CSS 連結
+            document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
+
+            // ✅ 修正 JS 連結
+            document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
+
+            // ✅ 修正圖片
+            document.querySelectorAll("img[data-src]").forEach(img => {
+                img.src = basePath + img.dataset.src.replace(/^\/+/, "");
+            });
+
+            // ✅ 修正內部連結
+            document.querySelectorAll("a[data-link]").forEach(link => {
+                link.href = basePath + link.getAttribute("data-link").replace(/^\/+/, "");
+            });
+
+            console.log(`🔍 目前運行於 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已修正所有路徑：${basePath}`);
+        })();
+    </script>
+    <!--
   <script>
       (function () {
           // **檢測是否運行於 GitHub Pages**
           const isGithubPages = window.location.hostname.includes("github.io");
-          const repoName = "frontiersilver"; // ✅ **GitHub 專案名稱**
-          const rootPath = isGithubPages ? `/${repoName}/` : "/";
+          const repoName = "frontiersilver";  // ✅ **手動設定 GitHub 專案名稱**
+          const basePath = isGithubPages ? `/${repoName}/` : "/";
 
-          // **計算當前 HTML 檔案的相對位置**
-          const currentPath = window.location.pathname;
-          const depth = (currentPath.match(/\//g) || []).length - 1; // 計算 URL 深度
-          const relativeBasePath = "../".repeat(depth); // 生成相對路徑
-
-          function updateAttribute(element, attr, useRoot = false) {
+          function updateAttribute(element, attr) {
               let originalPath = element.getAttribute(attr);
               if (originalPath && !originalPath.startsWith("http")) {
-                  // **如果是 GitHub Pages，使用 rootPath**
-                  // **如果是本地端，使用相對路徑（避免 /pages/ 影響）**
-                  let fixedPath = isGithubPages
-                      ? rootPath + originalPath.replace(/^\/+/, "")
-                      : (useRoot ? rootPath : relativeBasePath) + originalPath.replace(/^\/+/, "");
-
-                  element.setAttribute(attr, fixedPath);
+                  // **修正 GitHub Pages 中 CSS、JS、圖片的載入**
+                  element.setAttribute(attr, basePath + originalPath.replace(/^\/+/, ""));
               }
           }
 
           // **✅ 修正 CSS 連結**
-          document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href", true));
+          document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
 
           // **✅ 修正 JS 連結**
-          document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src", true));
+          document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
+
 
           // **✅ 修正內部連結 `data-link`**
           document.querySelectorAll("a[data-link]").forEach(link => {
-              updateAttribute(link, "href");
+              link.href = basePath + link.getAttribute("data-link").replace(/^\/+/, "");
           });
 
-          console.log(`🔍 偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已自動調整路徑：${rootPath}`);
+          console.log(`🔍 已偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已自動調整所有路徑：${basePath}`);
       })();
   </script>
+  -->
 
   <!-- 🔹 CSS -->
   <link rel="stylesheet" href="css/private.css">
