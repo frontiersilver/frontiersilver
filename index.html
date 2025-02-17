@@ -20,7 +20,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         (function () {
-            // 🔍 檢測是否運行於 GitHub Pages
             const isGithubPages = window.location.hostname.includes("github.io");
             const basePath = isGithubPages ? "/frontiersilver/" : "/";
 
@@ -31,17 +30,11 @@
                 }
             }
 
-            // ✅ 自動修正 CSS 連結
+            // 修正 CSS
             document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
 
-            // ✅ 自動修正 JS 連結
+            // 修正 JS
             document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
-
-            // ✅ 自動修正圖片 (需使用 `data-src` 屬性)
-            document.querySelectorAll("img[data-src]").forEach(img => updateAttribute(img, "data-src"));
-
-            // ✅ 自動修正內部連結 (需使用 `data-link` 屬性)
-            document.querySelectorAll("a[data-link]").forEach(link => updateAttribute(link, "data-link"));
 
             console.log(`🔍 已偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已自動調整所有路徑`);
         })();
