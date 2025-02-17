@@ -74,10 +74,6 @@
             // **✅ 修正 JS 連結**
             document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
 
-            // **✅ 修正圖片 `data-src`**
-            document.querySelectorAll("img[data-src]").forEach(img => {
-                img.src = basePath + img.dataset.src.replace(/^\/+/, "");
-            });
 
             // **✅ 修正內部連結 `data-link`**
             document.querySelectorAll("a[data-link]").forEach(link => {
