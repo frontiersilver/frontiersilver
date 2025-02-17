@@ -23,6 +23,7 @@
             // **檢測是否運行於 GitHub Pages**
             const isGithubPages = window.location.hostname.includes("github.io");
             const repoName = "frontiersilver"; // ✅ **GitHub Repo 名稱**
+            const baseURL = `https://frontiersilver.github.io/${repoName}/`;
 
             // ✅ **此頁面預設在 `/pages/`**
             let basePath = isGithubPages ? `/frontiersilver/` : "/";
@@ -31,7 +32,7 @@
             function updateAttribute(element, attr) {
                 let originalPath = element.getAttribute(attr);
                 if (originalPath && !originalPath.startsWith("http")) {
-                    element.setAttribute(attr, basePath + originalPath.replace(/^\/+/, ""));
+                    element.setAttribute(attr, baseURL + originalPath.replace(/^\/+/, ""));
                 }
             }
 
