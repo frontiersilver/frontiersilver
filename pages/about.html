@@ -41,10 +41,6 @@
             // ✅ 修正 JS 連結
             document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
 
-            // ✅ 修正圖片
-            document.querySelectorAll("img[data-src]").forEach(img => {
-                img.src = basePath + img.dataset.src.replace(/^\/+/, "");
-            });
 
             // ✅ 修正內部連結
             document.querySelectorAll("a[data-link]").forEach(link => {
@@ -68,8 +64,8 @@
     <!-- 引入 Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <!-- 絕對路徑 CSS -->
-    <link rel="stylesheet" href="css/indexstyle.css">
-    <link rel="stylesheet" href="css/allworks.css">
+    <link rel="stylesheet" href="/css/indexstyle.css">
+    <link rel="stylesheet" href="/css/allworks.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -102,14 +98,14 @@
             <!-- 側邊選單 -->
             <div id="sidebar" class="sidebar">
                 <button class="close-btn" onclick="toggleMenu()">×</button>
-                <a rel="index" href="index.html">首頁</a>
-                <a rel="about" href="pages/about.html">Frontier</a>
+                <a rel="index" href="/index.html">首頁</a>
+                <a rel="about" href="/pages/about.html">Frontier</a>
                 <div class="dropdown">
                     <button class="dropdown-btn" onclick="toggleMenu2()">All WORKS <span class="arrow"></span> </button>
                     <div class="dropdown-content">
-                        <a href="pages/allworks.html">系列</a>
-                        <a href="pages/allworks.html">品項</a>
-                        <a href="pages/allworks.html">用途</a>
+                        <a href="/pages/allworks.html">系列</a>
+                        <a href="/pages/allworks.html">品項</a>
+                        <a href="/pages/allworks.html">用途</a>
                     </div>
                 </div>
                 <a rel="service" href="pages/service.html">訂製</a>
@@ -178,8 +174,8 @@
 
 
     <!-- 絕對路徑 JS -->
-  <script src="js/indexscript.js"></script>
-  <script src="js/allworks.js"></script>
+  <script src="/js/indexscript.js"></script>
+  <script src="/js/allworks.js"></script>
 
 </body>
 
