@@ -5,176 +5,130 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- 設定網站描述（對 SEO 搜尋引擎優化有幫助） -->
     <meta name="description" content="frontiersilverwebsite">
 
-    <title>Frontier Sliver</title>
+    <title>Frontier Silver</title>
 
-        <!-- 設定作者名稱 -->
     <meta name="author" content="CHEN">
 
-    <!-- 網站 favicon（瀏覽器標籤的小圖示） -->
-    <link rel="icon" href="favicon.ico" type="/image/index_main">
+    <!-- 設定 Base URL -->
+    <base href="{{ site.baseurl }}/">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        (function () {
-            const isGithubPages = window.location.hostname.includes("github.io");
-            const repoName = "frontiersilver"; // ✅ **GitHub Repo 名稱**
-            const baseURL = `https://frontiersilver.github.io/${repoName}/`;
+    <!-- 網站 favicon -->
+    <link rel="icon" href="{{ site.baseurl }}/favicon.ico" type="image/x-icon">
 
-            if (isGithubPages) {
-                function updateAttribute(selector, attr) {
-                    document.querySelectorAll(selector).forEach(element => {
-                        let originalPath = element.getAttribute(attr);
-                        if (originalPath && !originalPath.startsWith("http")) {
-                            // **✅ 修正 `/css/indexstyle.css` 和 `css/indexstyle.css` 問題**
-                            let fixedPath = originalPath.replace(/^\/+/, "");  // 移除 `/`
-                            if (!fixedPath.startsWith(repoName + "/")) {
-                                fixedPath = repoName + "/" + fixedPath;  // **強制加上 repo 名稱**
-                            }
-                            element.setAttribute(attr, `https://frontiersilver.github.io/` + fixedPath);
-                        }
-                    });
-                }
-
-                // ✅ 修正 CSS、JS、圖片、內部連結
-                updateAttribute("link[rel='stylesheet']", "href");  // CSS
-                updateAttribute("script[src]", "src");  // JS
-                updateAttribute("a[href]", "href");  // 內部連結
-
-                console.log(`🔍 GitHub Pages 偵測成功，已修正所有資源路徑：${baseURL}`);
-            } else {
-                console.log("✅ 本地開發環境，保持原始路徑");
-            }
-        })();
-    </script>
     <!-- 先載入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
-    <!-- 然後載入 paroller.js -->
+    <!-- 先載入 paroller.js -->
     <script src="https://cdn.jsdelivr.net/npm/paroller.js@1.4.6/dist/jquery.paroller.min.js"></script>
 
     <!-- 再載入 tilt.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
 
-
     <!-- 引入 Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-    <!-- 絕對路徑 CSS -->
-    <link rel="stylesheet" href="css/indexstyle.css">
-    <link rel="stylesheet" href="css/allworks.css">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bahiana&family=Barrio&family=Noto+Sans+TC:wght@100..900&family=Rubik+Distressed&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://raw.githubusercontent.com/lxgw/LxgwWenKai/main/fonts/TTF/LXGWWenKai-Light.ttf">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/indexstyle.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/allworks.css">
+
 </head>
 
-
 <body>
+
     <div class="containerhead">
         <header style="top:-0px;">
-            <div class="header-typewriter" >
-              <span id="typewriter-text">
-              </span>
+            <div class="header-typewriter">
+                <span id="typewriter-text"></span>
             </div>
-
 
             <!-- 側邊選單按鈕 -->
             <div class="btncontainer">
-              <button class="menu-btn" onclick="toggleMenu()">
-                ☰
-              </button>
+                <button class="menu-btn" onclick="toggleMenu()">☰</button>
             </div>
-
-
-
-
-
 
             <!-- 側邊選單 -->
             <div id="sidebar" class="sidebar">
                 <button class="close-btn" onclick="toggleMenu()">×</button>
-                <a rel="index" href="/index.html">首頁</a>
-                <a rel="about" href="/pages/about.html">Frontier</a>
+                <a rel="index" href="{{ site.baseurl }}/index.html">首頁</a>
+                <a rel="about" href="{{ site.baseurl }}/pages/about.html">Frontier</a>
                 <div class="dropdown">
-                    <button class="dropdown-btn" onclick="toggleMenu2()">All WORKS <span class="arrow"></span> </button>
+                    <button class="dropdown-btn" onclick="toggleMenu2()">All WORKS <span class="arrow"></span></button>
                     <div class="dropdown-content">
-                        <a href="/pages/allworks.html">系列</a>
-                        <a href="/pages/allworks.html">品項</a>
-                        <a href="/pages/allworks.html">用途</a>
+                        <a href="{{ site.baseurl }}/pages/allworks.html">系列</a>
+                        <a href="{{ site.baseurl }}/pages/allworks.html">品項</a>
+                        <a href="{{ site.baseurl }}/pages/allworks.html">用途</a>
                     </div>
                 </div>
-                <a rel="service" href="/pages/service.html">訂製</a>
-                <a rel="contact" href="/pages/contact.html">聯絡</a>
-
+                <a rel="service" href="{{ site.baseurl }}/pages/service.html">訂製</a>
+                <a rel="contact" href="{{ site.baseurl }}/pages/contact.html">聯絡</a>
             </div>
 
             <!-- 增加一個透明背景層（點擊時會關閉側邊欄） -->
             <div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
             <div class="container2">
-              <div class="jumbotron">
-                <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index3_kjdfto.jpg" alt="test">
-              </div>
+                <div class="jumbotron">
+                    <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index3_kjdfto.jpg" alt="test">
+                </div>
             </div>
 
         </header>
     </div>
+
     <section class="content">
         <h2>FRONTIER</h2>
         <div class="text1">
-          <p>於邊界之上，遊走於孤獨與連結之間，尋找自我的平衡。</p>
+            <p>於邊界之上，遊走於孤獨與連結之間，尋找自我的平衡。</p>
         </div>
         <div class="d-flex">
-          <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg')no-repeat center;background-size: cover;"
-              data-paroller-factor="0.5"
-              data-paroller-factor-md="0.3"
-              data-paroller-factor-sm="0.2"
-              data-paroller-factor-xs="0.1">
-          </div>
-          <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') repeat center; background-size: cover;"
+            <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') no-repeat center;background-size: cover;"
+                data-paroller-factor="0.5">
+            </div>
+            <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') repeat center; background-size: cover;"
                 data-paroller-factor="-0.4">
-          </div>
-          <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') no-repeat center;background-size: cover;"
+            </div>
+            <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') no-repeat center;background-size: cover;"
                 data-paroller-factor="-0.2">
-          </div>
+            </div>
         </div>
 
         <div class="text1">
-          <p>既不淹沒於人群，也不被孤獨吞噬，在邊界之間尋找平衡。</p>
+            <p>既不淹沒於人群，也不被孤獨吞噬，在邊界之間尋找平衡。</p>
         </div>
+
         <div class="tilt-box">
             <span data-tilt></span>
-         </div>
-        <div class="tex2">
-          <p>邊界——兩個世界的交匯處，靈魂與現實的分界線。</p>
-          <p>肉體是靈魂的邊界，大腦是思想的邊界，而我們都是孤獨的世界。</p>
-          <p>沒有人能真正觸及他人的靈魂，但我們仍渴望被理解——希望自己獨特，卻不想與世界脫節，希望展現態度，卻不想被標籤。
-          </p>
         </div>
-        <div class="tex1">
-          <p>邊界誕生的銀飾，邊境的產物，展現邊界另一端靈魂的模樣，讓我們認出彼此，讓我們的邊界互相交融，不再孤獨。</p>
+
+        <div class="text2">
+            <p>邊界——兩個世界的交匯處，靈魂與現實的分界線。</p>
+            <p>肉體是靈魂的邊界，大腦是思想的邊界，而我們都是孤獨的世界。</p>
+            <p>沒有人能真正觸及他人的靈魂，但我們仍渴望被理解——希望自己獨特，卻不想與世界脫節，希望展現態度，卻不想被標籤。</p>
+        </div>
+
+        <div class="text1">
+            <p>邊界誕生的銀飾，邊境的產物，展現邊界另一端靈魂的模樣，讓我們認出彼此，讓我們的邊界互相交融，不再孤獨。</p>
         </div>
 
     </section>
+
     <footer>
-      <div >
         <div class="containerfoot">
-          Frontier Sliver | All Rights Reserved
-          <br>Peresentative: TYH
-          <br>CS: +886 987654321
-          <br>
-          <br>Terms of use | Privacy
+            Frontier Silver | All Rights Reserved
+            <br>Representative: TYH
+            <br>CS: +886 987654321
+            <br><br>Terms of use | Privacy
         </div>
-      </div>
     </footer>
 
-
-    <!-- 絕對路徑 JS -->
-  <script src="/js/indexscript.js"></script>
-  <script src="/js/allworks.js"></script>
+    <!-- JS -->
+    <script src="{{ site.baseurl }}/js/indexscript.js"></script>
+    <script src="{{ site.baseurl }}/js/allworks.js"></script>
 
 </body>
 
