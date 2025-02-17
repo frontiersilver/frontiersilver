@@ -19,38 +19,35 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        (function () {
-            // **檢測是否運行於 GitHub Pages**
-            const isGithubPages = window.location.hostname.includes("github.io");
-            const repoName = "frontiersilver"; // ✅ **GitHub Repo 名稱**
-            const baseURL = `https://frontiersilver.github.io/frontiersilver/`;
+    (function () {
+        // ✅ 檢測是否運行於 GitHub Pages
+        const isGithubPages = window.location.hostname.includes("github.io");
+        const repoName = "frontiersilver";  // ✅ 手動設定 GitHub Repo 名稱
+        const baseURL = `https://frontiersilver.github.io/${repoName}/`; // 🔹 這是所有資源的根路徑
 
-            // ✅ **此頁面預設在 `/pages/`**
-            let basePath = isGithubPages ? `/frontiersilver/` : "/";
-            basePath += "../"; // **回到上一層，確保 CSS & JS 正確引用**
-
-            function updateAttribute(element, attr) {
-                let originalPath = element.getAttribute(attr);
-                if (originalPath && !originalPath.startsWith("http")) {
-                    element.setAttribute(attr, baseURL + originalPath.replace(/^\/+/, ""));
-                }
+        function updateAttribute(element, attr) {
+            let originalPath = element.getAttribute(attr);
+            if (originalPath && !originalPath.startsWith("http")) {
+                element.setAttribute(attr, baseURL + originalPath.replace(/^\/+/, ""));
             }
+        }
 
-            // ✅ 修正 CSS 連結
-            document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
+        // ✅ 修正 CSS 連結
+        document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
 
-            // ✅ 修正 JS 連結
-            document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
+        // ✅ 修正 JS 連結
+        document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
 
+        });
 
-            // ✅ 修正內部連結
-            document.querySelectorAll("a[data-link]").forEach(link => {
-                link.href = baseURL + link.getAttribute("data-link").replace(/^\/+/, "");
-            });
+        // ✅ 修正內部連結
+        document.querySelectorAll("a[data-link]").forEach(link => {
+            link.href = baseURL + link.getAttribute("data-link").replace(/^\/+/, "");
+        });
 
-            console.log(`🔍 目前運行於 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已修正所有路徑：${baseURL}`);
-        })();
-    </script>
+        console.log(`🔍 目前運行於 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已修正所有路徑：${baseURL}`);
+    })();
+</script>
 
     <!-- 先載入 jQuery -->
 
