@@ -20,33 +20,28 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         (function () {
-            // 檢測是否運行於 GitHub Pages
+            // 🔍 檢測是否運行於 GitHub Pages
             const isGithubPages = window.location.hostname.includes("github.io");
             const basePath = isGithubPages ? "/frontiersilver/" : "/";
 
-            // ✅ 自動修正 CSS 連結
-            document.querySelectorAll("link[rel='stylesheet']").forEach(link => {
-                if (!link.href.startsWith("http")) {
-                    link.href = "https://frontiersilver.github.io/frontiersilver/"  + link.getAttribute("href").replace(/^\/+/, "");
+            function updateAttribute(element, attr) {
+                let originalPath = element.getAttribute(attr);
+                if (originalPath && !originalPath.startsWith("http") && !originalPath.startsWith(basePath)) {
+                    element.setAttribute(attr, basePath + originalPath.replace(/^\/+/, ""));
                 }
-            });
+            }
+
+            // ✅ 自動修正 CSS 連結
+            document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
 
             // ✅ 自動修正 JS 連結
-            document.querySelectorAll("script[src]").forEach(script => {
-                if (!script.src.startsWith("http")) {
-                    script.src = "https://frontiersilver.github.io/frontiersilver/" + script.getAttribute("src").replace(/^\/+/, "");
-                }
-            });
+            document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
 
             // ✅ 自動修正圖片 (需使用 `data-src` 屬性)
-            document.querySelectorAll("img[data-src]").forEach(img => {
-                img.src = "https://frontiersilver.github.io/frontiersilver/"  + img.dataset.src.replace(/^\/+/, "");
-            });
+            document.querySelectorAll("img[data-src]").forEach(img => updateAttribute(img, "data-src"));
 
             // ✅ 自動修正內部連結 (需使用 `data-link` 屬性)
-            document.querySelectorAll("a[data-link]").forEach(link => {
-                link.href = "https://frontiersilver.github.io/frontiersilver/"  + link.getAttribute("data-link").replace(/^\/+/, "");
-            });
+            document.querySelectorAll("a[data-link]").forEach(link => updateAttribute(link, "data-link"));
 
             console.log(`🔍 已偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已自動調整所有路徑`);
         })();
