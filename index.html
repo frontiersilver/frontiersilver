@@ -22,30 +22,30 @@
         (function () {
             // 檢測是否運行於 GitHub Pages
             const isGithubPages = window.location.hostname.includes("github.io");
-            const basePath = isGithubPages ? "/frontiersilver/" : "/";
+            const basePath = isGithubPages ? "frontiersilver.github.io/frontiersilver/" : "/";
 
             // ✅ 自動修正 CSS 連結
             document.querySelectorAll("link[rel='stylesheet']").forEach(link => {
                 if (!link.href.startsWith("http")) {
-                    link.href = basePath + link.getAttribute("href").replace(/^\/+/, "");
+                    link.href = "https://frontiersilver.github.io/frontiersilver/"  + link.getAttribute("href").replace(/^\/+/, "");
                 }
             });
 
             // ✅ 自動修正 JS 連結
             document.querySelectorAll("script[src]").forEach(script => {
                 if (!script.src.startsWith("http")) {
-                    script.src = basePath + script.getAttribute("src").replace(/^\/+/, "");
+                    script.src = "https://frontiersilver.github.io/frontiersilver/" + script.getAttribute("src").replace(/^\/+/, "");
                 }
             });
 
             // ✅ 自動修正圖片 (需使用 `data-src` 屬性)
             document.querySelectorAll("img[data-src]").forEach(img => {
-                img.src = basePath + img.dataset.src.replace(/^\/+/, "");
+                img.src = "https://frontiersilver.github.io/frontiersilver/"  + img.dataset.src.replace(/^\/+/, "");
             });
 
             // ✅ 自動修正內部連結 (需使用 `data-link` 屬性)
             document.querySelectorAll("a[data-link]").forEach(link => {
-                link.href = basePath + link.getAttribute("data-link").replace(/^\/+/, "");
+                link.href = "https://frontiersilver.github.io/frontiersilver/"  + link.getAttribute("data-link").replace(/^\/+/, "");
             });
 
             console.log(`🔍 已偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已自動調整所有路徑`);
