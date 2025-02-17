@@ -11,9 +11,6 @@
 
     <meta name="author" content="CHEN">
 
-    <!-- 設定 Base URL -->
-    <base href="{{ site.baseurl }}/">
-
     <!-- 網站 favicon -->
     <link rel="icon" href="{{ site.baseurl }}/favicon.ico" type="image/x-icon">
 
@@ -41,7 +38,7 @@
 <body>
 
     <div class="containerhead">
-        <header style="top:-0px;">
+        <header>
             <div class="header-typewriter">
                 <span id="typewriter-text"></span>
             </div>
@@ -54,8 +51,8 @@
             <!-- 側邊選單 -->
             <div id="sidebar" class="sidebar">
                 <button class="close-btn" onclick="toggleMenu()">×</button>
-                <a rel="index" href="{{ site.baseurl }}/index.html">首頁</a>
-                <a rel="about" href="{{ site.baseurl }}/pages/about.html">Frontier</a>
+                <a href="{{ site.baseurl }}/index.html">首頁</a>
+                <a href="{{ site.baseurl }}/pages/about.html">Frontier</a>
                 <div class="dropdown">
                     <button class="dropdown-btn" onclick="toggleMenu2()">All WORKS <span class="arrow"></span></button>
                     <div class="dropdown-content">
@@ -64,11 +61,10 @@
                         <a href="{{ site.baseurl }}/pages/allworks.html">用途</a>
                     </div>
                 </div>
-                <a rel="service" href="{{ site.baseurl }}/pages/service.html">訂製</a>
-                <a rel="contact" href="{{ site.baseurl }}/pages/contact.html">聯絡</a>
+                <a href="{{ site.baseurl }}/pages/service.html">訂製</a>
+                <a href="{{ site.baseurl }}/pages/contact.html">聯絡</a>
             </div>
 
-            <!-- 增加一個透明背景層（點擊時會關閉側邊欄） -->
             <div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
             <div class="container2">
@@ -76,7 +72,6 @@
                     <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index3_kjdfto.jpg" alt="test">
                 </div>
             </div>
-
         </header>
     </div>
 
@@ -85,36 +80,11 @@
         <div class="text1">
             <p>於邊界之上，遊走於孤獨與連結之間，尋找自我的平衡。</p>
         </div>
-        <div class="d-flex">
-            <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') no-repeat center;background-size: cover;"
-                data-paroller-factor="0.5">
-            </div>
-            <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') repeat center; background-size: cover;"
-                data-paroller-factor="-0.4">
-            </div>
-            <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') no-repeat center;background-size: cover;"
-                data-paroller-factor="-0.2">
-            </div>
-        </div>
-
-        <div class="text1">
-            <p>既不淹沒於人群，也不被孤獨吞噬，在邊界之間尋找平衡。</p>
-        </div>
-
-        <div class="tilt-box">
-            <span data-tilt></span>
-        </div>
 
         <div class="text2">
             <p>邊界——兩個世界的交匯處，靈魂與現實的分界線。</p>
             <p>肉體是靈魂的邊界，大腦是思想的邊界，而我們都是孤獨的世界。</p>
-            <p>沒有人能真正觸及他人的靈魂，但我們仍渴望被理解——希望自己獨特，卻不想與世界脫節，希望展現態度，卻不想被標籤。</p>
         </div>
-
-        <div class="text1">
-            <p>邊界誕生的銀飾，邊境的產物，展現邊界另一端靈魂的模樣，讓我們認出彼此，讓我們的邊界互相交融，不再孤獨。</p>
-        </div>
-
     </section>
 
     <footer>
