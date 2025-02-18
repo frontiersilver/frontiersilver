@@ -5,41 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FRONTIER SILVER 1:1諮詢</title>
   <script>
-        (function () {
-            // **檢測是否運行於 GitHub Pages**
-            const isGithubPages = window.location.hostname.includes("github.io");
-            const repoName = "frontiersilver"; // ✅ **GitHub Repo 名稱**
+      (function () {
+          // **檢測是否運行於 GitHub Pages**
+          const isGithubPages = window.location.hostname.includes("github.io");
+          const repoName = "frontiersilver";  // ✅ **手動設定 GitHub 專案名稱**
+          const basePath = isGithubPages ? `/${repoName}/` : "/";
 
-            // ✅ **此頁面預設在 `/pages/`**
-            let basePath = isGithubPages ? `/${repoName}/` : "/";
-            basePath += "../"; // **回到上一層，確保 CSS & JS 正確引用**
+          function updateAttribute(element, attr) {
+              let originalPath = element.getAttribute(attr);
+              if (originalPath && !originalPath.startsWith("http")) {
+                  // **修正 GitHub Pages 中 CSS、JS、圖片的載入**
+                  element.setAttribute(attr, basePath + originalPath.replace(/^\/+/, ""));
+              }
+          }
 
-            function updateAttribute(element, attr) {
-                let originalPath = element.getAttribute(attr);
-                if (originalPath && !originalPath.startsWith("http")) {
-                    element.setAttribute(attr, basePath + originalPath.replace(/^\/+/, ""));
-                }
-            }
+          // **✅ 修正 CSS 連結**
+          document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
 
-            // ✅ 修正 CSS 連結
-            document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
+          // **✅ 修正 JS 連結**
+          document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
 
-            // ✅ 修正 JS 連結
-            document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
 
-            // ✅ 修正圖片
-            document.querySelectorAll("img[data-src]").forEach(img => {
-                img.src = basePath + img.dataset.src.replace(/^\/+/, "");
-            });
-
-            // ✅ 修正內部連結
-            document.querySelectorAll("a[data-link]").forEach(link => {
-                link.href = basePath + link.getAttribute("data-link").replace(/^\/+/, "");
-            });
-
-            console.log(`🔍 目前運行於 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已修正所有路徑：${basePath}`);
-        })();
-    </script>
+          console.log(`🔍 已偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已自動調整所有路徑：${basePath}`);
+      })();
+  </script>
     <!--
   <script>
       (function () {
@@ -167,7 +156,7 @@
             <div id="sidebar" class="sidebar">
                 <button class="close-btn" onclick="toggleMenu()">×</button>
                 <a rel="index" href="index.html">首頁</a>
-                <a rel="about" href="pages/about.html">Frontier</a>
+                <a rel="about" href="about.html">Frontier</a>
                 <div class="dropdown">
                     <button class="dropdown-btn" onclick="toggleMenu2()">All WORKS <span class="arrow"></span> </button>
                     <div class="dropdown-content">
@@ -239,7 +228,7 @@
         </p>
       </div>
     </footer>
-    <script src="/js/indexscript.js"></script>
+    <script src="js/indexscript.js"></script>
     <script type="module">
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
