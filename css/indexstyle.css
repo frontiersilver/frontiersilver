@@ -243,6 +243,113 @@ nav ul li a:hover {
     display: block;
     transition: 0.1s;
 }
+
+
+/* 設置滾動區塊容器 */
+.scroll-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+
+}
+
+/* 設置滾動內容區塊 */
+.scroll-content {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    max-width: 1000px;
+    padding: 0px;
+    cursor: grab;
+    margin:0 auto;
+    user-select: none;
+    height: 100%;
+}
+
+/* 拖動時的鼠標效果 */
+.scroll-content:active {
+    cursor: grabbing;
+}
+
+/* 隱藏滾動條（適用於 Chrome、Edge、Safari） */
+.scroll-content::-webkit-scrollbar {
+    display: none;
+}
+
+/* 隱藏滾動條（適用於 Firefox） */
+.scroll-content {
+    scrollbar-width: none;
+}
+
+/* 隱藏滾動條（適用於 IE 和 Edge） */
+.scroll-content {
+    -ms-overflow-style: none;
+}
+
+/* 設置滾動項目 */
+.item {
+    flex: 0 0 auto;
+    width: 200px;
+    height: 250px;
+    background: none;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    margin:20px;
+    user-select: none;
+
+
+}
+.item_img{
+    width: 100%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.item_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-fit: cover;
+    pointer-events: none;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3) ;
+}
+.item_p{
+  padding: 10px 5px;
+}
+.item p {
+  height: 30%; /* 下半部分是文字 */
+  margin:0px;
+  margin-bottom: 5px;
+  padding:0;
+  font-size: 16px;
+  color: #333;
+}
+
+/* 滾動按鈕 */
+.scroll-container button {
+    background-color: transparent;
+    color: black;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 24px;
+    border-radius: 5px;
+}
+
+/* 滑鼠懸停按鈕 */
+.scroll-container button:hover {
+  color: linear-gradient(90deg, #005bea, #00c6fb);
+  transform: scale(1.3);
+}
+
+
+
 .text2{
 
 }
@@ -449,13 +556,19 @@ nav ul li a:hover {
     opacity: 50%;
 }
 
-
+.section {
+    height: 300px;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    white-space: nowrap;
+    margin:20px 0px;
+}
 .tilt-box {
     width: 500px;
     height: 300px;
     background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index_main_bho0av.jpg');
     background-size: cover;
-    margin:20px 0px;
     background-position: center;
     background-repeat: no-repeat;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) ;

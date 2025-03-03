@@ -133,3 +133,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
     typeWriter();
 });
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const scrollContainer = document.querySelector('.scroll-content');
+    const scrollLeftBtn = document.querySelector('.scroll-left');
+    const scrollRightBtn = document.querySelector('.scroll-right');
+
+    // 按鈕點擊滾動
+    scrollLeftBtn.addEventListener('click', function () {
+        scrollContainer.scrollBy({ left: -200, behavior: 'smooth' });
+    });
+
+    scrollRightBtn.addEventListener('click', function () {
+        scrollContainer.scrollBy({ left: 200, behavior: 'smooth' });
+    });
+
+    // 滑鼠拖曳滾動
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    scrollContainer.addEventListener('mousedown', (e) => {
+        isDown = true;
+        scrollContainer.classList.add('active');
+        startX = e.pageX - scrollContainer.offsetLeft;
+        scrollLeft = scrollContainer.scrollLeft;
+    });
+
+    scrollContainer.addEventListener('mouseleave', () => {
+        isDown = false;
+    });
+
+    scrollContainer.addEventListener('mouseup', () => {
+        isDown = false;
+    });
+
+    scrollContainer.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - scrollContainer.offsetLeft;
+        const walk = (x - startX) * 2; // 調整拖動速度
+        scrollContainer.scrollLeft = scrollLeft - walk;
+    });
+});
