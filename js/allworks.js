@@ -8,48 +8,48 @@ const items = [
     { id: 6, img: "https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index3_kjdfto.jpg", series: "荒城系列", type: "戒指", usage: "特殊搭配" },
 ];
 
-// 儲存目前篩選條件
-let filters = {
-    series: null,
-    type: null,
-    usage: null
-};
+// **當前選擇的篩選類別**
+let currentCategory = null;
+let currentValue = null;
 
-// 顯示篩選後的作品
+// **篩選邏輯（僅篩選當前標籤）**
 function filterItems(category, value) {
-    filters[category] = value; // 設定篩選條件
-    renderGallery();
+    currentCategory = category; // 記錄當前篩選類別
+    currentValue = value; // 記錄當前篩選值
+
+    console.log("目前篩選條件：", { [currentCategory]: currentValue });
+    renderGallery(); // 重新渲染畫面
 }
 
-// 渲染作品
 function renderGallery() {
     const gallery = document.getElementById("gallery");
-    gallery.innerHTML = ""; // 清空現有內容
+    gallery.innerHTML = ""; // **清空畫面，準備重新插入符合條件的作品**
 
-    // 篩選符合條件的作品
-    const filteredItems = items.filter(item =>
-        (!filters.series || item.series === filters.series) &&
-        (!filters.type || item.type === filters.type) &&
-        (!filters.usage || item.usage === filters.usage)
-    );
+    // **只根據目前點選的標籤篩選**
+    let filteredItems = items.filter(item => {
+        if (!currentCategory || !currentValue) return true;
+        return item[currentCategory] === currentValue;
+    });
 
-    // 如果沒有篩選條件，顯示所有作品
-    const displayItems = (filters.series || filters.type || filters.usage) ? filteredItems : items;
+    console.log("篩選條件：", { [currentCategory]: currentValue });
+    console.log("篩選後的作品：", filteredItems);
 
+    // **如果沒有篩選條件，則顯示所有作品**
+    let displayItems = filteredItems.length > 0 ? filteredItems : items;
 
-    // 生成新的作品內容
-    filteredItems.forEach(item => {
+    // **動態生成作品**
+    displayItems.forEach(item => {
         const div = document.createElement("div");
         div.classList.add("item");
         div.innerHTML = `
             <img src="${item.img}" alt="${item.series}">
-            <p>${item.series} <br> ${item.type} <br> ${item.usage}</p>
+            <p>${item.series} - ${item.type} - ${item.usage}</p>
         `;
         gallery.appendChild(div);
     });
 }
 
-// 控制下拉選單顯示
+// **控制下拉選單顯示**
 function toggleDropdown(menuId) {
     document.querySelectorAll(".dropdown-content").forEach(menu => {
         if (menu.id === menuId) {
@@ -60,9 +60,8 @@ function toggleDropdown(menuId) {
     });
 }
 
-// 頁面載入時，顯示所有作品
+// **頁面載入時，自動顯示所有作品**
 document.addEventListener("DOMContentLoaded", renderGallery);
-
 
 
 function asideMenu() {
