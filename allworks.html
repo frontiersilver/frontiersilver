@@ -166,29 +166,31 @@
         <div class="dropdown2">
             <button class="dropdown-btn2" onclick="asideMenu()">系列</button>
                 <div class="dropdown-content2">
-                  <div class="series">
-                    <a  href="#">獻祭-獻系列</a>
-                    <a  href="#">獻祭-祭系列</a>
-                    <a  href="#">對話系列</a>
-                    <a  href="#">熾天使系列</a>
-                    <a  href="#">鎖鏈系列</a>
-                    <a  href="#">荒城系列</a>
+                  <div id="series-menu">
+                    <a href="#" onclick="filterItems('series', '獻祭-獻系列')">獻祭-獻系列</a>
+                    <a href="#" onclick="filterItems('series', '獻祭-祭系列')">獻祭-祭系列</a>
+                    <a href="#" onclick="filterItems('series', '對話系列')">對話系列</a>
+                    <a href="#" onclick="filterItems('series', '熾天使系列')">熾天使系列</a>
+                    <a href="#" onclick="filterItems('series', '鎖鏈系列')">鎖鏈系列</a>
+                    <a href="#" onclick="filterItems('series', '荒城系列')">荒城系列</a>
                   </div>
                 </div>
             <button class="dropdown-btn2" onclick="asideMenu2()">品項</button>
                 <div class="dropdown-content3">
-                    <a href="#">戒指</a>
-                    <a href="#">手鍊</a>
-                    <a href="#">吊墜&配鏈</a>
-                    <a href="#">耳飾</a>
+                  <div id="type-menu">
+                    <a href="#" onclick="filterItems('type', '戒指')">戒指</a>
+                    <a href="#" onclick="filterItems('type', '手鍊')">手鍊</a>
+                    <a href="#" onclick="filterItems('type', '吊墜&配鏈')">吊墜&配鏈</a>
+                    <a href="#" onclick="filterItems('type', '耳飾')">耳飾</a>
+                  </div>
                 </div>
             <button class="dropdown-btn2" onclick="asideMenu3()">用途</button>
                 <div class="dropdown-content4">
-                  <div class="series">
-                    <a href="#">日常細節</a>
-                    <a href="#">特殊搭配</a>
-                    <a href="#">對話系列</a>
-                    <a href="#">送禮選擇</a>
+                  <div id="usage-menu">
+                    <a href="#" onclick="filterItems('usage', '日常細節')">日常細節</a>
+                    <a href="#" onclick="filterItems('usage', '特殊搭配')">特殊搭配</a>
+                    <a href="#" onclick="filterItems('usage', '對話系列')">對話系列</a>
+                    <a href="#" onclick="filterItems('usage', '送禮選擇')">送禮選擇</a>
                   </div>
                 </div>
         </div>
@@ -201,39 +203,9 @@
 
 
           <section class="content">
-              <h2>NEW ARRIVALS</h2>
-              <div class="text1">
-                <p>於邊界之上，遊走於孤獨與連結之間，尋找自我的平衡。</p>
-              </div>
-              <div class="d-flex">
-                <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg')no-repeat center;background-size: cover;"
-                    data-paroller-factor="0.5"
-                    data-paroller-factor-md="0.3"
-                    data-paroller-factor-sm="0.2"
-                    data-paroller-factor-xs="0.1">
-                </div>
-                <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') repeat center; background-size: cover;"
-                      data-paroller-factor="-0.4">
-                </div>
-                <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') no-repeat center;background-size: cover;"
-                      data-paroller-factor="-0.2">
-                </div>
-              </div>
-
-              <div class="text1">
-                <p>既不淹沒於人群，也不被孤獨吞噬，在邊界之間尋找平衡。</p>
-              </div>
-              <div class="tilt-box">
-                  <span data-tilt></span>
-               </div>
-              <div class="tex2">
-                <p>邊界——兩個世界的交匯處，靈魂與現實的分界線。</p>
-                <p>肉體是靈魂的邊界，大腦是思想的邊界，而我們都是孤獨的世界。</p>
-                <p>沒有人能真正觸及他人的靈魂，但我們仍渴望被理解——希望自己獨特，卻不想與世界脫節，希望展現態度，卻不想被標籤。
-                </p>
-              </div>
-              <div class="tex1">
-                <p>邊界誕生的銀飾，邊境的產物，展現邊界另一端靈魂的模樣，讓我們認出彼此，讓我們的邊界互相交融，不再孤獨。</p>
+              <h2>WORKS</h2>
+              <div class="gallery" id="gallery">
+                  <!-- 這裡的圖片會根據篩選條件變化 -->
               </div>
 
           </section>

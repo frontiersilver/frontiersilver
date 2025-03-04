@@ -7,12 +7,7 @@
   position: relative;
   background-color: #F8F8F8;
 }
-.inside{
-  max-width:100%;
-  border-width: 0 0 0 0px;
-  display: table-cell;
-  margin: 0;
-}
+
 .asidedrop{
     padding: 10px ;
 }
@@ -139,4 +134,40 @@
     justify-content: center;
     margin-top: 0px;
     background-color: black;
+}
+
+
+.inside{
+  max-width:100%;
+  border-width: 0 0 0 0px;
+  display: table-cell;
+  margin: 0;
+}
+
+/* 作品展示區 */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* 作品卡片 */
+.item {
+    width: 200px;
+    height: 300px;
+    overflow: hidden;
+    background: white;
+    text-align: center;
+}
+
+.item img {
+    width: 100%;
+    height: 70%;
+    object-fit: cover;
+}
+
+.item p {
+    margin: 5px 0;
+    font-size: 14px;
+    text-align: left;
 }
