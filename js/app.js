@@ -38,140 +38,91 @@ document.getElementById("loginBtn").addEventListener("click", async function () 
     const email = document.getElementById("authorEmail").value.trim();
     const password = document.getElementById("authorPassword").value.trim();
 
-    if (email === "" || password === "") {
+    if (!email || !password) {
         alert("請輸入 Email 和 密碼！");
         return;
     }
 
     try {
-        const userData = await checkUserExists(email);
-
-        if (userData) {
-            // ✅ 檢查密碼是否正確
-            if (userData.password === password) {
-                // ✅ 密碼正確，執行登入
-                signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        console.log("✅ 登入成功！", userCredential.user);
-                        alert("登入成功！");
-                    })
-                    .catch((error) => {
-                        console.warn("⚠️ 登入失敗：" + error.message);
-                        alert("登入失敗：" + error.message);
-                    });
-            } else {
-                // ❌ 密碼錯誤
-                alert("⚠️ 密碼錯誤，請重新輸入！");
-            }
-        } else {
-            // 🔹 使用者不存在，創建新帳號
-            createUser(email, password);
-        }
+        // ✅ 直接用 Firebase Authentication 登入
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        console.log("✅ 登入成功！", userCredential.user);
+        alert("登入成功！");
     } catch (error) {
-        console.error("❌ 錯誤：", error);
-        alert("發生錯誤：" + error.message);
+        console.error("⚠️ 登入失敗：", error.message);
+        alert("登入失敗：" + error.message);
     }
 });
 
-// 🔹 檢查 Firebase Database 是否已有該 Email
-async function checkUserExists(email) {
-    const usersRef = ref(database, "users");
-    const snapshot = await get(usersRef);
-    if (snapshot.exists()) {
-        const usersData = snapshot.val();
-        for (const userId in usersData) {
-            if (usersData[userId].email === email) {
-                return usersData[userId]; // ✅ 回傳使用者資訊（包含密碼）
-            }
-        }
+// 🔹 註冊新帳號
+document.getElementById("registerBtn").addEventListener("click", async function () {
+    const email = document.getElementById("authorEmail").value.trim();
+    const password = document.getElementById("authorPassword").value.trim();
+
+    if (!email || !password) {
+        alert("請輸入 Email 和 密碼！");
+        return;
     }
-    return null; // ❌ 沒有找到該 Email
-}
 
-// 🔹 註冊新帳號並自動登入
-function createUser(email, password) {
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log("🎉 新帳號已創建！", user);
+    try {
+        // ✅ 使用 Firebase Authentication 註冊
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        console.log("🎉 註冊成功！", user);
 
-            // 🔹 儲存使用者資料（包含密碼）
-            set(ref(database, "users/" + user.uid), {
-                email: email,
-                password: password, // ✅ 儲存密碼
-                createdAt: new Date().toISOString()
-            }).then(() => {
-                console.log("✅ 使用者資訊已儲存至 Firebase Database");
-                alert("帳號已創建並自動登入！");
-            }).catch((error) => {
-                console.error("❌ 儲存錯誤：", error);
-            });
-        })
-        .catch((error) => {
-            console.error("❌ 註冊失敗：", error.message);
-            alert("註冊失敗：" + error.message);
+        // ✅ 儲存用戶資訊（不儲存密碼！）
+        await set(ref(database, "users/" + user.uid), {
+            email: email,
+            createdAt: new Date().toISOString()
         });
-}
+
+        alert("帳號已創建並自動登入！");
+    } catch (error) {
+        console.error("❌ 註冊失敗：", error.message);
+        alert("註冊失敗：" + error.message);
+    }
+});
 
 // 🔹 監聽登出按鈕
 document.getElementById("logoutBtn").addEventListener("click", function () {
-    signOut(auth).then(() => {
-        alert("已登出！");
-    }).catch((error) => {
-        console.error("❌ 登出錯誤：", error.message);
-    });
+    signOut(auth)
+        .then(() => alert("已登出！"))
+        .catch((error) => console.error("❌ 登出錯誤：", error.message));
 });
 
-// 🔹 監聽登入狀態
-onAuthStateChanged(auth, (user) => {
+// 🔹 監聽用戶登入狀態，確保頁面更新
+onAuthStateChanged(auth, async (user) => {
     if (user) {
         console.log("✅ 使用者已登入", user.uid);
+
+        // 檢查是否為管理員
+        const isAdmin = await checkIfAdmin(user.uid);
+        if (isAdmin) {
+            console.log("✅ 你是管理員！");
+        } else {
+            console.log("⚠️ 你不是管理員");
+        }
+
+        // 讀取用戶專屬留言
         loadAdminMessages(user.uid);
     } else {
         console.warn("⚠️ 尚未登入");
     }
 });
 
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        checkIfAdmin(user).then((isAdmin) => {
-            if (isAdmin) {
-                console.log("✅ 你是管理員！");
-            } else {
-                console.log("⚠️ 你不是管理員");
-            }
-        });
-    }
-});
-
-function checkIfAdmin(user) {
-    if (!user) return Promise.resolve(false);
-
-    const database = getDatabase();
-    const adminRef = ref(database, "admins/" + user.uid);
-
-    return get(adminRef).then((snapshot) => {
-        return snapshot.exists(); // ✅ 存在代表是管理員
-    }).catch((error) => {
+// 🔹 檢查是否為管理員
+async function checkIfAdmin(userId) {
+    const adminRef = ref(database, "admins/" + userId);
+    try {
+        const snapshot = await get(adminRef);
+        return snapshot.exists();
+    } catch (error) {
         console.error("❌ 讀取管理員權限失敗", error);
         return false;
-    });
+    }
 }
 
-// 🛠 登入後檢查是否為管理員
-auth.onAuthStateChanged((user) => {
-    if (user) {
-        checkIfAdmin(user).then((isAdmin) => {
-            if (isAdmin) {
-                console.log("✅ 這是管理員！", user.uid);
-            } else {
-                console.warn("⚠️ 這不是管理員！", user.uid);
-            }
-        });
-    }
-});
-
-// 🔹 監聽發送留言按鈕
+// 🔹 發送留言
 document.getElementById("submitMessage").addEventListener("click", function () {
     const messageText = document.getElementById("message").value.trim();
     const titleText = document.getElementById("title").value.trim();
@@ -182,7 +133,7 @@ document.getElementById("submitMessage").addEventListener("click", function () {
         return;
     }
 
-    if (messageText === "" || titleText === "") {
+    if (!messageText || !titleText) {
         alert("請輸入標題與留言！");
         return;
     }
@@ -213,7 +164,7 @@ function loadPublicMessages() {
     });
 }
 
-// 🔹 顯示完整留言（只有作者登入後可見）
+// 🔹 顯示完整留言（只有作者可見）
 function loadAdminMessages(userId) {
     const adminMessageList = document.getElementById("adminMessageList");
     adminMessageList.innerHTML = "";
