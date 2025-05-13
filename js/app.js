@@ -1,4 +1,3 @@
-// 🔹 引入 Firebase SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
 import {
   getAuth,
@@ -16,7 +15,6 @@ import {
   set
 } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
 
-// ✅ Firebase 設定
 const firebaseConfig = {
   apiKey: "AIzaSyBNMOLOUp4VrjdQiULXQCInNyI8gx7kl9s",
   authDomain: "frontiersilver-4a99a.firebaseapp.com",
@@ -27,44 +25,66 @@ const firebaseConfig = {
   appId: "1:547331341626:web:275d76403296f888686403"
 };
 
-// ✅ 初始化 Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-// ✅ DOM 綁定在頁面加載後
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("loginBtn")?.addEventListener("click", handleLogin);
-  document.getElementById("logoutBtn")?.addEventListener("click", handleLogout);
+  document.getElementById("loginBtn")?.addEventListener("click", handleLoginLogout);
   document.getElementById("submitMessage")?.addEventListener("click", handleSendMessage);
   document.getElementById("closePopup")?.addEventListener("click", () => {
     document.getElementById("popup").style.display = "none";
   });
 
-  // 監聽登入狀態
   onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      console.log("✅ 已登入：", user.email);
-      document.getElementById("logoutBtn").style.display = "inline";
-      document.getElementById("loginBtn").style.display = "none";
+  const loginBtn = document.getElementById("loginBtn");
+  const uploadLink = document.getElementById("uploadLink");
 
-      // 檢查是否為管理員
-      const snapshot = await get(ref(db, `admins/${user.uid}`));
-      if (snapshot.exists() && snapshot.val() === true) {
-        document.getElementById("uploadLink").style.display = "block";
+  if (!loginBtn) return;
+
+  if (user) {
+    loginBtn.textContent = "登出";
+
+    // ✅ 判斷是否為管理員
+    try {
+      const adminSnap = await get(ref(db, `admins/${user.uid}`));
+      const isAdmin = adminSnap.exists() && adminSnap.val() === true;
+
+      if (isAdmin) {
+        console.log("✅ 管理員登入成功");
+        if (uploadLink) uploadLink.style.display = "block";
+      } else {
+        if (uploadLink) uploadLink.style.display = "none";
+        console.log("⚠️ 登入者不是管理員");
       }
-
-    } else {
-      document.getElementById("logoutBtn").style.display = "none";
-      document.getElementById("loginBtn").style.display = "inline";
+    } catch (e) {
+      console.error("❌ 讀取 admin 權限錯誤：", e);
     }
-  });
 
+    loadPublicMessages();
+  } else {
+    loginBtn.textContent = "登入";
+    if (uploadLink) uploadLink.style.display = "none";
+  }
+});
   loadPublicMessages();
 });
 
-// ✅ 登入 / 自動註冊
-async function handleLogin() {
+// ✅ 登入/登出整合
+async function handleLoginLogout() {
+  const user = auth.currentUser;
+  if (user) {
+    // ✅ 登出流程
+    try {
+      await signOut(auth);
+      alert("✅ 已登出！");
+    } catch (err) {
+      alert("❌ 登出錯誤：" + err.message);
+    }
+    return;
+  }
+
+  // ✅ 登入流程
   const email = document.getElementById("authorEmail")?.value.trim();
   const password = document.getElementById("authorPassword")?.value.trim();
 
@@ -72,7 +92,7 @@ async function handleLogin() {
   if (!email.includes("@") || password.length < 6) return alert("Email 格式或密碼長度錯誤");
 
   try {
-    const userCred = await signInWithEmailAndPassword(auth, email, password);
+    await signInWithEmailAndPassword(auth, email, password);
     alert("✅ 登入成功！");
   } catch (err) {
     if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
@@ -92,18 +112,7 @@ async function handleLogin() {
   }
 }
 
-// ✅ 登出功能
-async function handleLogout() {
-  try {
-    await signOut(auth);
-    alert("✅ 已登出！");
-    location.reload();
-  } catch (err) {
-    alert("❌ 登出錯誤：" + err.message);
-  }
-}
-
-// ✅ 發送留言
+// ✅ 留言功能
 async function handleSendMessage() {
   const user = auth.currentUser;
   const title = document.getElementById("title")?.value.trim();
@@ -128,7 +137,7 @@ async function handleSendMessage() {
   }
 }
 
-// ✅ 載入留言標題（顯示作者 Email）
+// ✅ 載入留言標題
 function loadPublicMessages() {
   const container = document.getElementById("publicMessageList");
   if (!container) return;
@@ -152,14 +161,22 @@ function loadPublicMessages() {
   });
 }
 
-// ✅ 彈出留言彈窗（限作者觀看）
+// ✅ 彈窗內容顯示
 function openMessagePopup(messageId) {
   const user = auth.currentUser;
   if (!user) return alert("請先登入");
 
-  get(ref(db, `messages/${messageId}`)).then((snapshot) => {
+  get(ref(db, `messages/${messageId}`)).then(async (snapshot) => {
     const data = snapshot.val();
-    if (!data || data.authorID !== user.uid) return alert("⚠️ 僅留言者可查看");
+    if (!data) return alert("⚠️ 留言不存在");
+
+    const isAuthor = data.authorID === user.uid;
+    const isAdminSnap = await get(ref(db, `admins/${user.uid}`));
+    const isAdmin = isAdminSnap.exists() && isAdminSnap.val() === true;
+
+    if (!isAuthor && !isAdmin) {
+      return alert("⚠️ 僅留言者或管理員可查看");
+    }
 
     document.getElementById("popupTitle").innerText = data.title;
     document.getElementById("popupText").innerText = data.text;
@@ -177,7 +194,7 @@ function openMessagePopup(messageId) {
   });
 }
 
-// ✅ 送出回覆
+// ✅ 回覆留言
 async function submitReply(messageId) {
   const replyText = document.getElementById("replyInput").value.trim();
   if (!replyText) return alert("請輸入回覆內容");
@@ -191,7 +208,7 @@ async function submitReply(messageId) {
   }
 }
 
-// ✅ Firebase 錯誤碼翻譯
+// ✅ 錯誤翻譯
 function translateError(code) {
   const map = {
     "auth/invalid-email": "Email 格式錯誤",
