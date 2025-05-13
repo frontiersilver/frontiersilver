@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品圖片上傳</title>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+</head>
+<body>
+
+    <h2>作品上傳</h2>
+    <form id="uploadForm">
+        <label>作品名稱：</label>
+
+        <label>選擇圖片上傳：</label>
+        <input type="file" id="fileInput" accept="image/*" required><br>
+
+        <input type="text" id="name" value="獻祭系列-祭品" required><br>
+
+        <label>價錢：</label>
+        <input type="number" id="price" required><br>
+
+        <label>作品理念：</label>
+        <textarea id="concept" required></textarea><br>
+
+        <label>材質：</label>
+        <input type="text" id="material" value="925純銀" readonly><br>
+
+        <label>尺寸：</label>
+        <input type="text" id="size" value="25mm×22mm×30mm" readonly><br>
+
+        <label>重量：</label>
+        <input type="text" id="weight" value="16g" readonly><br>
+
+        <label>尺寸選擇：</label>
+        <select id="sizeChoice">
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+        </select><br>
+
+
+        <button type="submit">上傳作品</button>
+    </form>
+
+    <h2>作品展示</h2>
+    <div id="gallery"></div>
+
+    <script src="indexscript.js"></script>
+    <script src="fileupload.js"></script>
+
+</body>
+</html>

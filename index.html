@@ -1,317 +1,168 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="frontiersilverwebsite" />
+  <meta name="author" content="CHEN" />
+  <title>Frontier Sliver</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bahiana&family=Barrio&family=Noto+Sans+TC:wght@100..900&family=Rubik+Distressed&display=swap" rel="stylesheet" />
 
-    <!-- 設定網站描述（對 SEO 搜尋引擎優化有幫助） -->
-    <meta name="description" content="frontiersilverwebsite">
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/indexstyle.css" />
 
-    <title>Frontier Sliver</title>
+  <!-- GitHub Pages 自動路徑修正 -->
+  <script>
+    (function () {
+      const isGithubPages = window.location.hostname.includes("github.io");
+      const repoName = "frontiersilver";
+      const basePath = isGithubPages ? `/${repoName}/` : "/";
+      function updateAttribute(element, attr) {
+        const originalPath = element.getAttribute(attr);
+        if (originalPath && !originalPath.startsWith("http")) {
+          element.setAttribute(attr, basePath + originalPath.replace(/^\/+/, ""));
+        }
+      }
+      document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
+      document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
+    })();
+  </script>
 
-        <!-- 設定作者名稱 -->
-    <meta name="author" content="CHEN">
+  <!-- jQuery & 插件 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/paroller.js@1.4.6/dist/jquery.paroller.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $(".parallax-bg").paroller();
+    });
+  </script>
 
-    <!-- 網站 favicon（瀏覽器標籤的小圖示） -->
-    <link rel="icon" href="favicon.ico" type="image/index_main">
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- <script>
-        (function() {
-            var isGithub = window.location.hostname.includes("github.io");
-            var basePath = isGithub ? "/frontiersilver/" : "";
-
-            // 載入 CSS
-            var link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = basePath + "css/indexstyle.css";
-            document.head.appendChild(link);
-
-            // 載入 favicon 讓它更早出現在瀏覽器標籤
-            var favicon = document.createElement("link");
-            favicon.rel = "icon";
-            favicon.href = basePath + "favicon.ico";
-            document.head.appendChild(favicon);
-
-
-
-            // 載入 JavaScript
-            var script = document.createElement("script");
-            script.src = basePath + "js/indexscript.js";
-            script.defer = true;
-            document.head.appendChild(script);
-
-            // 設定圖片
-            document.addEventListener("DOMContentLoaded", function() {
-                document.querySelectorAll("img[data-src]").forEach(img => {
-                    img.src = basePath + img.dataset.src;
-                });
-            });
-
-        })();
-    </script>-->
-
-    <script>
-        (function () {
-            // **檢測是否運行於 GitHub Pages**
-            const isGithubPages = window.location.hostname.includes("github.io");
-            const repoName = "frontiersilver";  // ✅ **手動設定 GitHub 專案名稱**
-            const basePath = isGithubPages ? `/${repoName}/` : "/";
-
-            function updateAttribute(element, attr) {
-                let originalPath = element.getAttribute(attr);
-                if (originalPath && !originalPath.startsWith("http")) {
-                    // **修正 GitHub Pages 中 CSS、JS、圖片的載入**
-                    element.setAttribute(attr, basePath + originalPath.replace(/^\/+/, ""));
-                }
-            }
-
-            // **✅ 修正 CSS 連結**
-            document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
-
-            // **✅ 修正 JS 連結**
-            document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
-
-
-            console.log(`🔍 已偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已自動調整所有路徑：${basePath}`);
-        })();
-    </script>
-    <!-- 先載入 jQuery -->
-
-
-    <!-- 然後載入 paroller.js -->
-    <script src="https://cdn.jsdelivr.net/npm/paroller.js@1.4.6/dist/jquery.paroller.min.js"></script>
-
-    <!-- 再載入 tilt.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
-
-
-    <!-- 引入 Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-    <!-- 絕對路徑 CSS -->
-    <link rel="stylesheet" href="css/indexstyle.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bahiana&family=Barrio&family=Noto+Sans+TC:wght@100..900&family=Rubik+Distressed&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://raw.githubusercontent.com/lxgw/LxgwWenKai/main/fonts/TTF/LXGWWenKai-Light.ttf">
 </head>
 
-
 <body>
+  <div class="containerhead">
+    <header>
+      <div class="header-typewriter"><span id="typewriter-text"></span></div>
+      <div class="btncontainer">
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+      </div>
 
-    <div class="containerhead">
-        <header>
-            <div class="header-typewriter">
-              <span id="typewriter-text">
-              </span>
-            </div>
-
-
-            <!-- 側邊選單按鈕 -->
-            <div class="btncontainer">
-              <button class="menu-btn" onclick="toggleMenu()">
-                ☰
-              </button>
-            </div>
-
-
-            <div class="perspective-container">
-              <div class="parallax-content">
-
-
-                <h1 class="animated-text" id="animated-text">
-                  <a rel="index" href="index.html">
-                  </a>
-                </h1>
-                <nav>
-                    <ul>
-                        <li><a href="index.html">
-                          SHOPNOW</a>
-                        </li>
-                        <li><a href="about.html">
-                          ABOUT
-                        </a>
-                        </li>
-                        <li>
-                          <a href="privatecontact.html">
-                          CONTACT
-                          </a>
-                        </li>
-                    </ul>
-                  </nav>
-              </div>
-
-              <div class="parallax">
-                <img class="parallax-bg" src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg" alt="">
-              </div>
-            </div>
-
-            <!-- 側邊選單 -->
-            <div id="sidebar" class="sidebar">
-                <button class="close-btn" onclick="toggleMenu()">×</button>
-                <a rel="index" href="index.html">首頁</a>
-                <a rel="about" href="about.html">Frontier</a>
-                <div class="dropdown">
-                    <button class="dropdown-btn" onclick="toggleMenu2()">Allworks<span class="arrow"></span> </button>
-                    <div class="dropdown-content">
-                        <a href="allworks.html">系列</a>
-                        <a href="allworks.html">品項</a>
-                        <a href="allworks.html">用途</a>
-                    </div>
-                </div>
-                <a rel="service" href="service.html">訂製</a>
-                <a rel="contact" href="privatecontact.html">聯絡</a>
-
-            </div>
-
-            <!-- 增加一個透明背景層（點擊時會關閉側邊欄） -->
-            <div id="overlay" class="overlay" onclick="closeMenu()"></div>
-
-
-
-
-
-        </header>
-    </div>
-
-    <div class="container">
-      <div class="container2">
-        <div class="jumbotron">
-          <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index3_kjdfto.jpg" alt="test">
+      <div class="perspective-container">
+        <div class="parallax-content">
+          <h1 class="animated-text" id="animated-text">
+            <a rel="index" href="index.html"></a>
+          </h1>
+          <nav>
+            <ul>
+              <li><a href="index.html">SHOPNOW</a></li>
+              <li><a href="about.html">ABOUT</a></li>
+              <li><a href="privatecontact.html">CONTACT</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="parallax">
+          <img class="parallax-bg" src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg" alt="" />
         </div>
       </div>
 
-        <section class="content">
-            <h2>NEWARRIVALS</h2>
-            <div class="text1">
-              <p>不屬於任何地方的人，會在邊界徘徊</p>
-            </div>
-            <div class="scroll-container">
-                <button class="scroll-left">←</button>
-                <div class="scroll-content">
-                    <div class="item">
-                      <div class="item_img">
-                        <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg" alt="">
-                      </div>
-                      <div class="item_p">
-                          <p>Work - 1</p>
-                          <p>price</p>
-                      </div>
-                    </div>
-                    <div class="item">
-                      <div class="item_img">
-                        <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694372/2_fr7zcu.jpg" alt="">
-                      </div>
-                      <div class="item_p">
-                          <p>Work - 2</p>
-                          <p>price</p>
-                      </div>
-                    </div>
-                    <div class="item">
-                      <div class="item_img">
-                        <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694478/1_ou3ckx.jpg" alt="">
-                      </div>
-                      <div class="item_p">
-                          <p>Work - 3</p>
-                          <p>price</p>
-                      </div>
-                    </div>
-                    <div class="item">
-                      <div class="item_img">
-                        <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694463/%E8%83%8C%E6%99%AF2_h7muxh.jpg" alt="">
-                      </div>
-                      <div class="item_p">
-                          <p>Work - 4</p>
-                          <p>price</p>
-                      </div>
-                    </div>
-                    <div class="item">
-                      <div class="item_img">
-                        <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694458/4_d7bmy1.jpg" alt="">
-                      </div>
-                      <div class="item_p">
-                          <p>Work - 5</p>
-                          <p>price</p>
-                      </div>
-                    </div>
-                    <div class="item">
-                      <div class="item_img">
-                        <img  src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694376/DSC_0382_xbpgvg.jpg" alt="">
-                      </div>
-                        <div class="item_p">
-                          <p>Work - 6</p>
-                          <p>price</p>
-                      </div>
-                    </div>
-                </div>
-                <button class="scroll-right">→</button>
-            </div>
-            <div class="text1">
-              <p>邊界——兩個世界的交匯處，靈魂與現實的分界線。</p>
-            </div>
-            <div class="d-flex">
-              <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg')no-repeat center;background-size: cover;"
-                  data-paroller-factor="0.5"
-                  data-paroller-factor-md="0.3"
-                  data-paroller-factor-sm="0.2"
-                  data-paroller-factor-xs="0.1">
-              </div>
-              <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') repeat center; background-size: cover;"
-                    data-paroller-factor="-0.4">
-              </div>
-              <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') no-repeat center;background-size: cover;"
-                    data-paroller-factor="-0.2">
-              </div>
-            </div>
-
-            <div class="section">
-              <div class="tilt-box">
-                  <span data-tilt></span>
-               </div>
-               <div class="text2">
-                 <p>肉體是靈魂的邊界，大腦是思想的邊界，而我們都是孤獨的世界。</p>
-                 <p>沒有人能真正觸及他人的靈魂，但我們仍渴望被理解——希望自己獨特，</p>
-                 <p>我們希望展現態度，卻不想被標籤，不想與世界脫節。</p>
-               </div>
-            </div>
-
-            <div class="tex2">
-              <p>建構你的風格，表達你的品味，原創手工銀飾具有收藏價值，私人訂製銀飾承載回憶與故事。</p>
-              <p>在這個大量生產快速汰換的世界裡，我會在緩慢流逝的時間裡慢慢雕琢，細細修磨。</p>
-              <p>讓每一個作品有意義，有靈魂，有價值。</p>
-            </div>
-            <div class="tex1">
-              <p>邊界誕生的銀飾，邊境的產物，展現邊界另一端靈魂的模樣，讓我們認出彼此，讓我們的邊界互相交融，不再孤獨。</p>
-            </div>
-
-        </section>
-        <div class="container2">
-            <div class="jumbotron">
-              <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index1_wwddxr.jpg" alt="test">
-            </div>
+      <div id="sidebar" class="sidebar">
+        <button class="close-btn" onclick="toggleMenu()">×</button>
+        <a href="index.html">首頁</a>
+        <a href="about.html">Frontier</a>
+        <div class="dropdown">
+          <button class="dropdown-btn" onclick="toggleMenu2()">Allworks <span class="arrow"></span></button>
+          <div class="dropdown-content">
+            <a href="allworks.html">系列</a>
+            <a href="allworks.html">品項</a>
+            <a href="allworks.html">用途</a>
+          </div>
         </div>
+        <a href="service.html">訂製</a>
+        <a href="privatecontact.html">聯絡</a>
+      </div>
+
+      <div id="overlay" class="overlay" onclick="closeMenu()"></div>
+    </header>
+  </div>
+
+  <div class="container">
+    <div class="container2">
+      <div class="jumbotron">
+        <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index3_kjdfto.jpg" alt="test" />
+      </div>
     </div>
 
+    <section class="content">
+      <h2>NEWARRIVALS</h2>
+      <div class="text1"><p>不屬於任何地方的人，會在邊界徘徊</p></div>
 
-        <footer>
-          <div >
-            <p class="containerfoot">
-              Frontier Sliver | All Rights Reserved
-              <br>Peresentative: TYH
-              <br>CS: +886 987654321
-              <br>
-              <br>Terms of use | Privacy
-            </p>
-          </div>
-        </footer>
+      <div class="scroll-container">
+        <button class="scroll-left">←</button>
+        <div class="scroll-content">
+          <!-- 六個商品 -->
+          <!-- 可程式化渲染 -->
+          <!-- item 可重複 block -->
+          <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg" alt="" /></div><div class="item_p"><p>Work - 1</p><p>price</p></div></div>
+          <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694372/2_fr7zcu.jpg" alt="" /></div><div class="item_p"><p>Work - 2</p><p>price</p></div></div>
+          <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694478/1_ou3ckx.jpg" alt="" /></div><div class="item_p"><p>Work - 3</p><p>price</p></div></div>
+          <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694463/%E8%83%8C%E6%99%AF2_h7muxh.jpg" alt="" /></div><div class="item_p"><p>Work - 4</p><p>price</p></div></div>
+          <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694458/4_d7bmy1.jpg" alt="" /></div><div class="item_p"><p>Work - 5</p><p>price</p></div></div>
+          <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694376/DSC_0382_xbpgvg.jpg" alt="" /></div><div class="item_p"><p>Work - 6</p><p>price</p></div></div>
+        </div>
+        <button class="scroll-right">→</button>
+      </div>
 
+      <div class="text1"><p>邊界——兩個世界的交匯處，靈魂與現實的分界線。</p></div>
 
-    <!-- 絕對路徑 JS -->
+      <div class="d-flex">
+        <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') no-repeat center; background-size: cover;" data-paroller-factor="0.5"></div>
+        <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') repeat center; background-size: cover;" data-paroller-factor="-0.4"></div>
+        <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') no-repeat center; background-size: cover;" data-paroller-factor="-0.2"></div>
+      </div>
+
+      <div class="section">
+        <div class="tilt-box"><span data-tilt></span></div>
+        <div class="text2">
+          <p>肉體是靈魂的邊界，大腦是思想的邊界，而我們都是孤獨的世界。</p>
+          <p>沒有人能真正觸及他人的靈魂，但我們仍渴望被理解——希望自己獨特，</p>
+          <p>我們希望展現態度，卻不想被標籤，不想與世界脫節。</p>
+        </div>
+      </div>
+
+      <div class="tex2">
+        <p>建構你的風格，表達你的品味，原創手工銀飾具有收藏價值，私人訂製銀飾承載回憶與故事。</p>
+        <p>在這個大量生產快速汰換的世界裡，我會在緩慢流逝的時間裡慢慢雕琢，細細修磨。</p>
+        <p>讓每一個作品有意義，有靈魂，有價值。</p>
+      </div>
+      <div class="tex1">
+        <p>邊界誕生的銀飾，邊境的產物，展現邊界另一端靈魂的模樣，讓我們認出彼此，讓我們的邊界互相交融，不再孤獨。</p>
+      </div>
+    </section>
+
+    <div class="container2">
+      <div class="jumbotron">
+        <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index1_wwddxr.jpg" alt="test" />
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>
+      <p class="containerfoot">
+        Frontier Sliver | All Rights Reserved<br />
+        Peresentative: TYH<br />
+        CS: +886 987654321<br /><br />
+        Terms of use | Privacy
+      </p>
+    </div>
+  </footer>
+
+  <!-- JS -->
   <script src="js/indexscript.js"></script>
-
 </body>
-
 </html>

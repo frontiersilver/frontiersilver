@@ -1,128 +1,54 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FRONTIER SILVER 1:1諮詢</title>
+
+  <!-- ✅ GitHub Pages 路徑修正 -->
   <script>
-      (function () {
-          // **檢測是否運行於 GitHub Pages**
-          const isGithubPages = window.location.hostname.includes("github.io");
-          const repoName = "frontiersilver";  // ✅ **手動設定 GitHub 專案名稱**
-          const basePath = isGithubPages ? `/${repoName}/` : "/";
+    (function () {
+      const isGithubPages = window.location.hostname.includes("github.io");
+      const repoName = "frontiersilver"; // ✅ 修改為你的 GitHub Repo 名
+      const basePath = isGithubPages ? `/${repoName}/` : "/";
 
-          function updateAttribute(element, attr) {
-              let originalPath = element.getAttribute(attr);
-              if (originalPath && !originalPath.startsWith("http")) {
-                  // **修正 GitHub Pages 中 CSS、JS、圖片的載入**
-                  element.setAttribute(attr, basePath + originalPath.replace(/^\/+/, ""));
-              }
-          }
+      function updateAttribute(element, attr) {
+        let originalPath = element.getAttribute(attr);
+        if (originalPath && !originalPath.startsWith("http")) {
+          element.setAttribute(attr, basePath + originalPath.replace(/^\/+/, ""));
+        }
+      }
 
-          // **✅ 修正 CSS 連結**
-          document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
-
-          // **✅ 修正 JS 連結**
-          document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
-
-
-          console.log(`🔍 已偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已自動調整所有路徑：${basePath}`);
-      })();
+      document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
+      document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
+      console.log(`🔍 偵測環境：${isGithubPages ? "GitHub Pages" : "本地開發"}，路徑 base：${basePath}`);
+    })();
   </script>
-    <!--
-  <script>
-      (function () {
-          // **檢測是否運行於 GitHub Pages**
-          const isGithubPages = window.location.hostname.includes("github.io");
-          const repoName = "frontiersilver";  // ✅ **手動設定 GitHub 專案名稱**
-          const basePath = isGithubPages ? `/${repoName}/` : "/";
 
-          function updateAttribute(element, attr) {
-              let originalPath = element.getAttribute(attr);
-              if (originalPath && !originalPath.startsWith("http")) {
-                  // **修正 GitHub Pages 中 CSS、JS、圖片的載入**
-                  element.setAttribute(attr, basePath + originalPath.replace(/^\/+/, ""));
-              }
-          }
+  <!-- ✅ CSS -->
+  <link rel="stylesheet" href="css/private.css" />
+  <link rel="stylesheet" href="css/indexstyle.css" />
 
-          // **✅ 修正 CSS 連結**
-          document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
-
-          // **✅ 修正 JS 連結**
-          document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
-
-
-          // **✅ 修正內部連結 `data-link`**
-          document.querySelectorAll("a[data-link]").forEach(link => {
-              link.href = basePath + link.getAttribute("data-link").replace(/^\/+/, "");
-          });
-
-          console.log(`🔍 已偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已自動調整所有路徑：${basePath}`);
-      })();
-  </script>
-  -->
-
-  <!-- 🔹 CSS -->
-  <link rel="stylesheet" href="css/private.css">
-  <link rel="stylesheet" href="css/indexstyle.css">
-
-  <!-- 🔹 jQuery & paroller.js -->
+  <!-- ✅ jQuery & paroller.js -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/paroller.js@1.4.6/dist/jquery.paroller.min.js"></script>
   <script>
-      $(document).ready(function () {
-          $('.parallax-bg').paroller(); // ✅ 確保它在 DOM 加載後執行
-      });
+    $(document).ready(function () {
+      $(".parallax-bg").paroller(); // ✅ 啟動背景視差
+    });
   </script>
 
-  <!-- 🔹 tilt.js -->
+  <!-- ✅ tilt.js 效果 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
 
-  <!-- 🔹 Firebase（使用模組方式） -->
-  <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-      import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-      import { getDatabase } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-
-      const firebaseConfig = {
-          apiKey: "AIzaSyBNMOLOUp4VrjdQiULXQCInNyI8gx7kl9s",
-          authDomain: "frontiersilver-4a99a.firebaseapp.com",
-          databaseURL: "https://frontiersilver-4a99a-default-rtdb.firebaseio.com",
-          projectId: "frontiersilver-4a99a",
-          storageBucket: "frontiersilver-4a99a.appspot.com",
-          messagingSenderId: "547331341626",
-          appId: "1:547331341626:web:275d76403296f888686403",
-          measurementId: "G-3Q5WS2C328"
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const database = getDatabase(app);
-
-      // 🔹 讓 `auth` 和 `database` 變數可全域存取
-      window.auth = auth;
-      window.database = database;
-  </script>
-
-  <!-- 🔹 其他 JavaScript -->
+  <!-- ✅ Firebase 功能整合 -->
   <script type="module" src="js/app.js"></script>
-  <script src="js/indexscript.js"></script>
 
+  <!-- ✅ 其他功能腳本（非 module） -->
+  <script src="js/indexscript.js"></script>
 </head>
 <body>
-    <script type="text/javascript">
-      import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-        const auth = getAuth();
-
-        createUserWithEmailAndPassword(auth, "your-email@example.com", "your-password")
-        .then((userCredential) => {
-          console.log("✅ 註冊成功:", userCredential.user);
-        })
-        .catch((error) => {
-          console.error("❌ 註冊失敗:", error.message);
-        });
-    </script>
     <div class="containerhead" style="height:200px;">
         <header style="height:200px;overflow: hidden;">
             <div class="header-typewriter">
@@ -167,14 +93,11 @@
                 </div>
                 <a rel="service" href="service.html">訂製</a>
                 <a rel="contact" href="privatecontact.html">聯絡</a>
-
+                <a href="fileupload.html" id="uploadLink" style="display: none; font-weight: bold;">🔒 上傳新作品</a>
             </div>
 
             <!-- 增加一個透明背景層（點擊時會關閉側邊欄） -->
             <div id="overlay" class="overlay" onclick="closeMenu()"></div>
-
-
-
 
 
         </header>
@@ -225,10 +148,7 @@
                 <button id="replyButton">送出回覆</button>
             </div>
         </div>
-        <!-- 🔹 只有作者能查看詳細內容
-        <p style="width:100%;height:26px;margin:5px 15px;">--------</p>
-        <div id="adminMessageList"></div>
-         -->
+
     </div>
 
     <footer>
@@ -243,29 +163,5 @@
       </div>
     </footer>
     <script src="js/indexscript.js"></script>
-    <script type="module">
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
-
-      // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      const firebaseConfig = {
-        apiKey: "AIzaSyBNMOLOUp4VrjdQiULXQCInNyI8gx7kl9s",
-        authDomain: "frontiersilver-4a99a.firebaseapp.com",
-        databaseURL: "https://frontiersilver-4a99a-default-rtdb.firebaseio.com",
-        projectId: "frontiersilver-4a99a",
-        storageBucket: "frontiersilver-4a99a.firebasestorage.app",
-        messagingSenderId: "547331341626",
-        appId: "1:547331341626:web:275d76403296f888686403",
-        measurementId: "G-3Q5WS2C328"
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-    </script>
-</body>
+    
 </html>

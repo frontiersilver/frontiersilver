@@ -1,181 +1,160 @@
 $(document).ready(function () {
-    console.log("jQuery 準備完成，開始執行腳本！");
+  console.log("jQuery 準備完成，開始執行腳本！");
 
-
-    $('.parallax').paroller();
-    $('.jumbotron').paroller();
-    $('.perspective-container').paroller();
-
+  if ($('.parallax').length) $('.parallax').paroller();
+  if ($('.jumbotron').length) $('.jumbotron').paroller();
+  if ($('.perspective-container').length) $('.perspective-container').paroller();
+  if ($('.parallaxtext').length) $('.parallaxtext').paroller();
+  if ($('.image').length) $('.image').paroller();
 });
 
-document.addEventListener("scroll", function () {
+document.addEventListener("scroll", () => {
   let scrollValue = window.scrollY;
   document.documentElement.style.setProperty("--scroll-y", `${scrollValue}px`);
 });
 
-document.addEventListener("scroll", function () {
-    let scrollValue = window.scrollY;
-    document.documentElement.style.setProperty("--scroll-y", `${scrollValue}px`);
-});
-$(document).ready(function() {
-    $('.parallaxtext').paroller(); // 啟動視差滾動
-});
-
-document.addEventListener("DOMContentLoaded", function() {
+// tilt-box 效果
+document.addEventListener("DOMContentLoaded", () => {
+  if ($(".tilt-box").length) {
     $(".tilt-box").tilt({
       maxTilt: 10,
       perspective: 1000,
       speed: 400,
       scale: 1.02
     });
+  }
 });
-$('.image').paroller();
 
+// 側邊選單
 function toggleMenu() {
-    let sidebar = document.getElementById("sidebar");
-    if (sidebar.style.width === "250px") {
-        sidebar.style.width = "0";
-    } else {
-        sidebar.style.width = "250px";
-    }
-}
-function toggleMenu() {
-    let sidebar = document.getElementById("sidebar");
-    let overlay = document.getElementById("overlay");
+  let sidebar = document.getElementById("sidebar");
+  let overlay = document.getElementById("overlay");
+  if (!sidebar || !overlay) return;
 
-    if (sidebar.classList.contains("open")) {
-        sidebar.classList.remove("open");
-        overlay.classList.remove("open");
-    } else {
-        sidebar.classList.add("open");
-        overlay.classList.add("open");
-    }
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("open");
 }
 
 function toggleMenu2() {
-    var dropdown = document.querySelector(".dropdown");
-    var menu = document.querySelector(".dropdown-content");
+  const dropdown = document.querySelector(".dropdown");
+  const menu = document.querySelector(".dropdown-content");
+  if (!dropdown || !menu) return;
 
-    var isOpen = menu.style.display === "block";
-
-    // 切換顯示/隱藏
-    menu.style.display = isOpen ? "none" : "block";
-
-    // 切換 active 狀態來旋轉箭頭
-    dropdown.classList.toggle("active", !isOpen);
+  const isOpen = menu.style.display === "block";
+  menu.style.display = isOpen ? "none" : "block";
+  dropdown.classList.toggle("active", !isOpen);
 }
 
 function closeMenu() {
-    document.getElementById("sidebar").classList.remove("open");
-    document.getElementById("overlay").classList.remove("open");
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  if (!sidebar || !overlay) return;
+  sidebar.classList.remove("open");
+  overlay.classList.remove("open");
 }
 
+// 類打字機動畫 1
+document.addEventListener("DOMContentLoaded", () => {
+  const text = "Frontier Sliver Frontier Sliver   Frontier Sliver   Frontier Sliver   Frontier Sliver";
+  let charIndex = 0;
+  let isDeleting = false;
+  const speed = 100;
+  const delayBetweenCycles = 1000;
+  const textElement = document.getElementById("typewriter-text");
+  if (!textElement) return;
 
-
-document.addEventListener("DOMContentLoaded", function () {
-    const text = "Frontier Sliver Frontier Sliver   Frontier Sliver   Frontier Sliver   Frontier Sliver";
-    let charIndex = 0;
-    let isDeleting = false;
-    let speed = 100; // 打字速度
-    let delayBetweenCycles = 1000; // 刪除完畢後等待時間
-    let textElement = document.getElementById("typewriter-text");
-
-
-
-    function typeEffect() {
-        if (isDeleting) {
-            // 從左到右刪除
-            textElement.textContent = text.substring(text.length - charIndex);
-            charIndex--;
-        } else {
-            // 從左到右逐字打出
-            textElement.textContent = text.substring(0, charIndex);
-            charIndex++;
-        }
-
-        if (!isDeleting && charIndex === text.length + 1) {
-            isDeleting = true;
-            setTimeout(typeEffect, delayBetweenCycles); // 停留後開始刪除
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            setTimeout(typeEffect, delayBetweenCycles); // 停留後重新開始
-        } else {
-            setTimeout(typeEffect, speed);
-        }
+  function typeEffect() {
+    if (isDeleting) {
+      textElement.textContent = text.substring(text.length - charIndex);
+      charIndex--;
+    } else {
+      textElement.textContent = text.substring(0, charIndex);
+      charIndex++;
     }
 
-    typeEffect();
-});
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    let text = "FRONTIER SLIVER";
-    let index = 0;
-    let speed = 150; // 文字出現速度
-    let animatedText = document.getElementById("animated-text");
-
-    animatedText.style.fontFamily = "'LXGW WenKai Regular', sans-serif";
-    animatedText.style.fontWeight = "200";
-    animatedText.style.fontStyle = "normal";
-
-    function typeWriter() {
-        if (index < text.length) {
-            animatedText.innerHTML = `<span style="font-family: 'LXGW WenKai Regular', sans-serif; font-weight: 200;">${text.substring(0, index + 1)}</span><span class='cursor'>|</span>`;
-            index++;
-            setTimeout(typeWriter, speed);
-        } else {
-            setTimeout(() => {
-                index = 0; // 重置動畫
-                typeWriter();
-            }, 2000);
-        }
+    if (!isDeleting && charIndex === text.length + 1) {
+      isDeleting = true;
+      setTimeout(typeEffect, delayBetweenCycles);
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      setTimeout(typeEffect, delayBetweenCycles);
+    } else {
+      setTimeout(typeEffect, speed);
     }
+  }
 
-    typeWriter();
+  typeEffect();
 });
 
+// 類打字機動畫 2
+document.addEventListener("DOMContentLoaded", () => {
+  const text = "FRONTIER SLIVER";
+  let index = 0;
+  const speed = 150;
+  const animatedText = document.getElementById("animated-text");
+  if (!animatedText) return;
 
+  animatedText.style.fontFamily = "'LXGW WenKai Regular', sans-serif";
+  animatedText.style.fontWeight = "200";
+  animatedText.style.fontStyle = "normal";
 
+  function typeWriter() {
+    if (index < text.length) {
+      animatedText.innerHTML = `<span style="font-family: 'LXGW WenKai Regular', sans-serif; font-weight: 200;">${text.substring(0, index + 1)}</span><span class='cursor'>|</span>`;
+      index++;
+      setTimeout(typeWriter, speed);
+    } else {
+      setTimeout(() => {
+        index = 0;
+        typeWriter();
+      }, 2000);
+    }
+  }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const scrollContainer = document.querySelector('.scroll-content');
-    const scrollLeftBtn = document.querySelector('.scroll-left');
-    const scrollRightBtn = document.querySelector('.scroll-right');
+  typeWriter();
+});
 
-    // 按鈕點擊滾動
-    scrollLeftBtn.addEventListener('click', function () {
-        scrollContainer.scrollBy({ left: -200, behavior: 'smooth' });
-    });
+// 左右滑動區塊
+document.addEventListener("DOMContentLoaded", () => {
+  const scrollContainer = document.querySelector(".scroll-content");
+  const scrollLeftBtn = document.querySelector(".scroll-left");
+  const scrollRightBtn = document.querySelector(".scroll-right");
+  if (!scrollContainer || !scrollLeftBtn || !scrollRightBtn) return;
 
-    scrollRightBtn.addEventListener('click', function () {
-        scrollContainer.scrollBy({ left: 200, behavior: 'smooth' });
-    });
+  scrollLeftBtn.addEventListener("click", () => {
+    scrollContainer.scrollBy({ left: -200, behavior: "smooth" });
+  });
 
-    // 滑鼠拖曳滾動
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+  scrollRightBtn.addEventListener("click", () => {
+    scrollContainer.scrollBy({ left: 200, behavior: "smooth" });
+  });
 
-    scrollContainer.addEventListener('mousedown', (e) => {
-        isDown = true;
-        scrollContainer.classList.add('active');
-        startX = e.pageX - scrollContainer.offsetLeft;
-        scrollLeft = scrollContainer.scrollLeft;
-    });
+  let isDown = false;
+  let startX;
+  let scrollLeft;
 
-    scrollContainer.addEventListener('mouseleave', () => {
-        isDown = false;
-    });
+  scrollContainer.addEventListener("mousedown", (e) => {
+    isDown = true;
+    scrollContainer.classList.add("active");
+    startX = e.pageX - scrollContainer.offsetLeft;
+    scrollLeft = scrollContainer.scrollLeft;
+  });
 
-    scrollContainer.addEventListener('mouseup', () => {
-        isDown = false;
-    });
+  scrollContainer.addEventListener("mouseleave", () => {
+    isDown = false;
+    scrollContainer.classList.remove("active");
+  });
 
-    scrollContainer.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - scrollContainer.offsetLeft;
-        const walk = (x - startX) * 2; // 調整拖動速度
-        scrollContainer.scrollLeft = scrollLeft - walk;
-    });
+  scrollContainer.addEventListener("mouseup", () => {
+    isDown = false;
+    scrollContainer.classList.remove("active");
+  });
+
+  scrollContainer.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainer.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollContainer.scrollLeft = scrollLeft - walk;
+  });
 });

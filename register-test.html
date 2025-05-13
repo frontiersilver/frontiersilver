@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Firebase 註冊測試</title>
+</head>
+<body>
+  <h1>Firebase 註冊測試</h1>
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Password" />
+  <button id="registerBtn">註冊</button>
+  <pre id="log"></pre>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBNMOLOUp4VrjdQiULXQCInNyI8gx7kl9s",
+      authDomain: "frontiersilver-4a99a.firebaseapp.com",
+      projectId: "frontiersilver-4a99a",
+      storageBucket: "frontiersilver-4a99a.appspot.com",
+      messagingSenderId: "547331341626",
+      appId: "1:547331341626:web:275d76403296f888686403"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const log = (msg) => document.getElementById("log").textContent = msg;
+
+    document.getElementById("registerBtn").addEventListener("click", async () => {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!email || !password) {
+        log("⚠️ 請輸入 Email 與 Password");
+        return;
+      }
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        log("✅ 註冊成功：\n" + JSON.stringify(userCredential.user, null, 2));
+      } catch (error) {
+        log("❌ 註冊錯誤：" + error.code + "\n" + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
