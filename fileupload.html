@@ -1,59 +1,162 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>作品圖片上傳</title>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
-</head>
-<body>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>作品圖片上傳</title>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+  <!-- GitHub Pages path 修正器 -->
+  <script>
+    (function () {
+      const isGithub = window.location.hostname.includes("github.io");
+      const basePath = isGithub ? "/frontiersilver/" : "";
+      const elements = document.querySelectorAll("link[rel='stylesheet'], script[src], a[data-link]");
+      elements.forEach(el => {
+        const attr = el.tagName === "SCRIPT" || el.tagName === "LINK" ? "src" in el ? "src" : "href" : "href";
+        const original = el.getAttribute(attr);
+        if (original && !original.startsWith("http")) {
+          el.setAttribute(attr, basePath + original.replace(/^\/+/, ""));
+        }
+      });
+    })();
+  </script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/fileupload.css" />
+</head>
+
+<body>
+  <header>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <div id="sidebar" class="sidebar">
+      <button class="close-btn" onclick="toggleMenu()">×</button>
+      <a href="index.html">首頁</a>
+      <a href="about.html">Frontier</a>
+      <div class="dropdown">
+        <button class="dropdown-btn" onclick="toggleMenu2()">All WORKS <span class="arrow"></span></button>
+        <div class="dropdown-content">
+          <a href="allworks.html">系列</a>
+          <a href="allworks.html">品項</a>
+          <a href="allworks.html">用途</a>
+        </div>
+      </div>
+      <a href="service.html">訂製</a>
+      <a href="privatecontact.html">聯絡</a>
+      <a href="fileupload.html" id="uploadLink" style="display: none; font-weight: bold;">🔒 上傳新作品</a>
+    </div>
+    <div id="overlay" class="overlay" onclick="closeMenu()"></div>
+  </header>
+
+  <main class="container">
     <h2>作品上傳</h2>
     <form id="uploadForm">
-        <label>作品名稱：</label>
+      <label>作品名稱：</label>
+      <input type="text" id="name" value="獻祭系列-祭品"><br>
 
-        <label>選擇圖片上傳：</label>
-        <input type="file" id="fileInput" accept="image/*" required><br>
+      <label>選擇圖片上傳：</label>
+      <input type="file" id="fileInput" accept="image/*"><br>
+      <img id="preview" style="max-width: 300px; margin-top: 10px; display: none;" />
 
-        <input type="text" id="name" value="獻祭系列-祭品" required><br>
-
-        <label>價錢：</label>
-        <input type="number" id="price" required><br>
-
-        <label>作品理念：</label>
-        <textarea id="concept" required></textarea><br>
-
-        <label>材質：</label>
-        <input type="text" id="material" value="925純銀" readonly><br>
-
-        <label>尺寸：</label>
-        <input type="text" id="size" value="25mm×22mm×30mm" readonly><br>
-
-        <label>重量：</label>
-        <input type="text" id="weight" value="16g" readonly><br>
-
-        <label>尺寸選擇：</label>
-        <select id="sizeChoice">
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-        </select><br>
+      <label>系列：</label>
+      <select id="seriesSelect" required>
+        <option value="">請選擇系列</option>
+        <option value="獻祭-獻系列">獻祭-獻系列</option>
+        <option value="獻祭-祭系列">獻祭-祭系列</option>
+        <option value="對話系列">對話系列</option>
+        <option value="熾天使系列">熾天使系列</option>
+        <option value="鎖鏈系列">鎖鏈系列</option>
+        <option value="荒城系列">荒城系列</option>
+      </select><br>
+      <input type="text" id="newSeriesInput" placeholder="新增系列">
+      <button type="button" onclick="addNewTag('series')">＋ 新增系列</button>
 
 
-        <button type="submit">上傳作品</button>
+      <label>品項類型：</label>
+      <select id="typeSelect" required>
+        <option value="">請選擇品項</option>
+        <option value="戒指">戒指</option>
+        <option value="手鍊">手鍊</option>
+        <option value="吊墜&配鏈">吊墜&配鏈</option>
+        <option value="耳飾">耳飾</option>
+      </select><br>
+      <input type="text" id="newTypeInput" placeholder="新增品項">
+      <button type="button" onclick="addNewTag('type')">＋ 新增品項</button>
+
+      <label>用途建議：</label>
+      <select id="usageSelect" required>
+        <option value="">請選擇用途</option>
+        <option value="日常細節">日常細節</option>
+        <option value="特殊搭配">特殊搭配</option>
+        <option value="對話系列">對話系列</option>
+        <option value="送禮選擇">送禮選擇</option>
+      </select><br>
+      <input type="text" id="newUsageInput" placeholder="新增用途">
+      <button type="button" onclick="addNewTag('usage')">＋ 新增用途</button>
+
+      <label>價錢：</label>
+      <input type="number" id="price" required><br>
+
+      <label>作品理念：</label>
+      <textarea id="concept" required></textarea><br>
+
+      <label>材質：</label>
+      <input type="text" id="material" value="925純銀"><br>
+
+      <label>尺寸：</label>
+      <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+        <input type="number" id="lengthInput" placeholder="長 (mm)" required style="width: 100px;">
+        <input type="number" id="widthInput" placeholder="寬 (mm)" required style="width: 100px;">
+        <input type="number" id="heightInput" placeholder="高 (mm)" required style="width: 100px;">
+      </div>
+      <label>重量：</label>
+      <input type="text" id="weight" value="16g"><br>
+
+      <label>尺寸選擇：</label>
+      <select id="sizeChoice">
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+      </select><br>
+
+      <button type="submit">上傳</button>
     </form>
 
     <h2>作品展示</h2>
+    <!-- 展示區名稱建議 -->
     <div id="gallery"></div>
+    <div id="myWorks"></div>
+  </main>
 
-    <script src="indexscript.js"></script>
-    <script src="fileupload.js"></script>
+  <!-- Firebase 初始化 + 功能 -->
+  <script src="js/fileupload.js" defer></script>
 
+  <!-- 圖片預覽功能 -->
+  <script>
+    document.getElementById("fileInput").addEventListener("change", function (event) {
+      const file = event.target.files[0];
+      const preview = document.getElementById("preview");
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          preview.src = e.target.result;
+          preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.src = "";
+        preview.style.display = "none";
+      }
+    });
+  </script>
 </body>
 </html>
