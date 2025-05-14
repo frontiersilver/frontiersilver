@@ -1,8 +1,7 @@
-// ✅ 初始化 Firebase
+// 🔧 Firebase 初始化
 const firebaseConfig = {
   apiKey: "AIzaSyBNMOLOUp4VrjdQiULXQCInNyI8gx7kl9s",
   authDomain: "frontiersilver-4a99a.firebaseapp.com",
-  databaseURL: "https://frontiersilver-4a99a-default-rtdb.firebaseio.com",
   projectId: "frontiersilver-4a99a",
   storageBucket: "frontiersilver-4a99a.appspot.com",
   messagingSenderId: "547331341626",
@@ -13,19 +12,19 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
 
-// ✅ 頁面初始化
+// ✅ DOM 載入後執行
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("uploadForm")?.addEventListener("submit", handleUpload);
   document.getElementById("fileInput")?.addEventListener("change", handlePreview);
-    loadTags(); // 🔺 加這一行才會載入 Firestore 裡的自訂標籤
-  renderGallery();
+  loadTags(); // 載入標籤（series/type/usage）
+  renderGallery(); // 渲染作品
 });
 
-// ✅ 圖片預覽
+// ✅ 預覽圖片
 function handlePreview(e) {
   const file = e.target.files[0];
   const preview = document.getElementById("preview");
-  if (file && preview) {
+  if (file) {
     const reader = new FileReader();
     reader.onload = (e) => {
       preview.src = e.target.result;
@@ -37,101 +36,80 @@ function handlePreview(e) {
     preview.style.display = "none";
   }
 }
+
+// ✅ 自動載入 Firestore 標籤選項
 async function loadTags() {
-  const tagTypes = ["series", "type", "usage"];
-  for (const tagType of tagTypes) {
-    const tagRef = db.collection("tags").doc(tagType);
-    const doc = await tagRef.get();
+  const categories = ["series", "type", "usage"];
+  for (let cat of categories) {
+    const doc = await db.collection("tags").doc(cat).get();
+    const values = doc.exists ? doc.data().values || [] : [];
 
-    if (!doc.exists) {
-      await tagRef.set({ values: [] }); // 若沒有則自動建立
-      continue;
-    }
-
-    const values = doc.data().values || [];
-    const select = document.getElementById(`${tagType}Select`);
-    const existingOptions = Array.from(select.options).map(opt => opt.value);
-
-    // 只加入還沒出現的
-    values.forEach(val => {
-      if (!existingOptions.includes(val)) {
-        const opt = document.createElement("option");
-        opt.value = val;
-        opt.textContent = val;
-        select.appendChild(opt);
+    const select = document.getElementById(`${cat}Select`);
+    values.forEach(v => {
+      if (!Array.from(select.options).some(opt => opt.value === v)) {
+        const option = document.createElement("option");
+        option.value = v;
+        option.textContent = v;
+        select.appendChild(option);
       }
     });
   }
 }
+
+// ✅ 新增標籤
 async function addNewTag(type) {
   const input = document.getElementById(`new${capitalize(type)}Input`);
   const newValue = input.value.trim();
   if (!newValue) return alert("請輸入內容");
 
-  const tagRef = db.collection("tags").doc(type);
-  const doc = await tagRef.get();
+  const ref = db.collection("tags").doc(type);
+  const doc = await ref.get();
+  const current = doc.exists ? doc.data().values || [] : [];
 
-  let values = [];
-  if (doc.exists) {
-    values = doc.data().values || [];
-    if (values.includes(newValue)) return alert("此項目已存在！");
-  }
-
-  values.push(newValue);
-  await tagRef.set({ values });
+  if (current.includes(newValue)) return alert("已存在！");
+  current.push(newValue);
+  await ref.set({ values: current });
 
   const select = document.getElementById(`${type}Select`);
-  const opt = document.createElement("option");
-  opt.value = newValue;
-  opt.textContent = newValue;
-  select.appendChild(opt);
-  select.value = newValue; // 自動選取剛加的
+  const option = document.createElement("option");
+  option.value = newValue;
+  option.textContent = newValue;
+  select.appendChild(option);
+  select.value = newValue;
   input.value = "";
 }
+
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
 // ✅ 上傳作品
 async function handleUpload(e) {
   e.preventDefault();
 
-  const name = document.getElementById("name").value;
-  const price = document.getElementById("price").value;
-  const concept = document.getElementById("concept").value;
-  const material = document.getElementById("material").value;
-  const weight = document.getElementById("weight").value;
-  const sizeChoice = document.getElementById("sizeChoice").value;
   const file = document.getElementById("fileInput").files[0];
-  const series = document.getElementById("seriesSelect").value;
-  const type = document.getElementById("typeSelect").value;
-  const usage = document.getElementById("usageSelect").value;
-  const length = document.getElementById("lengthInput").value;
-  const width = document.getElementById("widthInput").value;
-  const height = document.getElementById("heightInput").value;
-  const size = `${length}mm×${width}mm×${height}mm`;
+  if (!file) return alert("請選擇圖片！");
 
-  if (!file) return alert("請選擇圖片");
+  const data = {
+    name: document.getElementById("name").value,
+    price: document.getElementById("price").value,
+    concept: document.getElementById("concept").value,
+    material: document.getElementById("material").value,
+    weight: document.getElementById("weight").value,
+    sizeChoice: document.getElementById("sizeChoice").value,
+    series: document.getElementById("seriesSelect").value,
+    type: document.getElementById("typeSelect").value,
+    usage: document.getElementById("usageSelect").value,
+    size: `${document.getElementById("lengthInput").value}mm×${document.getElementById("widthInput").value}mm×${document.getElementById("heightInput").value}mm`,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  };
 
   try {
-    const storageRef = storage.ref(`works/${Date.now()}_${file.name}`);
-    const snapshot = await storageRef.put(file);
-    const imageUrl = await snapshot.ref.getDownloadURL();
+    const ref = storage.ref(`works/${Date.now()}_${file.name}`);
+    const snapshot = await ref.put(file);
+    data.imageUrl = await snapshot.ref.getDownloadURL();
 
-    await db.collection("works").add({
-      name,
-      price,
-      concept,
-      material,
-      size,
-      weight,
-      sizeChoice,
-      series,
-      type,
-      usage,
-      imageUrl,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    });
-
+    await db.collection("works").add(data);
     alert("✅ 上傳成功！");
     document.getElementById("uploadForm").reset();
     document.getElementById("preview").style.display = "none";
@@ -142,7 +120,7 @@ async function handleUpload(e) {
   }
 }
 
-// ✅ 顯示所有作品
+// ✅ 渲染所有作品
 async function renderGallery() {
   const gallery = document.getElementById("gallery");
   if (!gallery) return;
@@ -159,48 +137,48 @@ async function renderGallery() {
     }
 
     snapshot.forEach(doc => {
-      const data = doc.data();
+      const d = doc.data();
       const div = document.createElement("div");
       div.className = "item";
       div.innerHTML = `
-        <img src="${data.imageUrl}" alt="${data.name}" style="width:200px;height:auto;">
-        <p><strong>${data.name}</strong></p>
-        <p>系列：${data.series}</p>
-        <p>品項：${data.type}</p>
-        <p>用途：${data.usage}</p>
-        <p>價錢：${data.price}</p>
-        <p>理念：${data.concept}</p>
-        <p>材質：${data.material}</p>
-        <p>尺寸：${data.size}（${data.sizeChoice}號）</p>
-        <p>重量：${data.weight}</p>
+        <img src="${d.imageUrl}" alt="${d.name}" style="width:200px;height:auto;">
+        <p><strong>${d.name}</strong></p>
+        <p>系列：${d.series}</p>
+        <p>品項：${d.type}</p>
+        <p>用途：${d.usage}</p>
+        <p>價格：${d.price}</p>
+        <p>理念：${d.concept}</p>
+        <p>材質：${d.material}</p>
+        <p>尺寸：${d.size}（${d.sizeChoice}號）</p>
+        <p>重量：${d.weight}</p>
         <button onclick="editWork('${doc.id}')">✏️ 編輯</button>
         <button onclick="deleteWork('${doc.id}')">🗑️ 刪除</button>
       `;
       gallery.appendChild(div);
     });
   } catch (err) {
-    console.error("❌ 讀取作品失敗：", err);
-    gallery.innerHTML = "<p>無法載入作品</p>";
+    console.error("❌ 載入失敗：", err);
+    gallery.innerHTML = "<p>無法載入作品。</p>";
   }
 }
 
-// ✅ 編輯作品（目前僅修改價格，可擴充）
-async function editWork(workId) {
-  const doc = await db.collection("works").doc(workId).get();
+// ✅ 編輯價格
+async function editWork(id) {
+  const doc = await db.collection("works").doc(id).get();
   const data = doc.data();
   const newPrice = prompt("輸入新價格：", data.price);
   if (newPrice !== null) {
-    await db.collection("works").doc(workId).update({ price: newPrice });
-    alert("✅ 價格已更新！");
+    await db.collection("works").doc(id).update({ price: newPrice });
+    alert("✅ 已更新！");
     renderGallery();
   }
 }
 
 // ✅ 刪除作品
-async function deleteWork(workId) {
+async function deleteWork(id) {
   if (confirm("確定要刪除這個作品嗎？")) {
-    await db.collection("works").doc(workId).delete();
-    alert("✅ 已刪除");
+    await db.collection("works").doc(id).delete();
+    alert("✅ 已刪除！");
     renderGallery();
   }
 }
