@@ -7,10 +7,10 @@
 
   <!-- Firebase SDK -->
   <!-- ✅ 使用 Firebase v8 CDN，全域 firebase 物件 -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <!-- GitHub Pages path 修正器 -->
   <script>
     (function () {
@@ -59,8 +59,8 @@
       <label>作品名稱：</label>
       <input type="text" id="name" value="獻祭系列-祭品"><br>
 
-      <label>選擇圖片上傳：</label>
-      <input type="file" id="fileInput" accept="image/*"><br>
+      <label>圖片網址：</label>
+      <input type="url" id="imageUrlInput" placeholder="請貼上 Cloudinary 圖片連結" required><br>
       <img id="preview" style="max-width: 300px; margin-top: 10px; display: none;" />
 
       <label>系列：</label>
@@ -117,17 +117,31 @@
       <label>重量：</label>
       <input type="text" id="weight" value="16g"><br>
 
-      <label>尺寸選擇：</label>
-      <select id="sizeChoice">
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-        <option value="16">16</option>
-        <option value="17">17</option>
-      </select><br>
+      <label>戒圍：</label>
+      <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+        <select id="ringMin">
+          <option value="">-- 最小戒圍 --</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+        </select>
+        <select id="ringMax">
+          <option value="">-- 最大戒圍 --</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+        </select>
+      </div>
 
       <button type="submit">上傳</button>
     </form>
