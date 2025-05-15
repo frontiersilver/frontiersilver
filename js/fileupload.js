@@ -125,16 +125,25 @@ async function renderGallery() {
   }
 }
 
-// ✅ 編輯價格
-async function editWork(id) {
-  const doc = await db.collection("works").doc(id).get();
-  const data = doc.data();
-  const newPrice = prompt("輸入新價格：", data.price);
-  if (newPrice !== null) {
-    await db.collection("works").doc(id).update({ price: newPrice });
-    alert("✅ 已更新！");
-    renderGallery();
-  }
+// ✅ 編輯
+function buildEditableField(label, field, value) {
+  return `
+    <label>${label}</label><br>
+    <input type="text" id="edit-${field}" value="${value || ''}" style="width:90%;margin-bottom:10px;"><br>
+  `;
+}
+
+async function saveEdit(id) {
+  const fields = ["name", "price", "concept", "material", "size", "weight", "series", "type", "usage"];
+  const updates = {};
+  fields.forEach(field => {
+    updates[field] = document.getElementById(`edit-${field}`).value.trim();
+  });
+
+  await db.collection("works").doc(id).update(updates);
+  alert("✅ 已更新！");
+  document.querySelector(".popup")?.remove();
+  renderGallery();
 }
 
 // ✅ 刪除
