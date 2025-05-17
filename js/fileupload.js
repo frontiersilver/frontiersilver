@@ -25,13 +25,29 @@ function handleImagePreview() {
   preview.src = url;
   preview.style.display = url ? "block" : "none";
 }
-
+function generateExtraImageInputs() {
+  const count = parseInt(document.getElementById("extraImageCount").value) || 0;
+  const container = document.getElementById("extraImageInputs");
+  container.innerHTML = "";
+  for (let i = 0; i < count; i++) {
+    const input = document.createElement("input");
+    input.type = "url";
+    input.placeholder = `展示圖片 ${i + 1} 網址`;
+    input.className = "extraImageInput";
+    input.style = "width: 100%; margin-bottom: 5px;";
+    container.appendChild(input);
+  }
+}
 // ✅ 上傳作品
 async function handleUpload(e) {
   e.preventDefault();
   const imageUrl = document.getElementById("imageUrlInput").value.trim();
   if (!imageUrl) return alert("請貼上圖片網址");
-
+  // ✅ 收集額外圖片網址
+  const extraImageInputs = Array.from(document.querySelectorAll(".extraImageInput"));
+  const extraImageUrls = extraImageInputs
+    .map(input => input.value.trim())
+    .filter(url => url !== ""); // 過濾掉空的欄位
   const data = {
     name: document.getElementById("name").value,
     price: document.getElementById("price").value,
@@ -43,6 +59,7 @@ async function handleUpload(e) {
     type: document.getElementById("typeSelect").value,
     usage: document.getElementById("usageSelect").value,
     imageUrl,
+    imageUrls: extraImageUrls, // ✅ 加入這一行，存為陣列
     timestamp: firebase.firestore.FieldValue.serverTimestamp()
   };
 
