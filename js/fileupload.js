@@ -64,6 +64,7 @@ async function renderGallery() {
   if (!gallery) return;
 
   gallery.innerHTML = "<p>載入中...</p>";
+
   try {
     const snapshot = await db.collection("works").orderBy("timestamp", "desc").get();
     gallery.innerHTML = "";
@@ -76,27 +77,10 @@ async function renderGallery() {
     snapshot.forEach(doc => {
       const d = doc.data();
       const div = document.createElement("div");
-      div.className = "item";
+      div.className = "gallery-card";
       div.innerHTML = `
-        <div class="item">
-          <img src="${d.imageUrl}" alt="${d.name}" class="item-img">
-          <div class="item-info">
-            <h3>${d.name}</h3>
-            <p><strong>系列：</strong>${d.series}</p>
-            <p><strong>品項：</strong>${d.type}</p>
-            <p><strong>用途：</strong>${d.usage}</p>
-            <p><strong>價格：</strong>${d.price}</p>
-            <p><strong>材質：</strong>${d.material}</p>
-            <p><strong>尺寸：</strong>${d.size}</p>
-            <p><strong>重量：</strong>${d.weight}</p>
-            <div class="concept">
-              <strong>理念：</strong>
-              <p>${(d.concept || "").replace(/\n/g, "<br>")}</p>
-            </div>
-            <button onclick="editWork('${doc.id}')">✏️ 編輯</button>
-            <button onclick="deleteWork('${doc.id}')">🗑️ 刪除</button>
-          </div>
-        </div>
+        <img src="${d.imageUrl}" alt="${d.name}" class="card-img" onclick="editWork('${doc.id}')">
+        <p class="card-title" onclick="editWork('${doc.id}')">${d.name}</p>
       `;
       gallery.appendChild(div);
     });
@@ -105,7 +89,6 @@ async function renderGallery() {
     gallery.innerHTML = "<p>無法讀取作品</p>";
   }
 }
-
 // ✅ 編輯作品
 function editWork(id) {
   db.collection("works").doc(id).get().then(doc => {

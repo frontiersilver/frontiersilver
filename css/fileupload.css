@@ -210,6 +210,42 @@ h2 {
   font-size: 20px;
 }
 
+/* 縮圖卡片清單樣式 */
+#gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.gallery-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+}
+
+.gallery-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.gallery-card img.card-img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.gallery-card .card-title {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
 /* 🔹 響應式設計 */
 @media (max-width: 480px) {
   #uploadForm {
