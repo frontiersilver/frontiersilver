@@ -140,7 +140,7 @@ function editWork(id) {
     `;
     document.body.appendChild(popup);
 
-    // ✅ 圖片網址變更時即時預覽更新
+    // ✅ 預覽圖片即時更新
     document.getElementById("editImageUrl").addEventListener("input", () => {
       const newUrl = document.getElementById("editImageUrl").value.trim();
       const preview = document.getElementById("editPreview");
@@ -148,6 +148,8 @@ function editWork(id) {
     });
   });
 }
+
+window.editWork = editWork; // ✅ 這行非常關鍵
 
 function saveEdit(id) {
   const updated = {
