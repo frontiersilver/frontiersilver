@@ -29,6 +29,47 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/fileupload.css" />
+  <style>
+    .popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .popup-content {
+      background: white;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      position: relative;
+      border-radius: 10px;
+    }
+
+    .popup-content input {
+      width: 100%;
+      margin: 6px 0;
+      padding: 6px;
+    }
+
+    .popup-content .close {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .popup-content img {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 
 <body>
@@ -110,7 +151,7 @@
 
       <label>尺寸：</label>
       <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-        <input type="number" id="lengthInput" placeholder="長 (mm)" required style="width: 100px;">
+        <input type="number" id="lengthInput" placeholder="長 (mm)" style="width: 100px;">
         <input type="number" id="widthInput" placeholder="寬 (mm)" style="width: 100px;">
         <input type="number" id="heightInput" placeholder="高 (mm)" style="width: 100px;">
       </div>

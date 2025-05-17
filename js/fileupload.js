@@ -19,11 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
   renderGallery();
 });
 
-// ✅ 圖片預覽（從網址）
+// ✅ 預覽圖片
 function handleImagePreview() {
   const url = document.getElementById("imageUrlInput").value.trim();
   const preview = document.getElementById("preview");
-
   if (url && (url.startsWith("http://") || url.startsWith("https://"))) {
     preview.src = url;
     preview.style.display = "block";
@@ -33,7 +32,7 @@ function handleImagePreview() {
   }
 }
 
-// ✅ 上傳作品（用圖片網址）
+// ✅ 上傳作品
 async function handleUpload(e) {
   e.preventDefault();
 
@@ -43,7 +42,6 @@ async function handleUpload(e) {
   const length = document.getElementById("lengthInput").value;
   const width = document.getElementById("widthInput").value;
   const height = document.getElementById("heightInput").value;
-
   const ringMin = document.getElementById("ringMin").value;
   const ringMax = document.getElementById("ringMax").value;
 
@@ -51,7 +49,6 @@ async function handleUpload(e) {
   if (length || width || height) {
     sizeText = `${length || "-"}mm×${width || "-"}mm×${height || "-"}mm`;
   }
-
   if (ringMin && ringMax && ringMin !== ringMax) {
     sizeText += `（戒圍 ${ringMin}～${ringMax} 號）`;
   } else if (ringMin || ringMax) {
@@ -76,7 +73,7 @@ async function handleUpload(e) {
     await db.collection("works").add(data);
     alert("✅ 上傳成功！");
     document.getElementById("uploadForm").reset();
-    handleImagePreview(); // 清除預覽
+    handleImagePreview();
     renderGallery();
   } catch (err) {
     console.error("❌ 上傳失敗：", err);
@@ -84,7 +81,7 @@ async function handleUpload(e) {
   }
 }
 
-// ✅ 渲染作品列表
+// ✅ 顯示所有作品
 async function renderGallery() {
   const gallery = document.getElementById("gallery");
   if (!gallery) return;
@@ -104,16 +101,8 @@ async function renderGallery() {
       const div = document.createElement("div");
       div.className = "item";
       div.innerHTML = `
-        <img src="${d.imageUrl}" alt="${d.name}" style="width:200px;height:auto;">
+        <img src="${d.imageUrl}" alt="${d.name}" style="width:200px;height:auto; cursor:pointer;">
         <p><strong>${d.name}</strong></p>
-        <p>系列：${d.series}</p>
-        <p>品項：${d.type}</p>
-        <p>用途：${d.usage}</p>
-        <p>價格：${d.price}</p>
-        <p>理念：${d.concept}</p>
-        <p>材質：${d.material}</p>
-        <p>尺寸：${d.size}</p>
-        <p>重量：${d.weight}</p>
         <button onclick="editWork('${doc.id}')">✏️ 編輯</button>
         <button onclick="deleteWork('${doc.id}')">🗑️ 刪除</button>
       `;
@@ -125,12 +114,10 @@ async function renderGallery() {
   }
 }
 
-// ✅ 編輯
-// ✅ 編輯整筆作品（打開彈出視窗）
-function editWork(id) {
+// ✅ 編輯作品彈窗
+window.editWork = function(id) {
   db.collection("works").doc(id).get().then(doc => {
     const d = doc.data();
-
     const popup = document.createElement("div");
     popup.className = "popup";
     popup.innerHTML = `
@@ -146,14 +133,14 @@ function editWork(id) {
         <input type="text" id="editSeries" value="${d.series}" placeholder="系列">
         <input type="text" id="editType" value="${d.type}" placeholder="品項">
         <input type="text" id="editUsage" value="${d.usage}" placeholder="用途">
-        <button onclick="saveEdit('${id}')">✅ 儲存</button>
+        <button onclick="saveEdit('${doc.id}')">✅ 儲存</button>
       </div>
     `;
     document.body.appendChild(popup);
   });
-}
+};
 
-function saveEdit(id) {
+window.saveEdit = function(id) {
   const updated = {
     name: document.getElementById("editName").value,
     price: document.getElementById("editPrice").value,
@@ -171,18 +158,18 @@ function saveEdit(id) {
     document.querySelector(".popup")?.remove();
     renderGallery();
   });
-}
+};
 
-// ✅ 刪除
-async function deleteWork(id) {
+// ✅ 刪除作品
+window.deleteWork = async function(id) {
   if (confirm("確定要刪除這個作品嗎？")) {
     await db.collection("works").doc(id).delete();
     alert("✅ 已刪除！");
     renderGallery();
   }
-}
+};
 
-// ✅ 載入標籤
+// ✅ 載入下拉式標籤
 async function loadTags() {
   const categories = ["series", "type", "usage"];
   for (let cat of categories) {
