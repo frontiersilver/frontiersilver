@@ -38,6 +38,15 @@ function generateExtraImageInputs() {
     container.appendChild(input);
   }
 }
+function addExtraEditImageInput() {
+  const container = document.getElementById("editExtraImageContainer");
+  const input = document.createElement("input");
+  input.type = "url";
+  input.placeholder = "展示圖片網址";
+  input.className = "editExtraImageInput";
+  input.style = "width: 100%; margin-bottom: 5px;";
+  container.appendChild(input);
+}
 // ✅ 上傳作品
 async function handleUpload(e) {
   e.preventDefault();
@@ -110,14 +119,17 @@ async function renderGallery() {
 function editWork(id) {
   db.collection("works").doc(id).get().then(doc => {
     const d = doc.data();
+    const extraImages = d.imageUrls || [];
 
     const popup = document.createElement("div");
     popup.className = "popup";
+
     popup.innerHTML = `
       <div class="popup-content">
         <span class="close" onclick="this.closest('.popup').remove()">×</span>
-        <input type="url" id="editImageUrl" value="${d.imageUrl}" placeholder="圖片網址" style="width: 100%;">
-        <img id="editPreview" src="${d.imageUrl}" alt="${d.name}" style="width: 100%; margin-bottom: 10px;">
+        <input type="url" id="editImageUrl" value="${d.imageUrl}" placeholder="主圖片網址" style="width: 100%;">
+        <img id="editPreview" src="${d.imageUrl}" style="width: 100%; margin-bottom: 10px;">
+
         <input type="text" id="editName" value="${d.name}" placeholder="作品名稱">
         <input type="text" id="editPrice" value="${d.price}" placeholder="價格">
         <textarea id="editConcept" placeholder="理念" style="width:100%; height:100px;">${d.concept || ""}</textarea>
@@ -127,13 +139,33 @@ function editWork(id) {
         <input type="text" id="editSeries" value="${d.series}" placeholder="系列">
         <input type="text" id="editType" value="${d.type}" placeholder="品項">
         <input type="text" id="editUsage" value="${d.usage}" placeholder="用途">
+
+        <label>展示圖片：</label>
+        <div id="editExtraImageContainer"></div>
+        <button type="button" onclick="addExtraEditImageInput()">＋新增展示圖片欄位</button>
+        <br><br>
+
         <button onclick="saveEdit('${id}')">✅ 儲存</button>
       </div>
     `;
+
     document.body.appendChild(popup);
 
+    // ✅ 更新預覽圖
     document.getElementById("editImageUrl").addEventListener("input", () => {
       document.getElementById("editPreview").src = document.getElementById("editImageUrl").value.trim();
+    });
+
+    // ✅ 插入原有圖片網址欄位
+    const container = document.getElementById("editExtraImageContainer");
+    extraImages.forEach(url => {
+      const input = document.createElement("input");
+      input.type = "url";
+      input.placeholder = "展示圖片網址";
+      input.value = url;
+      input.className = "editExtraImageInput";
+      input.style = "width: 100%; margin-bottom: 5px;";
+      container.appendChild(input);
     });
   });
 }
@@ -151,7 +183,10 @@ function saveEdit(id) {
     weight: document.getElementById("editWeight").value,
     series: document.getElementById("editSeries").value,
     type: document.getElementById("editType").value,
-    usage: document.getElementById("editUsage").value
+    usage: document.getElementById("editUsage").value,
+    imageUrls: Array.from(document.querySelectorAll(".editExtraImageInput"))
+      .map(input => input.value.trim())
+      .filter(url => url)
   };
 
   db.collection("works").doc(id).update(updated).then(() => {
