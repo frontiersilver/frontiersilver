@@ -115,15 +115,17 @@ async function renderGallery() {
 }
 
 // ✅ 編輯作品彈窗
-window.editWork = function(id) {
+function editWork(id) {
   db.collection("works").doc(id).get().then(doc => {
     const d = doc.data();
+
     const popup = document.createElement("div");
     popup.className = "popup";
     popup.innerHTML = `
       <div class="popup-content">
         <span class="close" onclick="this.closest('.popup').remove()">×</span>
-        <img src="${d.imageUrl}" alt="${d.name}">
+        <input type="url" id="editImageUrl" value="${d.imageUrl}" placeholder="圖片網址" style="width: 100%;">
+        <img id="editPreview" src="${d.imageUrl}" alt="${d.name}" style="width: 100%; margin-bottom: 10px;">
         <input type="text" id="editName" value="${d.name}" placeholder="作品名稱">
         <input type="text" id="editPrice" value="${d.price}" placeholder="價格">
         <input type="text" id="editConcept" value="${d.concept}" placeholder="理念">
@@ -133,15 +135,23 @@ window.editWork = function(id) {
         <input type="text" id="editSeries" value="${d.series}" placeholder="系列">
         <input type="text" id="editType" value="${d.type}" placeholder="品項">
         <input type="text" id="editUsage" value="${d.usage}" placeholder="用途">
-        <button onclick="saveEdit('${doc.id}')">✅ 儲存</button>
+        <button onclick="saveEdit('${id}')">✅ 儲存</button>
       </div>
     `;
     document.body.appendChild(popup);
-  });
-};
 
-window.saveEdit = function(id) {
+    // ✅ 圖片網址變更時即時預覽更新
+    document.getElementById("editImageUrl").addEventListener("input", () => {
+      const newUrl = document.getElementById("editImageUrl").value.trim();
+      const preview = document.getElementById("editPreview");
+      preview.src = newUrl || "";
+    });
+  });
+}
+
+function saveEdit(id) {
   const updated = {
+    imageUrl: document.getElementById("editImageUrl").value.trim(),
     name: document.getElementById("editName").value,
     price: document.getElementById("editPrice").value,
     concept: document.getElementById("editConcept").value,
@@ -158,8 +168,7 @@ window.saveEdit = function(id) {
     document.querySelector(".popup")?.remove();
     renderGallery();
   });
-};
-
+}
 // ✅ 刪除作品
 window.deleteWork = async function(id) {
   if (confirm("確定要刪除這個作品嗎？")) {
