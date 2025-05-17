@@ -1,3 +1,53 @@
+/* -------------------- 全局樣式 -------------------- */
+html, body {
+    overflow-x: hidden; /* 隱藏 X 軸滾動 */
+    width: 100%; /* 確保寬度不超過視口 */
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'LXGW WenKai Regular', sans-serif;
+    background-color: white;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+*  {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+  font-family: 'LXGW WenKai Light', sans-serif;
+}
+p{
+  margin: 5px;
+}
+h2{
+  font-family: 'LXGW WenKai Light', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  text-align: center;
+}
+.d-flex{
+    display: flex;
+    justify-content: center;
+    white-space: nowrap;
+    height:auto;
+    margin: 0 auto;
+}
+.image{
+    display: inline-block;
+    min-height: 300px;
+    min-width: 20%;
+    padding: 3em;
+    margin: 0.5em;
+    display: inline-block;
+    position: relative;
+
+}
 /* 🔹 字體設定 */
 @font-face {
   font-family: 'LXGW WenKai Light';
@@ -295,49 +345,7 @@ h2 {
     font-style: normal;
 }
 
-/* -------------------- 全局樣式 -------------------- */
-html, body {
-    overflow-x: hidden; /* 隱藏 X 軸滾動 */
-    width: 100%; /* 確保寬度不超過視口 */
-    margin: 0;
-    padding: 0;
-}
-body {
-    font-family: 'LXGW WenKai Regular', sans-serif;
-    background-color: white;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-* {
-    box-sizing: border-box; /* 確保寬度不會被 padding/border 增加 */
-}
-p{
-  margin: 5px;
-}
-h2{
-  font-family: 'LXGW WenKai Light', sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  text-align: center;
-}
-.d-flex{
-    display: flex;
-    justify-content: center;
-    white-space: nowrap;
-    height:auto;
-    margin: 0 auto;
-}
-.image{
-    display: inline-block;
-    min-height: 300px;
-    min-width: 20%;
-    padding: 3em;
-    margin: 0.5em;
-    display: inline-block;
-    position: relative;
 
-}
 /* -------------------- 漢堡選單按鈕 -------------------- */
 
 .btncontainer {
