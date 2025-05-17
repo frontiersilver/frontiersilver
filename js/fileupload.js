@@ -39,22 +39,7 @@ async function handleUpload(e) {
   const imageUrl = document.getElementById("imageUrlInput").value.trim();
   if (!imageUrl) return alert("請貼上圖片網址！");
 
-  const length = document.getElementById("lengthInput").value;
-  const width = document.getElementById("widthInput").value;
-  const height = document.getElementById("heightInput").value;
-  const ringMin = document.getElementById("ringMin").value;
-  const ringMax = document.getElementById("ringMax").value;
-
-  let sizeText = "";
-  if (length || width || height) {
-    sizeText = `${length || "-"}mm×${width || "-"}mm×${height || "-"}mm`;
-  }
-  if (ringMin && ringMax && ringMin !== ringMax) {
-    sizeText += `（戒圍 ${ringMin}～${ringMax} 號）`;
-  } else if (ringMin || ringMax) {
-    sizeText += `（戒圍 ${ringMin || ringMax} 號）`;
-  }
-
+  const sizeText = document.getElementById("sizeInput").value.trim();
   const data = {
     name: document.getElementById("name").value,
     price: document.getElementById("price").value,
@@ -101,11 +86,26 @@ async function renderGallery() {
       const div = document.createElement("div");
       div.className = "item";
       div.innerHTML = `
-        <img src="${d.imageUrl}" alt="${d.name}" style="width:200px;height:auto; cursor:pointer;">
-        <p><strong>${d.name}</strong></p>
-        <button onclick="editWork('${doc.id}')">✏️ 編輯</button>
-        <button onclick="deleteWork('${doc.id}')">🗑️ 刪除</button>
-      `;
+      <div class="item">
+        <img src="${d.imageUrl}" alt="${d.name}" class="item-img">
+        <div class="item-info">
+          <h3>${d.name}</h3>
+          <p><strong>系列：</strong>${d.series}</p>
+          <p><strong>品項：</strong>${d.type}</p>
+          <p><strong>用途：</strong>${d.usage}</p>
+          <p><strong>價格：</strong>${d.price}</p>
+          <p><strong>材質：</strong>${d.material}</p>
+          <p><strong>尺寸：</strong>${d.size}</p>
+          <p><strong>重量：</strong>${d.weight}</p>
+          <div class="concept">
+            <strong>理念：</strong>
+            <p>${(d.concept || "").replace(/\n/g, "<br>")}</p>
+          </div>
+          <button onclick="editWork('${doc.id}')">✏️ 編輯</button>
+          <button onclick="deleteWork('${doc.id}')">🗑️ 刪除</button>
+        </div>
+      </div>
+    `;
       gallery.appendChild(div);
     });
   } catch (err) {
