@@ -7,7 +7,6 @@ const firebaseConfig = {
   messagingSenderId: "547331341626",
   appId: "1:547331341626:web:275d76403296f888686403"
 };
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
@@ -19,34 +18,27 @@ document.addEventListener("DOMContentLoaded", () => {
   renderGallery();
 });
 
-// ✅ 預覽圖片
+// ✅ 預覽圖片網址
 function handleImagePreview() {
   const url = document.getElementById("imageUrlInput").value.trim();
   const preview = document.getElementById("preview");
-  if (url && (url.startsWith("http://") || url.startsWith("https://"))) {
-    preview.src = url;
-    preview.style.display = "block";
-  } else {
-    preview.src = "";
-    preview.style.display = "none";
-  }
+  preview.src = url;
+  preview.style.display = url ? "block" : "none";
 }
 
 // ✅ 上傳作品
 async function handleUpload(e) {
   e.preventDefault();
-
   const imageUrl = document.getElementById("imageUrlInput").value.trim();
-  if (!imageUrl) return alert("請貼上圖片網址！");
+  if (!imageUrl) return alert("請貼上圖片網址");
 
-  const sizeText = document.getElementById("sizeInput").value.trim();
   const data = {
     name: document.getElementById("name").value,
     price: document.getElementById("price").value,
     concept: document.getElementById("concept").value,
     material: document.getElementById("material").value,
     weight: document.getElementById("weight").value,
-    size: sizeText,
+    size: document.getElementById("sizeInput").value.trim(),
     series: document.getElementById("seriesSelect").value,
     type: document.getElementById("typeSelect").value,
     usage: document.getElementById("usageSelect").value,
@@ -66,7 +58,7 @@ async function handleUpload(e) {
   }
 }
 
-// ✅ 顯示所有作品
+// ✅ 展示所有作品
 async function renderGallery() {
   const gallery = document.getElementById("gallery");
   if (!gallery) return;
@@ -86,26 +78,26 @@ async function renderGallery() {
       const div = document.createElement("div");
       div.className = "item";
       div.innerHTML = `
-      <div class="item">
-        <img src="${d.imageUrl}" alt="${d.name}" class="item-img">
-        <div class="item-info">
-          <h3>${d.name}</h3>
-          <p><strong>系列：</strong>${d.series}</p>
-          <p><strong>品項：</strong>${d.type}</p>
-          <p><strong>用途：</strong>${d.usage}</p>
-          <p><strong>價格：</strong>${d.price}</p>
-          <p><strong>材質：</strong>${d.material}</p>
-          <p><strong>尺寸：</strong>${d.size}</p>
-          <p><strong>重量：</strong>${d.weight}</p>
-          <div class="concept">
-            <strong>理念：</strong>
-            <p>${(d.concept || "").replace(/\n/g, "<br>")}</p>
+        <div class="item">
+          <img src="${d.imageUrl}" alt="${d.name}" class="item-img">
+          <div class="item-info">
+            <h3>${d.name}</h3>
+            <p><strong>系列：</strong>${d.series}</p>
+            <p><strong>品項：</strong>${d.type}</p>
+            <p><strong>用途：</strong>${d.usage}</p>
+            <p><strong>價格：</strong>${d.price}</p>
+            <p><strong>材質：</strong>${d.material}</p>
+            <p><strong>尺寸：</strong>${d.size}</p>
+            <p><strong>重量：</strong>${d.weight}</p>
+            <div class="concept">
+              <strong>理念：</strong>
+              <p>${(d.concept || "").replace(/\n/g, "<br>")}</p>
+            </div>
+            <button onclick="editWork('${doc.id}')">✏️ 編輯</button>
+            <button onclick="deleteWork('${doc.id}')">🗑️ 刪除</button>
           </div>
-          <button onclick="editWork('${doc.id}')">✏️ 編輯</button>
-          <button onclick="deleteWork('${doc.id}')">🗑️ 刪除</button>
         </div>
-      </div>
-    `;
+      `;
       gallery.appendChild(div);
     });
   } catch (err) {
@@ -114,7 +106,7 @@ async function renderGallery() {
   }
 }
 
-// ✅ 編輯作品彈窗
+// ✅ 編輯作品
 function editWork(id) {
   db.collection("works").doc(id).get().then(doc => {
     const d = doc.data();
@@ -128,7 +120,7 @@ function editWork(id) {
         <img id="editPreview" src="${d.imageUrl}" alt="${d.name}" style="width: 100%; margin-bottom: 10px;">
         <input type="text" id="editName" value="${d.name}" placeholder="作品名稱">
         <input type="text" id="editPrice" value="${d.price}" placeholder="價格">
-        <input type="text" id="editConcept" value="${d.concept}" placeholder="理念">
+        <textarea id="editConcept" placeholder="理念" style="width:100%; height:100px;">${d.concept || ""}</textarea>
         <input type="text" id="editMaterial" value="${d.material}" placeholder="材質">
         <input type="text" id="editSize" value="${d.size}" placeholder="尺寸">
         <input type="text" id="editWeight" value="${d.weight}" placeholder="重量">
@@ -140,17 +132,14 @@ function editWork(id) {
     `;
     document.body.appendChild(popup);
 
-    // ✅ 預覽圖片即時更新
     document.getElementById("editImageUrl").addEventListener("input", () => {
-      const newUrl = document.getElementById("editImageUrl").value.trim();
-      const preview = document.getElementById("editPreview");
-      preview.src = newUrl || "";
+      document.getElementById("editPreview").src = document.getElementById("editImageUrl").value.trim();
     });
   });
 }
+window.editWork = editWork;
 
-window.editWork = editWork; // ✅ 這行非常關鍵
-
+// ✅ 儲存編輯
 function saveEdit(id) {
   const updated = {
     imageUrl: document.getElementById("editImageUrl").value.trim(),
@@ -171,6 +160,7 @@ function saveEdit(id) {
     renderGallery();
   });
 }
+
 // ✅ 刪除作品
 window.deleteWork = async function(id) {
   if (confirm("確定要刪除這個作品嗎？")) {
@@ -180,7 +170,7 @@ window.deleteWork = async function(id) {
   }
 };
 
-// ✅ 載入下拉式標籤
+// ✅ 載入下拉選單標籤
 async function loadTags() {
   const categories = ["series", "type", "usage"];
   for (let cat of categories) {
@@ -200,24 +190,19 @@ async function loadTags() {
 
 // ✅ 側邊選單
 function toggleMenu() {
-  let sidebar = document.getElementById("sidebar");
-  let overlay = document.getElementById("overlay");
-  if (!sidebar || !overlay) return;
-  sidebar.classList.toggle("open");
-  overlay.classList.toggle("open");
+  document.getElementById("sidebar")?.classList.toggle("open");
+  document.getElementById("overlay")?.classList.toggle("open");
 }
 function toggleMenu2() {
   const dropdown = document.querySelector(".dropdown");
   const menu = document.querySelector(".dropdown-content");
-  if (!dropdown || !menu) return;
-  const isOpen = menu.style.display === "block";
-  menu.style.display = isOpen ? "none" : "block";
-  dropdown.classList.toggle("active", !isOpen);
+  const isOpen = menu?.style.display === "block";
+  if (dropdown && menu) {
+    menu.style.display = isOpen ? "none" : "block";
+    dropdown.classList.toggle("active", !isOpen);
+  }
 }
 function closeMenu() {
-  const sidebar = document.getElementById("sidebar");
-  const overlay = document.getElementById("overlay");
-  if (!sidebar || !overlay) return;
-  sidebar.classList.remove("open");
-  overlay.classList.remove("open");
+  document.getElementById("sidebar")?.classList.remove("open");
+  document.getElementById("overlay")?.classList.remove("open");
 }
