@@ -12,15 +12,8 @@ body {
     margin: 0;
     padding: 0;
 }
-*  {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 15px;
-  box-sizing: border-box;
-  transition: border-color 0.2s;
-  font-family: 'LXGW WenKai Light', sans-serif;
+* {
+    box-sizing: border-box; /* 確保寬度不會被 padding/border 增加 */
 }
 p{
   margin: 5px;
