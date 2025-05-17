@@ -38,14 +38,39 @@ function generateExtraImageInputs() {
     container.appendChild(input);
   }
 }
-function addExtraEditImageInput() {
+function addExtraEditImageInput(initialValue = "") {
   const container = document.getElementById("editExtraImageContainer");
+
+  const wrapper = document.createElement("div");
+  wrapper.style = "margin-bottom: 10px; position: relative;";
+
   const input = document.createElement("input");
   input.type = "url";
   input.placeholder = "展示圖片網址";
   input.className = "editExtraImageInput";
-  input.style = "width: 100%; margin-bottom: 5px;";
-  container.appendChild(input);
+  input.style = "width: 100%;";
+  input.value = initialValue;
+
+  const preview = document.createElement("img");
+  preview.src = initialValue || "";
+  preview.style = "width: 100%; margin-top: 5px; display: " + (initialValue ? "block" : "none");
+
+  input.addEventListener("input", () => {
+    preview.src = input.value.trim();
+    preview.style.display = input.value.trim() ? "block" : "none";
+  });
+
+  const removeBtn = document.createElement("button");
+  removeBtn.textContent = "🗑";
+  removeBtn.style = "position: absolute; top: 0; right: 0;";
+  removeBtn.addEventListener("click", () => {
+    wrapper.remove();
+  });
+
+  wrapper.appendChild(input);
+  wrapper.appendChild(preview);
+  wrapper.appendChild(removeBtn);
+  container.appendChild(wrapper);
 }
 // ✅ 上傳作品
 async function handleUpload(e) {
@@ -148,25 +173,16 @@ function editWork(id) {
         <button onclick="saveEdit('${id}')">✅ 儲存</button>
       </div>
     `;
-
     document.body.appendChild(popup);
 
-    // ✅ 更新預覽圖
+    // ✅ 主圖預覽
     document.getElementById("editImageUrl").addEventListener("input", () => {
       document.getElementById("editPreview").src = document.getElementById("editImageUrl").value.trim();
     });
 
-    // ✅ 插入原有圖片網址欄位
+    // ✅ 加入原有圖片網址欄位與預覽
     const container = document.getElementById("editExtraImageContainer");
-    extraImages.forEach(url => {
-      const input = document.createElement("input");
-      input.type = "url";
-      input.placeholder = "展示圖片網址";
-      input.value = url;
-      input.className = "editExtraImageInput";
-      input.style = "width: 100%; margin-bottom: 5px;";
-      container.appendChild(input);
-    });
+    extraImages.forEach(url => addExtraEditImageInput(url));
   });
 }
 window.editWork = editWork;
