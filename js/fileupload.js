@@ -126,24 +126,51 @@ async function renderGallery() {
 }
 
 // ✅ 編輯
-function buildEditableField(label, field, value) {
-  return `
-    <label>${label}</label><br>
-    <input type="text" id="edit-${field}" value="${value || ''}" style="width:90%;margin-bottom:10px;"><br>
-  `;
+// ✅ 編輯整筆作品（打開彈出視窗）
+function editWork(id) {
+  db.collection("works").doc(id).get().then(doc => {
+    const d = doc.data();
+
+    const popup = document.createElement("div");
+    popup.className = "popup";
+    popup.innerHTML = `
+      <div class="popup-content">
+        <span class="close" onclick="this.closest('.popup').remove()">×</span>
+        <img src="${d.imageUrl}" alt="${d.name}">
+        <input type="text" id="editName" value="${d.name}" placeholder="作品名稱">
+        <input type="text" id="editPrice" value="${d.price}" placeholder="價格">
+        <input type="text" id="editConcept" value="${d.concept}" placeholder="理念">
+        <input type="text" id="editMaterial" value="${d.material}" placeholder="材質">
+        <input type="text" id="editSize" value="${d.size}" placeholder="尺寸">
+        <input type="text" id="editWeight" value="${d.weight}" placeholder="重量">
+        <input type="text" id="editSeries" value="${d.series}" placeholder="系列">
+        <input type="text" id="editType" value="${d.type}" placeholder="品項">
+        <input type="text" id="editUsage" value="${d.usage}" placeholder="用途">
+        <button onclick="saveEdit('${id}')">✅ 儲存</button>
+      </div>
+    `;
+    document.body.appendChild(popup);
+  });
 }
 
-async function saveEdit(id) {
-  const fields = ["name", "price", "concept", "material", "size", "weight", "series", "type", "usage"];
-  const updates = {};
-  fields.forEach(field => {
-    updates[field] = document.getElementById(`edit-${field}`).value.trim();
-  });
+function saveEdit(id) {
+  const updated = {
+    name: document.getElementById("editName").value,
+    price: document.getElementById("editPrice").value,
+    concept: document.getElementById("editConcept").value,
+    material: document.getElementById("editMaterial").value,
+    size: document.getElementById("editSize").value,
+    weight: document.getElementById("editWeight").value,
+    series: document.getElementById("editSeries").value,
+    type: document.getElementById("editType").value,
+    usage: document.getElementById("editUsage").value
+  };
 
-  await db.collection("works").doc(id).update(updates);
-  alert("✅ 已更新！");
-  document.querySelector(".popup")?.remove();
-  renderGallery();
+  db.collection("works").doc(id).update(updated).then(() => {
+    alert("✅ 已更新！");
+    document.querySelector(".popup")?.remove();
+    renderGallery();
+  });
 }
 
 // ✅ 刪除
