@@ -140,8 +140,8 @@ h2 {
   background: #fff;
   padding: 20px;
   width: 90%;
-  max-width: 420px;
-  border-radius: 10px;
+  max-width: 1000px;
+  border-radius: none;
   box-shadow: 0 4px 20px rgba(0,0,0,0.25);
   position: relative;
   overflow-y: auto;
