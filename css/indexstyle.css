@@ -325,10 +325,15 @@ nav ul li a:hover {
 .item p {
   height: auto;; /* 下半部分是文字 */
   margin:0px;
-  margin-bottom: 5px;
   padding:0;
   font-size: 16px;
   color: #333;
+}
+.item_name{
+  margin: 10px 0;
+}
+.item_tag{
+  margin-bottom:5px;
 }
 
 /* 滾動按鈕 */

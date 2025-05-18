@@ -131,14 +131,14 @@ async function renderLatestWorks() {
           <img src="${d.imageUrl}" alt="${d.name || ''}" />
         </div>
         <div class="item_p">
-          <p>${d.name || '未命名作品'}</p>
-          <p>
+          <p class="item_name">${d.name || '未命名作品'}</p>
+          <p class="item_tag">
             ${d.series ? `#${d.series}` : ''}
           </p>
-          <p>
+          <p class="item_tag">
             ${d.type ? `#${d.type}` : ''}
           </p>
-          <p>
+          <p class="item_tag">
             ${d.usage ? `#${d.usage}` : ''}
           </p>
         </div>
