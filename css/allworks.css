@@ -174,8 +174,7 @@
 
 .item_tag {
     margin: 5px 0;
-    color: gray;
+    color: #333;
     font-size: 14px;
     text-align: left;
-    line-height: 0.5;
 }
