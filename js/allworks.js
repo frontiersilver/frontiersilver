@@ -43,10 +43,12 @@ async function renderGallery() {
           <img src="${item.imageUrl}" alt="${item.name || ''}" />
         </div>
         <div class="item_p">
-          <p>${item.name || '無名稱'}</p>
-          <p>#${item.series || ''}</p>
-          <p>#${item.type || ''}</p>
-          <p>#${item.usage || ''}</p>
+          <p class="item_name">${item.name || '無名稱'}</p>
+          <div class="item_tag">
+            <p>#${item.series || ''}</p>
+            <p>#${item.type || ''}</p>
+            <p>#${item.usage || ''}</p>
+          </div>
         </div>
       `;
       gallery.appendChild(div);
