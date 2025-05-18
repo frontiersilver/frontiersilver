@@ -8,24 +8,32 @@
   <title>Frontier Sliver</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
-  <!-- Google Fonts -->
+  <!-- ✅ Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Bahiana&family=Barrio&family=Noto+Sans+TC:wght@100..900&family=Rubik+Distressed&display=swap" rel="stylesheet" />
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-  <!-- CSS -->
+
+  <!-- ✅ CSS -->
   <link rel="stylesheet" href="css/indexstyle.css" />
 
-  <!-- GitHub Pages 自動路徑修正 -->
+  <!-- ✅ Firebase CDN v8（全域 firebase 物件） -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <!-- ✅ jQuery + 插件 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/paroller.js@1.4.6/dist/jquery.paroller.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+
+  <!-- ✅ GitHub Pages 自動修正路徑 -->
   <script>
     (function () {
       const isGithubPages = window.location.hostname.includes("github.io");
       const repoName = "frontiersilver";
       const basePath = isGithubPages ? `/${repoName}/` : "/";
       function updateAttribute(element, attr) {
-        const originalPath = element.getAttribute(attr);
-        if (originalPath && !originalPath.startsWith("http")) {
-          element.setAttribute(attr, basePath + originalPath.replace(/^\/+/, ""));
+        const original = element.getAttribute(attr);
+        if (original && !original.startsWith("http")) {
+          element.setAttribute(attr, basePath + original.replace(/^\/+/, ""));
         }
       }
       document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
@@ -33,15 +41,13 @@
     })();
   </script>
 
-  <!-- jQuery & 插件 -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/paroller.js@1.4.6/dist/jquery.paroller.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
-  <script src="js/indexscript.js"></script>
+  <!-- ✅ 自訂 JS（記得 defer 確保載入順序） -->
+  <script src="js/firebase-init.js" defer></script>
+  <script src="js/indexscript.js" defer></script>
 
-  </script>
+  <!-- ✅ 初始化插件 -->
   <script>
-    $(document).ready(function () {
+    document.addEventListener("DOMContentLoaded", function () {
       $(".parallax-bg").paroller();
     });
   </script>
