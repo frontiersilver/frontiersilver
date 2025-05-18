@@ -323,7 +323,7 @@ nav ul li a:hover {
   padding: 10px 5px;
 }
 .item p {
-  height: 30%; /* 下半部分是文字 */
+  height: auto;; /* 下半部分是文字 */
   margin:0px;
   margin-bottom: 5px;
   padding:0;
