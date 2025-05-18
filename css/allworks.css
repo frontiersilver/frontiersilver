@@ -160,13 +160,6 @@
     text-align: center;
 }
 
-.item img {
-    width: 95%;
-    height: 200px;
-    object-fit: cover; /* 自動裁切以填滿容器 */
-    display: block;
-
-}
 
 .item p {
     margin: 5px 0;
