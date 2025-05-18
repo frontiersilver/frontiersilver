@@ -44,10 +44,10 @@ async function renderGallery() {
         </div>
         <div class="item_p">
           <p class="item_name">${item.name || '無名稱'}</p>
-          <div class="item_tag">
-            <p>#${item.series || ''}</p>
-            <p>#${item.type || ''}</p>
-            <p>#${item.usage || ''}</p>
+          <div >
+            <p class="item_tag">#${item.series || ''}</p>
+            <p class="item_tag">#${item.type || ''}</p>
+            <p class="item_tag">#${item.usage || ''}</p>
           </div>
         </div>
       `;
