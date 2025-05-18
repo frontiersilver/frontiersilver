@@ -17,101 +17,56 @@
     <!-- 網站 favicon（瀏覽器標籤的小圖示） -->
     <link rel="icon" href="favicon.ico" type="image/index_main">
 
+    <!-- 🔧 自動修正 GitHub Pages 路徑 -->
     <script>
-        (function () {
-            // **檢測是否運行於 GitHub Pages**
-            const isGithubPages = window.location.hostname.includes("github.io");
-            const repoName = "frontiersilver"; // ✅ **GitHub 專案名稱**
-            const rootPath = isGithubPages ? `/${repoName}/` : "/";
-
-            // **計算當前 HTML 檔案的相對位置**
-            const currentPath = window.location.pathname;
-            const depth = (currentPath.match(/\//g) || []).length - 1; // 計算 URL 深度
-            const relativeBasePath = "../".repeat(depth); // 生成相對路徑
-
-            function updateAttribute(element, attr, useRoot = false) {
-                let originalPath = element.getAttribute(attr);
-                if (originalPath && !originalPath.startsWith("http")) {
-                    // **如果是 GitHub Pages，使用 rootPath**
-                    // **如果是本地端，使用相對路徑（避免 /pages/ 影響）**
-                    let fixedPath = isGithubPages
-                        ? rootPath + originalPath.replace(/^\/+/, "")
-                        : (useRoot ? rootPath : relativeBasePath) + originalPath.replace(/^\/+/, "");
-
-                    element.setAttribute(attr, fixedPath);
-                }
-            }
-
-            // **✅ 修正 CSS 連結**
-            document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href", true));
-
-            // **✅ 修正 JS 連結**
-            document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src", true));
-
-            // **✅ 修正內部連結 `data-link`**
-            document.querySelectorAll("a[data-link]").forEach(link => {
-                updateAttribute(link, "href");
-            });
-
-            console.log(`🔍 偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，已自動調整路徑：${rootPath}`);
-        })();
+      (function () {
+        const isGithubPages = window.location.hostname.includes("github.io");
+        const repoName = "frontiersilver";
+        const rootPath = isGithubPages ? `/${repoName}/` : "/";
+        const currentPath = window.location.pathname;
+        const depth = (currentPath.match(/\//g) || []).length - 1;
+        const relativeBasePath = "../".repeat(depth);
+        function updateAttribute(element, attr, useRoot = false) {
+          let originalPath = element.getAttribute(attr);
+          if (originalPath && !originalPath.startsWith("http")) {
+            let fixedPath = isGithubPages
+              ? rootPath + originalPath.replace(/^\/+/, "")
+              : (useRoot ? rootPath : relativeBasePath) + originalPath.replace(/^\/+/, "");
+            element.setAttribute(attr, fixedPath);
+          }
+        }
+        document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href", true));
+        document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src", true));
+        document.querySelectorAll("a[data-link]").forEach(link => updateAttribute(link, "href"));
+        console.log(`🔍 偵測到 ${isGithubPages ? "GitHub Pages" : "本地環境"}，路徑已修正`);
+      })();
     </script>
 
+    <!-- ✅ jQuery + 外部 JS 套件 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        (function() {
-            var isGithub = window.location.hostname.includes("github.io");
-            var basePath = isGithub ? "/frontiersilver/" : "";
-
-            // 載入 CSS
-            var link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = basePath + "css/indexstyle.css";
-            document.head.appendChild(link);
-
-            // 載入 favicon 讓它更早出現在瀏覽器標籤
-            var favicon = document.createElement("link");
-            favicon.rel = "icon";
-            favicon.href = basePath + "favicon.ico";
-            document.head.appendChild(favicon);
-
-
-
-            // 載入 JavaScript
-            var script = document.createElement("script");
-            script.src = basePath + "js/indexscript.js";
-            script.defer = true;
-            document.head.appendChild(script);
-
-            // 設定圖片
-            document.addEventListener("DOMContentLoaded", function() {
-                document.querySelectorAll("img[data-src]").forEach(img => {
-                    img.src = basePath + img.dataset.src;
-                });
-            });
-
-        })();
-    </script>
-    <!-- 先載入 jQuery -->
-
-
-    <!-- 然後載入 paroller.js -->
     <script src="https://cdn.jsdelivr.net/npm/paroller.js@1.4.6/dist/jquery.paroller.min.js"></script>
-
-    <!-- 再載入 tilt.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
 
+    <!-- ✅ Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bahiana&family=Barrio&family=Noto+Sans+TC:wght@100..900&family=Rubik+Distressed&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- 引入 Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-    <!-- 絕對路徑 CSS -->
-    <link rel="stylesheet" href="css/indexstyle.css">
-    <link rel="stylesheet" href="css/allworks.css">
+    <!-- ✅ CSS 檔案 -->
+    <link rel="stylesheet" href="css/indexstyle.css" />
+    <link rel="stylesheet" href="css/allworks.css" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bahiana&family=Barrio&family=Noto+Sans+TC:wght@100..900&family=Rubik+Distressed&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://raw.githubusercontent.com/lxgw/LxgwWenKai/main/fonts/TTF/LXGWWenKai-Light.ttf">
+    <!-- ✅ Firebase CDN（v8 全域可用） -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <!-- ✅ Firebase 初始化檔案（必須放在其他腳本之前） -->
+    <script src="js/firebase-init.js" defer></script>
+
+    <!-- ✅ 你的主 JS 檔 -->
+    <script src="js/indexscript.js" defer></script>
+    <script src="js/allworks.js" defer></script>
 </head>
 
 
