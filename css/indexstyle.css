@@ -569,6 +569,7 @@ nav ul li a:hover {
     height: 300px;
     justify-content: center;
     margin: 0 auto;
+    padding: 10px 0;
     background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index_main_bho0av.jpg');
     background-size: cover;
     background-position: center;
