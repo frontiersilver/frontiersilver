@@ -133,8 +133,12 @@ async function renderLatestWorks() {
         <div class="item_p">
           <p>${d.name || '未命名作品'}</p>
           <p>
-            ${d.series ? `#${d.series}<br>` : ''}
-            ${d.type ? `#${d.type}<br>` : ''}
+            ${d.series ? `#${d.series}` : ''}
+          </p>
+          <p>
+            ${d.type ? `#${d.type}` : ''}
+          </p>
+          <p>
             ${d.usage ? `#${d.usage}` : ''}
           </p>
         </div>
