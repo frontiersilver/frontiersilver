@@ -39,7 +39,7 @@ async function renderGallery() {
       const div = document.createElement("div");
       div.classList.add("item");
       div.innerHTML = `
-        <div class="item_pic">
+        <div class="item_img">
           <img src="${item.imageUrl}" alt="${item.name || ''}" />
         </div>
         <div class="item_p">
