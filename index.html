@@ -11,7 +11,8 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Bahiana&family=Barrio&family=Noto+Sans+TC:wght@100..900&family=Rubik+Distressed&display=swap" rel="stylesheet" />
-
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   <!-- CSS -->
   <link rel="stylesheet" href="css/indexstyle.css" />
 
@@ -103,16 +104,20 @@
 
       <div class="scroll-container">
         <button class="scroll-left">←</button>
-        <div class="scroll-content">
-          <!-- 六個商品 -->
-          <!-- 可程式化渲染 -->
-          <!-- item 可重複 block -->
+        </div>
+        <div class="scroll-content" id="latestGallery">
+          <!-- Firebase 最新作品會插入這裡 -->
+
+        <!-- 可程式化渲染 -->
+        <!-- item 可重複 block -->
+        <!-- <div class="scroll-content">
           <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg" alt="" /></div><div class="item_p"><p>Work - 1</p><p>price</p></div></div>
           <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694372/2_fr7zcu.jpg" alt="" /></div><div class="item_p"><p>Work - 2</p><p>price</p></div></div>
           <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694478/1_ou3ckx.jpg" alt="" /></div><div class="item_p"><p>Work - 3</p><p>price</p></div></div>
           <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694463/%E8%83%8C%E6%99%AF2_h7muxh.jpg" alt="" /></div><div class="item_p"><p>Work - 4</p><p>price</p></div></div>
           <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694458/4_d7bmy1.jpg" alt="" /></div><div class="item_p"><p>Work - 5</p><p>price</p></div></div>
           <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694376/DSC_0382_xbpgvg.jpg" alt="" /></div><div class="item_p"><p>Work - 6</p><p>price</p></div></div>
+          -->
         </div>
         <button class="scroll-right">→</button>
       </div>

@@ -30,22 +30,36 @@ async function renderGallery() {
     const snapshot = await db.collection("works").orderBy("timestamp", "desc").get();
     gallery.innerHTML = "";
 
+    let hasResult = false;
+
     snapshot.forEach(doc => {
       const item = doc.data();
 
-      // 篩選邏輯
+      // 篩選條件不符合則略過
       if (currentCategory && currentValue && item[currentCategory] !== currentValue) {
         return;
       }
 
+      hasResult = true;
+
       const div = document.createElement("div");
       div.classList.add("item");
       div.innerHTML = `
-        <img src="${item.imageUrl}" alt="${item.series}" />
-        <p>${item.series} - ${item.type} - ${item.usage}</p>
+        <div class="item_img">
+          <img src="${item.imageUrl}" alt="${item.name || ''}" />
+        </div>
+        <div class="item_p">
+          <p>${item.name || '無名稱'}</p>
+          <p>${item.price || ''}</p>
+        </div>
       `;
       gallery.appendChild(div);
     });
+
+    if (!hasResult) {
+      gallery.innerHTML = "<p>目前沒有符合條件的作品。</p>";
+    }
+
   } catch (err) {
     console.error("❌ 讀取作品失敗：", err);
     gallery.innerHTML = "<p>無法載入作品</p>";
