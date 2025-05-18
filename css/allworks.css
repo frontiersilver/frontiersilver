@@ -163,7 +163,8 @@
 .item img {
     width: 100%;
     height: 70%;
-    object-fit: cover;
+    object-fit: cover; /* 自動裁切以填滿容器 */
+    display: block;
 }
 
 .item p {

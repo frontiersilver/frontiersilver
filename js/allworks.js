@@ -3,6 +3,11 @@ let currentCategory = null;
 let currentValue = null;
 
 // ✅ 篩選條件設定
+function showAllWorks() {
+  currentCategory = null;
+  currentValue = null;
+  renderGallery();
+}
 function filterItems(category, value) {
   currentCategory = category;
   currentValue = value;
