@@ -167,6 +167,12 @@
   pointer-events: none;
   box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3) ;
 }
+.item_p{
+  height: auto;; /* 下半部分是文字 */
+  margin:0px;
+  padding:0;
+  font-size: 16px;
+}
 .item_name{
   font-size: 16px;
   text-align: left;
