@@ -165,12 +165,12 @@
     height: 200px;
     object-fit: cover; /* 自動裁切以填滿容器 */
     display: block;
-    
+
 }
 
 .item p {
     margin: 5px 0;
     font-size: 14px;
     text-align: left;
-    line-height: 1.1;
+    line-height: 0.7;
 }
