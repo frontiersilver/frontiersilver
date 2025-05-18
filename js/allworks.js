@@ -1,16 +1,18 @@
-// ✅ 篩選條件
-let currentCategory = null;
-let currentValue = null;
+// ✅ 狀態集中管理
+const state = {
+  currentCategory: null,
+  currentValue: null
+};
 
 // ✅ 篩選條件設定
 function showAllWorks() {
-  currentCategory = null;
-  currentValue = null;
+  state.currentCategory = null;
+  state.currentValue = null;
   renderGallery();
 }
 function filterItems(category, value) {
-  currentCategory = category;
-  currentValue = value;
+  state.currentCategory = category;
+  state.currentValue = value;
   renderGallery();
 }
 
@@ -28,8 +30,7 @@ async function renderGallery() {
     snapshot.forEach(doc => {
       const item = doc.data();
 
-      // 篩選條件不符合則略過
-      if (currentCategory && currentValue && item[currentCategory] !== currentValue) {
+      if (state.currentCategory && state.currentValue && item[state.currentCategory] !== state.currentValue) {
         return;
       }
 
@@ -43,7 +44,9 @@ async function renderGallery() {
         </div>
         <div class="item_p">
           <p>${item.name || '無名稱'}</p>
-          <p>${item.series || ''} / ${item.type || ''} / ${item.usage || ''}</p>
+          <p>#${item.series || ''}</p>
+          <p>#${item.type || ''}</p>
+          <p>#${item.usage || ''}</p>
         </div>
       `;
       gallery.appendChild(div);
