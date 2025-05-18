@@ -1,15 +1,3 @@
-// ✅ Firebase 初始化
-const firebaseConfig = {
-  apiKey: "AIzaSyBNMOLOUp4VrjdQiULXQCInNyI8gx7kl9s",
-  authDomain: "frontiersilver-4a99a.firebaseapp.com",
-  projectId: "frontiersilver-4a99a",
-  storageBucket: "frontiersilver-4a99a.appspot.com",
-  messagingSenderId: "547331341626",
-  appId: "1:547331341626:web:275d76403296f888686403"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
 // ✅ 篩選條件
 let currentCategory = null;
 let currentValue = null;
@@ -50,7 +38,7 @@ async function renderGallery() {
         </div>
         <div class="item_p">
           <p>${item.name || '無名稱'}</p>
-          <p>${item.price || ''}</p>
+          <p>${item.series || ''} / ${item.type || ''} / ${item.usage || ''}</p>
         </div>
       `;
       gallery.appendChild(div);

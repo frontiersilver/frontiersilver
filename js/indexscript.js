@@ -1,15 +1,3 @@
-// ✅ Firebase 初始化
-const firebaseConfig = {
-  apiKey: "AIzaSyBNMOLOUp4VrjdQiULXQCInNyI8gx7kl9s",
-  authDomain: "frontiersilver-4a99a.firebaseapp.com",
-  projectId: "frontiersilver-4a99a",
-  storageBucket: "frontiersilver-4a99a.appspot.com",
-  messagingSenderId: "547331341626",
-  appId: "1:547331341626:web:275d76403296f888686403"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
 // ✅ jQuery 觸發效果
 $(document).ready(function () {
   $(".parallax, .jumbotron, .perspective-container, .parallaxtext, .image").paroller();
@@ -69,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
   typeEffect();
 });
 
-// ✅ 打字動畫 2（若有另一段 animated-text）
+// ✅ 打字動畫 2
 document.addEventListener("DOMContentLoaded", () => {
   const text = "FRONTIER SLIVER";
   const animatedText = document.getElementById("animated-text");
