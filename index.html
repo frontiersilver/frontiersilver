@@ -15,118 +15,91 @@
   <!-- ✅ CSS -->
   <link rel="stylesheet" href="css/indexstyle.css" />
 
-  <!-- ✅ Firebase CDN v8（全域 firebase 物件） -->
+  <!-- ✅ Firebase SDK (v8) -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
-  <!-- ✅ jQuery + 插件 -->
+  <!-- ✅ jQuery + Plugins -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/paroller.js@1.4.6/dist/jquery.paroller.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
 
-  <!-- ✅ GitHub Pages 自動修正路徑 -->
+  <!-- ✅ GitHub Pages 路徑修正 -->
   <script>
     (function () {
       const isGithubPages = window.location.hostname.includes("github.io");
       const repoName = "frontiersilver";
       const basePath = isGithubPages ? `/${repoName}/` : "/";
-      function updateAttribute(element, attr) {
+      function fixPath(element, attr) {
         const original = element.getAttribute(attr);
         if (original && !original.startsWith("http")) {
           element.setAttribute(attr, basePath + original.replace(/^\/+/, ""));
         }
       }
-      document.querySelectorAll("link[rel='stylesheet']").forEach(link => updateAttribute(link, "href"));
-      document.querySelectorAll("script[src]").forEach(script => updateAttribute(script, "src"));
+      document.querySelectorAll("link[rel='stylesheet']").forEach(link => fixPath(link, "href"));
+      document.querySelectorAll("script[src]").forEach(script => fixPath(script, "src"));
     })();
   </script>
 
-  <!-- ✅ 自訂 JS（記得 defer 確保載入順序） -->
+  <!-- ✅ Firebase 初始化與主程式 -->
   <script src="js/firebase-init.js" defer></script>
   <script src="js/indexscript.js" defer></script>
-
-  <!-- ✅ 初始化插件 -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      $(".parallax-bg").paroller();
-    });
-  </script>
-
 </head>
 
 <body>
-  <div class="containerhead">
-    <header>
-      <div class="header-typewriter"><span id="typewriter-text"></span></div>
-      <div class="btncontainer">
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+  <header class="containerhead">
+    <div class="header-typewriter"><span id="typewriter-text"></span></div>
+    <div class="btncontainer"><button class="menu-btn" onclick="toggleMenu()">☰</button></div>
+
+    <div class="perspective-container">
+      <div class="parallax-content">
+        <h1 class="animated-text" id="animated-text"><a rel="index" href="index.html"></a></h1>
+        <nav>
+          <ul>
+            <li><a href="index.html">SHOPNOW</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="privatecontact.html">CONTACT</a></li>
+          </ul>
+        </nav>
       </div>
+      <div class="parallax">
+        <img class="parallax-bg" src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg" alt="" />
+      </div>
+    </div>
 
-      <div class="perspective-container">
-        <div class="parallax-content">
-          <h1 class="animated-text" id="animated-text">
-            <a rel="index" href="index.html"></a>
-          </h1>
-          <nav>
-            <ul>
-              <li><a href="index.html">SHOPNOW</a></li>
-              <li><a href="about.html">ABOUT</a></li>
-              <li><a href="privatecontact.html">CONTACT</a></li>
-            </ul>
-          </nav>
-        </div>
-        <div class="parallax">
-          <img class="parallax-bg" src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg" alt="" />
+    <!-- 側邊選單 -->
+    <div id="sidebar" class="sidebar">
+      <button class="close-btn" onclick="toggleMenu()">×</button>
+      <a href="index.html">Frontier</a>
+      <div class="dropdown">
+        <button class="dropdown-btn" onclick="toggleMenu2()">Allworks <span class="arrow"></span></button>
+        <div class="dropdown-content">
+          <a href="allworks.html">系列</a>
+          <a href="allworks.html">品項</a>
+          <a href="allworks.html">用途</a>
         </div>
       </div>
+      <a href="service.html">訂製</a>
+      <a href="privatecontact.html">聯絡</a>
+    </div>
+    <div id="overlay" class="overlay" onclick="closeMenu()"></div>
+  </header>
 
-      <div id="sidebar" class="sidebar">
-        <button class="close-btn" onclick="toggleMenu()">×</button>
-        <a href="index.html">Frontier</a>
-        <!--<a href="about.html">Frontier</a>-->
-        <div class="dropdown">
-          <button class="dropdown-btn" onclick="toggleMenu2()">Allworks <span class="arrow"></span></button>
-          <div class="dropdown-content">
-            <a href="allworks.html">系列</a>
-            <a href="allworks.html">品項</a>
-            <a href="allworks.html">用途</a>
-          </div>
-        </div>
-        <a href="service.html">訂製</a>
-        <a href="privatecontact.html">聯絡</a>
-      </div>
-
-      <div id="overlay" class="overlay" onclick="closeMenu()"></div>
-    </header>
-  </div>
-
-  <div class="container">
+  <main class="container">
     <div class="container2">
       <div class="jumbotron">
-        <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index3_kjdfto.jpg" alt="test" />
+        <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index3_kjdfto.jpg" alt="主視覺" />
       </div>
     </div>
 
     <section class="content">
-      <h2>NEWARRIVALS</h2>
+      <h2>NEW ARRIVALS</h2>
       <div class="text1"><p>不屬於任何地方的人，會在邊界徘徊</p></div>
 
       <div class="scroll-container">
         <button class="scroll-left">←</button>
-        </div>
         <div class="scroll-content" id="latestGallery">
-          <!-- Firebase 最新作品會插入這裡 -->
-
-        <!-- 可程式化渲染 -->
-        <!-- item 可重複 block -->
-        <!-- <div class="scroll-content">
-          <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg" alt="" /></div><div class="item_p"><p>Work - 1</p><p>price</p></div></div>
-          <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694372/2_fr7zcu.jpg" alt="" /></div><div class="item_p"><p>Work - 2</p><p>price</p></div></div>
-          <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694478/1_ou3ckx.jpg" alt="" /></div><div class="item_p"><p>Work - 3</p><p>price</p></div></div>
-          <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694463/%E8%83%8C%E6%99%AF2_h7muxh.jpg" alt="" /></div><div class="item_p"><p>Work - 4</p><p>price</p></div></div>
-          <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694458/4_d7bmy1.jpg" alt="" /></div><div class="item_p"><p>Work - 5</p><p>price</p></div></div>
-          <div class="item"><div class="item_img"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739694376/DSC_0382_xbpgvg.jpg" alt="" /></div><div class="item_p"><p>Work - 6</p><p>price</p></div></div>
-          -->
+          <!-- Firebase 最新作品將插入這裡 -->
         </div>
         <button class="scroll-right">→</button>
       </div>
@@ -160,23 +133,20 @@
 
     <div class="container2">
       <div class="jumbotron">
-        <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index1_wwddxr.jpg" alt="test" />
+        <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index1_wwddxr.jpg" alt="jumbotron" />
       </div>
     </div>
-  </div>
+  </main>
 
   <footer>
     <div>
       <p class="containerfoot">
         Frontier Sliver | All Rights Reserved<br />
-        Peresentative: TYH<br />
+        Representative: TYH<br />
         CS: +886 987654321<br /><br />
         Terms of use | Privacy
       </p>
     </div>
   </footer>
-
-  <!-- JS -->
-  <script src="js/indexscript.js"></script>
 </body>
 </html>

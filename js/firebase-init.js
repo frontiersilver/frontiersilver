@@ -1,6 +1,7 @@
-// ✅ 確保 Firebase SDK 已正確載入（請在 HTML 先引入 firebase-app 和 firebase-firestore）
+// ✅ 確保 Firebase SDK 已正確載入（firebase-app.js 與 firebase-firestore.js）
+// 本檔案請確保在 HTML 中「firebase-app.js 和 firebase-firestore.js」之後載入
 
-// 避免重複初始化
+// ✅ 避免重複初始化 Firebase
 if (!firebase.apps.length) {
   const firebaseConfig = {
     apiKey: "AIzaSyBNMOLOUp4VrjdQiULXQCInNyI8gx7kl9s",
@@ -14,5 +15,5 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-// ✅ Firestore 全域使用
+// ✅ 提供全站共用 Firestore 實例
 const db = firebase.firestore();
