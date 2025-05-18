@@ -132,7 +132,11 @@ async function renderLatestWorks() {
         </div>
         <div class="item_p">
           <p>${d.name || '未命名作品'}</p>
-          <p>${d.series || ''} / ${d.type || ''} / ${d.usage || ''}</p>
+          <p>
+            ${d.series ? `#${d.series}<br>` : ''}
+            ${d.type ? `#${d.type}<br>` : ''}
+            ${d.usage ? `#${d.usage}` : ''}
+          </p>
         </div>
       `;
       container.appendChild(div);
