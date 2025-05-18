@@ -242,6 +242,7 @@ nav ul li a:hover {
     color: black;
     display: block;
     transition: 0.1s;
+    margin-bottom:10px;
 }
 
 
