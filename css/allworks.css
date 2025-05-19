@@ -131,7 +131,6 @@
   max-width: 230px;
   position: relative;
   background-color: #F8F8F8;
-  justify-content: center;  /* 內容水平置中 */
   align-items: center;
 }
 
