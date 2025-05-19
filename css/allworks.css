@@ -153,20 +153,32 @@
 
 /* 作品卡片 */
 .item {
-    width: 200px;
-    height: 300px;
+    width: 220px;
+    height: 320px;
     overflow: hidden;
     background: white;
     text-align: center;
+    padding:20px;
+
 }
 .item_pic{
-  width: 100%;
-  height: 70%;
-  object-fit: cover;
-  object-fit: cover;
-  pointer-events: none;
-  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3) ;
+    width: 100%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 20px;
 }
+.item_pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-fit: cover;
+    pointer-events: none;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3) ;
+}
+
 .item_p{
   height: auto;; /* 下半部分是文字 */
   margin:0px;
