@@ -1,20 +1,4 @@
-.aside{
-  display: table-cell;
-  width: 200px;
-  min-width: 20%;
-  vertical-align: top;
-  max-width: 230px;
-  position: relative;
-  background-color: #F8F8F8;
-}
 
-.asidedrop{
-    padding: 10px ;
-}
-.dropdown2 {
-    position: relative;
-    display: block;
-}
 /* 設定按鈕 */
 .dropdown-btn2 {
     padding: 5px 20px;
@@ -135,13 +119,37 @@
     margin-top: 0px;
     background-color: black;
 }
+.allWorks{
+  display: flex;
+}
+.aside{
+  flex-shrink: 0;
+  display: flex;
+  width: 200px;
+  min-width: 20%;
+  vertical-align: top;
+  max-width: 230px;
+  position: relative;
+  background-color: #F8F8F8;
+  justify-content: center;  /* 內容水平置中 */
+  align-items: center;
+}
 
-
+.asidedrop{
+    padding: 10px ;
+}
+.dropdown2 {
+    position: relative;
+    display: block;
+}
 .inside{
+  flex: 1;
+  display: flex;
+  justify-content: center;  /* 內容水平置中 */
+  padding: 20px; /* 可視需求調整 */
   max-width:100%;
   border-width: 0 0 0 0px;
-  display: table-cell;
-  margin: 0;
+  margin: 0 auto;
 }
 
 /* 作品展示區 */
