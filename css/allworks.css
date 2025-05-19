@@ -143,10 +143,9 @@
 .inside{
   flex: 1;
   display: flex;
-  justify-content: center;  /* 內容水平置中 */
   padding: 20px; /* 可視需求調整 */
   max-width:100%;
-  border-width: 0 0 0 0px;
+  border-width: 0;
   margin: 0 auto;
 }
 
