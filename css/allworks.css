@@ -155,8 +155,8 @@
 /* 作品展示區 */
 .gallery {
     display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 10px;
 }
 
 /* 作品卡片 */
