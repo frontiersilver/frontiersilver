@@ -78,14 +78,14 @@ function viewWork(id) {
         <h2>${d.name || '未命名作品'}</h2>
         <img src="${d.imageUrl}" alt="${d.name}" style="width: 100%; margin-bottom: 10px;" />
 
-        <p><strong>價格：</strong> ${d.price || '—'}</p>
-        <p><strong>理念：</strong><br>${(d.concept || '').replace(/\\n/g, '<br>')}</p>
-        <p><strong>材質：</strong> ${d.material || '—'}</p>
-        <p><strong>尺寸：</strong> ${d.size || '—'}</p>
-        <p><strong>重量：</strong> ${d.weight || '—'}</p>
-        <p><strong>系列：</strong> #${d.series || '—'}</p>
-        <p><strong>品項：</strong> #${d.type || '—'}</p>
-        <p><strong>用途：</strong> #${d.usage || '—'}</p>
+        <p>價格： ${d.price || '—'}</p>
+        <p><br>${(d.concept || '').replace(/\\n/g, '<br>')}</p>
+        <p>材質： ${d.material || '—'}</p>
+        <p>尺寸： ${d.size || '—'}</p>
+        <p>重量： ${d.weight || '—'}</p>
+        <p>系列： #${d.series || '—'}</p>
+        <p>品項： #${d.type || '—'}</p>
+        <p>用途： #${d.usage || '—'}</p>
 
         ${(Array.isArray(d.extraImages) && d.extraImages.length > 0)
           ? '<div><strong>展示圖：</strong><br>' +
