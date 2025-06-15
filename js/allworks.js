@@ -64,6 +64,40 @@ async function renderGallery() {
   }
 }
 
+function viewWork(id) {
+  db.collection("works").doc(id).get().then(doc => {
+    const d = doc.data();
+
+    const popup = document.createElement("div");
+    popup.className = "popup";
+    popup.innerHTML = `
+      <div class="popup-content">
+        <span class="close" onclick="this.closest('.popup').remove()">×</span>
+
+        <h2>${d.name || '未命名作品'}</h2>
+        <img src="${d.imageUrl}" alt="${d.name}" style="width: 100%; margin-bottom: 10px;" />
+
+        <p><strong>價格：</strong> ${d.price || '—'}</p>
+        <p><strong>理念：</strong><br>${(d.concept || '').replace(/\n/g, '<br>')}</p>
+        <p><strong>材質：</strong> ${d.material || '—'}</p>
+        <p><strong>尺寸：</strong> ${d.size || '—'}</p>
+        <p><strong>重量：</strong> ${d.weight || '—'}</p>
+        <p><strong>系列：</strong> #${d.series || '—'}</p>
+        <p><strong>品項：</strong> #${d.type || '—'}</p>
+        <p><strong>用途：</strong> #${d.usage || '—'}</p>
+
+        ${Array.isArray(d.extraImages) && d.extraImages.length > 0
+          ? `<div><strong>展示圖：</strong><br>` +
+            d.extraImages.map(url => `<img src="${url}" style="width: 100%; margin-top: 10px;">`).join("") +
+            `</div>`
+          : ""
+        }
+      </div>
+    `;
+    document.body.appendChild(popup);
+  });
+}
+
 // ✅ 下拉選單控制
 function toggleDropdown(menuId) {
   document.querySelectorAll(".dropdown-content").forEach(menu => {
