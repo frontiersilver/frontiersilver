@@ -78,11 +78,12 @@ function viewWork(id) {
         <h2>${d.name || '未命名作品'}</h2>
         <img src="${d.imageUrl}" alt="${d.name}" style="width: 100%; margin-bottom: 10px;" />
 
-        <p>價格： ${d.price || '—'}</p>
+
         <p><br>${(d.concept || '').replace(/\\n/g, '<br>')}</p>
         <p>材質： ${d.material || '—'}</p>
         <p>尺寸： ${d.size || '—'}</p>
         <p>重量： ${d.weight || '—'}</p>
+        <p>價格： ${d.price || '—'}</p>
         <p>#${d.series || '—'}</p>
         <p>#${d.type || '—'}</p>
         <p>#${d.usage || '—'}</p>
