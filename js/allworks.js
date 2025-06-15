@@ -83,9 +83,9 @@ function viewWork(id) {
         <p>材質： ${d.material || '—'}</p>
         <p>尺寸： ${d.size || '—'}</p>
         <p>重量： ${d.weight || '—'}</p>
-        <p>系列： #${d.series || '—'}</p>
-        <p>品項： #${d.type || '—'}</p>
-        <p>用途： #${d.usage || '—'}</p>
+        <p>#${d.series || '—'}</p>
+        <p>#${d.type || '—'}</p>
+        <p>#${d.usage || '—'}</p>
 
         ${(Array.isArray(d.extraImages) && d.extraImages.length > 0)
           ? '<div><strong>展示圖：</strong><br>' +
