@@ -226,6 +226,11 @@
   z-index: 9999;
 }
 
+.popup-h2 {
+  text-align: left;
+
+}
+
 /* 🔵 內部內容區塊 */
 .popup-content {
   background: #fff;
