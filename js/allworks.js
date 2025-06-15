@@ -75,9 +75,11 @@ function viewWork(id) {
     popup.innerHTML = `
       <div class="popup-content">
         <span class="close" onclick="this.closest('.popup').remove()">×</span>
+        <h2 class="popup-h">${d.name || '未命名作品'}</h2>
+
 
         <img src="${d.imageUrl}" alt="${d.name}" style="width: 100%; margin-bottom: 10px;" />
-        <h2 class="popup-h">${d.name || '未命名作品'}</h2>
+
 
         <p>${(d.concept || '').replace(/\\n/g, '<br>')}</p>
 
