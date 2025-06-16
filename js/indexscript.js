@@ -33,7 +33,7 @@ function closeMenu() {
 
 // ✅ 打字動畫 1
 document.addEventListener("DOMContentLoaded", () => {
-  const text = "Frontier Sliver Frontier Sliver   Frontier Sliver   Frontier Sliver   Frontier Sliver";
+  const text = "Frontier Silver Frontier Silver   Frontier Silver   Frontier Silver   Frontier Silver";
   const textElement = document.getElementById("typewriter-text");
   if (!textElement) return;
 
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ✅ 打字動畫 2
 document.addEventListener("DOMContentLoaded", () => {
-  const text = "FRONTIER SLIVER";
+  const text = "FRONTIER SILVER";
   const animatedText = document.getElementById("animated-text");
   if (!animatedText) return;
 
