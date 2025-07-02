@@ -1,3 +1,15 @@
+h1{
+  margin: 0;
+}
+#concept {
+  display: block;
+  height: fit-content;
+  resize: vertical;
+  width: 100%;
+  font-size: 15px;
+  font-family: 'LXGW WenKai Light', sans-serif;
+  white-space: pre-wrap;
+}
 
 /* 設定按鈕 */
 .dropdown-btn2 {
@@ -195,7 +207,7 @@
 .item_p {
   margin: 0;
   padding: 0;
-  font-size: 16px;
+  font-size: 15px;
   text-align: left;
 }
 

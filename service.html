@@ -65,18 +65,20 @@
 
     <!-- 再載入 tilt.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
 
 
     <!-- 引入 Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <!-- 絕對路徑 CSS -->
-    <link rel="stylesheet" href="css/indexstyle.css">
     <link rel="stylesheet" href="css/allworks.css">
-
+    <link rel="stylesheet" href="css/service.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bahiana&family=Barrio&family=Noto+Sans+TC:wght@100..900&family=Rubik+Distressed&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://raw.githubusercontent.com/lxgw/LxgwWenKai/main/fonts/TTF/LXGWWenKai-Light.ttf">
+    <!-- p5.js CDN -->
+
 </head>
 
 
@@ -125,42 +127,51 @@
         </header>
     </div>
     <section class="content">
-        <h2>訂製</h2>
+        <div class="content">
+          <h1>CUSTOMIZED</h1>
+        </div>
+        <div class="content">
+          <!-- ▶ 用來放畫布；float 讓段落自動環繞 -->
+          <div id="jaggedHolder" class="jagged-box"></div>
 
-        <div class="d-flex">
-          <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg')no-repeat center;background-size: cover;"
-              data-paroller-factor="0.5"
-              data-paroller-factor-md="0.3"
-              data-paroller-factor-sm="0.2"
-              data-paroller-factor-xs="0.1">
-          </div>
-          <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') repeat center; background-size: cover;"
-                data-paroller-factor="-0.4">
-          </div>
-          <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index2_fjmuwj.jpg') no-repeat center;background-size: cover;"
-                data-paroller-factor="-0.2">
-          </div>
+          <!-- 內文示例（會自動環繞在畫布右側 & 下方） -->
+          <article class="content">
+            <p>跟我說說你的故事與預算。討論過後，將會確定細節與價錢。訂金為原價的三分之一。
+            </p>
+            <p>
+            收到訂金後，便會開始製作</p>
+            <p>製作時間約20～30個工作天</p>
+            <p>
+              <br>
+            </p>
+            <p>完成後，透過店到店出貨，並且收取尾款
+              <br>
+            </p>
+            <p>過程中我們會一起討論設計
+              <br>每個階段都會有全角度影片展示
+              <br>
+            </p>
+          </article>
         </div>
-        <div class="text1">
-          <p class="text2">告訴我你要的圖片/故事/元素……之類的，跟你的預算。
-            <br>確定細項和價錢後匯款訂金（原價的三分之一）
-            <br>收到訂金就會開始製作
-            <br>20～30個工作天寄店到店出貨同時收尾款
-          </p>
+        <div class="content">
+          <div class="d-flex">
+            <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1751360708/%E6%88%AA%E5%9C%96_2025-07-01_%E4%B8%8B%E5%8D%884.55.32_fg8dx7.png')no-repeat center;background-size: cover;"
+                data-paroller-factor="0.5"
+                data-paroller-factor-md="0.3"
+                data-paroller-factor-sm="0.2"
+                data-paroller-factor-xs="0.1">
+            </div>
+            <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1750414726/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2_2025-06-20_181718_ywykke.png') repeat center; background-size: cover;"
+                  data-paroller-factor="-0.4">
+            </div>
+            <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1748055393/A04211962_k7hjak.jpg') no-repeat center;background-size: cover;"
+                  data-paroller-factor="-0.2">
+            </div>
+          </div>
         </div>
 
-        <div class="tilt-box">
-            <span data-tilt></span>
-         </div>
-         <div class="text1">
-           <p class="text2">過程中我會跟你一起討論設計
-             <br>每個階段都會拍影片全角度展示確認
-             <br>
-           </p>
-          <p class="text2">客製商品不會向其他人販售，我會確保只有你擁有這個獨一無二的作品，這才是客製銀飾的意義。</p>
-        </div>
         <div class="tex1">
-
+          <p class="text2">＃客製商品不會向其他人販售，我會確保只有你擁有這個獨一無二的作品，這才是客製銀飾的意義。</p>
         </div>
 
     </section>
@@ -180,6 +191,7 @@
     <!-- 絕對路徑 JS -->
   <script src="js/indexscript.js"></script>
   <script src="js/allworks.js"></script>
+  <script src="js/sketch.js"></script>
 
 </body>
 

@@ -1,3 +1,42 @@
+/* 讓畫布浮動在左邊，段落自動繞排 */
+.jagged-box{
+  float: left;                       /* 只有這塊參與文字繞排 */
+  width: 260px;                      /* 想要的版面尺寸 */
+  aspect-ratio: 1/1;
+  clip-path: var(--zigzag);          /* 同前：鋸齒邊、polygon() 或 url(svg) */
+  shape-outside: var(--zigzag);
+  margin: 0 1.5rem 1rem 0;           /* 文字與圖片間距 */
+  position: relative;                /* 讓 canvas 能 absolute 定位 */
+  overflow: hidden;                  /* 把多餘畫布切掉，避免壓到旁邊 */
+}
+
+/* 2. 內層 canvas 完全貼滿容器，**不參與排版** ---------- */
+.jagged-box > canvas{
+  position: absolute;
+  inset: 0;                          /* top:0 right:0 bottom:0 left:0 */
+  width: 100%;
+  height: 100%;
+  display: block;                    /* 消除行內縫隙 */
+  pointer-events: none;              /* 如果你不需要接滑鼠事件 */
+}
+
+.content{
+  font-family:sans-serif;
+  font-size:15px;
+  line-height:1.6;
+  text-align:justify;
+}
+/* 背景圖形 */
+.bg-shape{
+  width: 95vw;      /* 想多大就調 */
+  height: 80vh;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 0;       /* 最底層 */
+  pointer-events: none;
+}
 /* -------------------- 字體 & 動畫 -------------------- */
 
 @font-face {
@@ -41,23 +80,18 @@ html, body {
     width: 100%; /* 確保寬度不超過視口 */
     margin: 0;
     padding: 0;
-}
-h1{
-  margin: 0;
-  text-align: center;
-}
-body {
     font-family: 'LXGW WenKai Regular', sans-serif;
-    background-color: white;
+    background:#ddd;
     width: 100%;
-    margin: 0;
-    padding: 0;
 }
 * {
     box-sizing: border-box; /* 確保寬度不會被 padding/border 增加 */
 }
 p{
   margin: 5px;
+}
+h1{
+  margin: 0;
 }
 h2{
   font-family: 'LXGW WenKai Light', sans-serif;
@@ -104,6 +138,7 @@ header {
     overflow: hidden;
     z-index: 500;
     padding: 0 70px;
+    margin-top: 0;
     display: inline-block;
     transform: scaleX(1);
 }
@@ -387,7 +422,6 @@ nav ul li a:hover {
     overflow: hidden;
     display: flex;
     justify-content: center;
-    margin-top: 10px;
     background-color: black;
 }
 

@@ -81,7 +81,7 @@ function viewWork(id) {
         <img src="${d.imageUrl}" alt="${d.name}" style="width: 100%; margin-bottom: 10px;" />
 
 
-        <p>${(d.concept || '').replace(/\\n/g, '<br>')}</p>
+        <p  id="concept">${(d.concept || '').replace(/\\n/g, '<br>')}</p>
 
         <p>材質： ${d.material || '—'}</p>
         <p>尺寸： ${d.size || '—'}</p>
