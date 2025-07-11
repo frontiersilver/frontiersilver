@@ -176,7 +176,7 @@ header {
 
 .parallax-bg  {
     position: relative;
-    top: -300px;
+    top: -500px;
     width: 100%;
     height: auto;
     background-repeat: repeat; /* 讓圖片在 X 軸 & Y 軸 都重複 */

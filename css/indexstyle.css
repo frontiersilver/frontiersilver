@@ -134,22 +134,23 @@ header {
     height: 350px;
     display: block;
     color: black;
-
+    background-image: url("https://res.cloudinary.com/dyjvqds92/image/upload/v1743753780/ADSC_0396_owenjt.jpg");
+    background-repeat: repeat;
     opacity: 50%;
     overflow: hidden;
 }
 
 .parallax-bg  {
     position: relative;
-    top: -300px;
+    top: -500px;
     width: 100%;
     height: auto;
-    background-repeat: repeat; /* 讓圖片在 X 軸 & Y 軸 都重複 */
     background-size: contain;
     transform: translateY(calc(var(--scroll-y) * var(--parallax-factor)));
     transition: transform 0.1s ease-out;
     z-index: 1;
 }
+.parallax-bg img{}
 
 /* 視差內容 */
 .parallax-content {
@@ -161,6 +162,7 @@ header {
     text-align: center;
     z-index: 5;
     margin: 0 auto;
+    background-repeat: repeat;
 }
 
 /* -------------------- 動畫文字 -------------------- */

@@ -46,6 +46,45 @@ h1{
     transition: height 0.3s ease-out;
     max-width: 100%;
 }
+
+/* ① 每個選單連結獨佔一行 ↓↓↓ */
+.dropdown-content2 a{
+  display:block;            /* 關鍵：改成 block 就會自動換行 */
+  line-height:1.4;          /* 想調行距可加這行 */
+}
+#nextBtn{
+  position:absolute;
+  right:0;
+  top:50%;
+  transform:translateY(-50%);
+  font-size: 30px;     /* 放大箭頭 */
+  font-weight: bold;   /* 加粗字體 */
+  background: none;    /* 去除背景 */
+  border: none;        /* 去除邊框 */
+  cursor: pointer;     /* 滑鼠變手指 */
+  padding: 10px;       /* 增加可點擊範圍 */
+  color: #333;         /* 設定箭頭顏色，可自行調整 */
+}
+#prevBtn{
+  position:absolute;
+  left:0;
+  top:50%;
+  transform:translateY(-50%);
+  font-size: 30px;     /* 放大箭頭 */
+  font-weight: bold;   /* 加粗字體 */
+  background: none;    /* 去除背景 */
+  border: none;        /* 去除邊框 */
+  cursor: pointer;     /* 滑鼠變手指 */
+  padding: 10px;       /* 增加可點擊範圍 */
+  color: #333;         /* 設定箭頭顏色，可自行調整 */
+}
+/* 方式 2：把父層改成 column flex，也能讓子元素直排 */
+#series-menu{
+  display:flex;
+  flex-direction:column;   /* 垂直排列子元素 */
+  gap:4px;                 /* 每列間距（CSS flex gap）*/
+}
+
 .dropdown-content3 {
     font-family: 'LXGW WenKai Regular', sans-serif;
     text-align: justify;
@@ -148,6 +187,21 @@ h1{
 .asidedrop{
     padding: 10px ;
 }
+@media (max-width: 768px) {
+  .allWorks {
+    flex-direction: column;
+  }
+
+  .aside {
+    width: 100%;
+    max-width: none;
+  }
+
+  .insdide {
+    width: 100%;
+  }
+}
+
 .dropdown2 {
     position: relative;
     display: block;

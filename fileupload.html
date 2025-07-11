@@ -118,7 +118,12 @@
       <input type="number" id="extraImageCount" min="0" placeholder="輸入張數" />
       <button type="button" onclick="generateExtraImageInputs()">＋ 產生欄位</button>
       <div id="extraImageInputs"></div>
-
+      <!-- 新增：輪播選擇區域 -->
+      <div id="thumbList"></div>
+      <div id="carouselSelector" style="margin-top: 10px;">
+        <h4>請勾選要當輪播的圖片：</h4>
+        <div id="carouselImageList" style="display: flex; flex-wrap: wrap; gap: 10px;"></div>
+      </div>
 
       <button type="submit">上傳</button>
     </form>

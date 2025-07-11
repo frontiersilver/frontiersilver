@@ -78,7 +78,14 @@ h2 {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
-
+/* 直接加到你的 fileupload.css ── 或者 <style> 區域 */
+#carouselView{
+  max-width : 100%;     /* 不超過容器寬  */
+  max-height: 220px;    /* 想要的最高高度 */
+  width : auto;         /* 讓瀏覽器自己算 */
+  height: auto;
+  object-fit: contain;  /* ▶︎ 保留比例；show 全圖 (想裁切就用 cover) */
+}
 #preview:hover {
   transform: scale(1.02);
 }

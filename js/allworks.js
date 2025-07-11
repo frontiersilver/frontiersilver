@@ -70,36 +70,69 @@ function viewWork(id) {
   db.collection("works").doc(id).get().then(doc => {
     const d = doc.data();
 
+    /* === 1. 組輪播圖片陣列（主圖一定在、且不重複） === */
+    const carousel = [];
+    if (d.imageUrl) carousel.push(d.imageUrl);
+
+    if (Array.isArray(d.carousel)) {
+      d.carousel.forEach(url => {
+        if (url && !carousel.includes(url)) carousel.push(url);
+      });
+    }
+
+    /* === 2. 非輪播 (額外) 圖片 === */
+    const extrasRaw = d.imageUrls || [];          // ←若你欄位叫 extraImages 就改名
+    const extraImgs = extrasRaw.filter(url => url && !carousel.includes(url));
+
+    /* === 3. 產生 popup === */
     const popup = document.createElement("div");
     popup.className = "popup";
     popup.innerHTML = `
       <div class="popup-content">
         <span class="close" onclick="this.closest('.popup').remove()">×</span>
+
         <h2 class="popup-h">${d.name || '未命名作品'}</h2>
 
+        <!-- ===== 輪播盒 ===== -->
+        <div style="position:relative;text-align:center;margin-bottom:10px;">
+          <button id="prevBtn" style="">⟨</button>
+          <img id="carouselImg"
+               src="${carousel[0] || ''}"
+               style="width:100%;aspect-ratio:1/1;object-fit:cover;" />
+          <button id="nextBtn" style="">⟩</button>
+        </div>
 
-        <img src="${d.imageUrl}" alt="${d.name}" style="width: 100%; margin-bottom: 10px;" />
-
-
-        <p  id="concept">${(d.concept || '').replace(/\\n/g, '<br>')}</p>
-
+        <p id="concept">${(d.concept || '').replace(/\\n/g, '<br>')}</p>
         <p>材質： ${d.material || '—'}</p>
         <p>尺寸： ${d.size || '—'}</p>
         <p>重量： ${d.weight || '—'}</p>
         <p>價格： ${d.price || '—'}</p>
         <p>#${d.series || '—'}</p>
-        <p>#${d.type || '—'}</p>
-        <p>#${d.usage || '—'}</p>
+        <p>#${d.type   || '—'}</p>
+        <p>#${d.usage  || '—'}</p>
 
-        ${(Array.isArray(d.extraImages) && d.extraImages.length > 0)
-          ? '<div><strong>展示圖：</strong><br>' +
-              d.extraImages.map(url => `<img src="${url}" style="width: 100%; margin-top: 10px;">`).join('') +
-            '</div>'
+        <!-- ===== 其餘圖片 ===== -->
+        ${extraImgs.length
+          ? `<div style="margin-top:15px">
+               ${extraImgs.map(u=>`<img src="${u}" style="width:100%;margin-top:10px;object-fit:contain;"/>`).join("")}
+             </div>`
           : ''
         }
       </div>
     `;
     document.body.appendChild(popup);
+
+    /* === 4. 輪播按鈕事件 === */
+    let idx = 0;
+    const imgEl  = popup.querySelector('#carouselImg');
+    popup.querySelector('#prevBtn').onclick = () => {
+      idx = (idx - 1 + carousel.length) % carousel.length;
+      imgEl.src = carousel[idx];
+    };
+    popup.querySelector('#nextBtn').onclick = () => {
+      idx = (idx + 1) % carousel.length;
+      imgEl.src = carousel[idx];
+    };
   });
 }
 

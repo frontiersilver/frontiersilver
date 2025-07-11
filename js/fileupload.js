@@ -1,4 +1,4 @@
-// ✅ Firebase 初始化
+/* ---------- Firebase ---------- */
 const firebaseConfig = {
   apiKey: "AIzaSyBNMOLOUp4VrjdQiULXQCInNyI8gx7kl9s",
   authDomain: "frontiersilver-4a99a.firebaseapp.com",
@@ -7,250 +7,164 @@ const firebaseConfig = {
   messagingSenderId: "547331341626",
   appId: "1:547331341626:web:275d76403296f888686403"
 };
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// ✅ 初始化
+/* ---------- Init ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("uploadForm")?.addEventListener("submit", handleUpload);
-  document.getElementById("imageUrlInput")?.addEventListener("input", handleImagePreview);
+  document.getElementById("imageUrlInput")?.addEventListener("input", () => {
+    handleImagePreview();
+    updateCarouselImageList(); // ✅ 同步縮圖區
+  });
   loadTags();
   renderGallery();
 });
 
-// ✅ 預覽圖片網址
+/* ============ 上傳區 ============ */
+
 function handleImagePreview() {
   const url = document.getElementById("imageUrlInput").value.trim();
-  const preview = document.getElementById("preview");
-  preview.src = url;
-  preview.style.display = url ? "block" : "none";
+  const pre = document.getElementById("preview");
+  pre.src = url;
+  pre.style.display = url ? "block" : "none";
 }
+
 function generateExtraImageInputs() {
-  const count = parseInt(document.getElementById("extraImageCount").value) || 0;
-  const container = document.getElementById("extraImageInputs");
-  container.innerHTML = "";
-  for (let i = 0; i < count; i++) {
-    const input = document.createElement("input");
-    input.type = "url";
-    input.placeholder = `展示圖片 ${i + 1} 網址`;
-    input.className = "extraImageInput";
-    input.style = "width: 100%; margin-bottom: 5px;";
-    container.appendChild(input);
+  const n = +document.getElementById("extraImageCount").value || 0;
+  const box = document.getElementById("extraImageInputs");
+  box.innerHTML = "";
+  for (let i = 0; i < n; i++) {
+    const inp = document.createElement("input");
+    inp.type = "url";
+    inp.placeholder = `展示圖片 ${i + 1} 網址`;
+    inp.className = "extraImageInput";
+    inp.style = "width:100%;margin-bottom:6px";
+    inp.addEventListener("input", updateCarouselImageList); // ✅ 新增
+    box.appendChild(inp);
   }
+  updateCarouselImageList(); // ✅ 初始化時也呼叫
 }
-function addExtraEditImageInput(initialValue = "") {
-  const container = document.getElementById("editExtraImageContainer");
 
-  const wrapper = document.createElement("div");
-  wrapper.style = "margin-bottom: 10px; position: relative;";
+/* ✅ 建立 carouselImageList 縮圖與勾選 */
+function updateCarouselImageList() {
+  const container = document.getElementById("carouselImageList");
+  if (!container) return;
+  container.innerHTML = "";
 
-  const input = document.createElement("input");
-  input.type = "url";
-  input.placeholder = "展示圖片網址";
-  input.className = "editExtraImageInput";
-  input.style = "width: 100%;";
-  input.value = initialValue;
+  const urls = [
+    document.getElementById("imageUrlInput").value.trim(),
+    ...[...document.querySelectorAll(".extraImageInput")].map(i => i.value.trim())
+  ].filter(Boolean);
 
-  const preview = document.createElement("img");
-  preview.src = initialValue || "";
-  preview.style = "width: 100%; margin-top: 5px; display: " + (initialValue ? "block" : "none");
+  urls.forEach(url => {
+    const wrap = document.createElement("div");
+    wrap.style = "position:relative;width:80px;height:80px;margin:4px";
 
-  input.addEventListener("input", () => {
-    preview.src = input.value.trim();
-    preview.style.display = input.value.trim() ? "block" : "none";
+    const img = new Image();
+    img.src = url;
+    img.style = "width:100%;height:100%;object-fit:cover;border:1px solid #999";
+
+    const chk = document.createElement("input");
+    chk.type = "checkbox";
+    chk.className = "carouselCheckbox";
+    chk.dataset.url = url;
+    chk.style = "position:absolute;top:2px;right:2px";
+
+    wrap.append(img, chk);
+    container.appendChild(wrap);
   });
-
-  const removeBtn = document.createElement("button");
-  removeBtn.textContent = "🗑";
-  removeBtn.style = "position: absolute; top: 0; right: 0;";
-  removeBtn.addEventListener("click", () => {
-    wrapper.remove();
-  });
-
-  wrapper.appendChild(input);
-  wrapper.appendChild(preview);
-  wrapper.appendChild(removeBtn);
-  container.appendChild(wrapper);
 }
-// ✅ 上傳作品
+
+/* 上傳作品 */
 async function handleUpload(e) {
   e.preventDefault();
-  const imageUrl = document.getElementById("imageUrlInput").value.trim();
-  if (!imageUrl) return alert("請貼上圖片網址");
-  // ✅ 收集額外圖片網址
-  const extraImageInputs = Array.from(document.querySelectorAll(".extraImageInput"));
-  const extraImageUrls = extraImageInputs
-    .map(input => input.value.trim())
-    .filter(url => url !== ""); // 過濾掉空的欄位
+  const mainUrl = document.getElementById("imageUrlInput").value.trim();
+  if (!mainUrl) return alert("請貼上主圖片網址！");
+
+  const imageUrls = [...document.querySelectorAll(".extraImageInput")]
+    .map(inp => inp.value.trim())
+    .filter(Boolean);
+
+  const carousel = [...document.querySelectorAll(".carouselCheckbox")]
+    .filter(chk => chk.checked)
+    .map(chk => chk.dataset.url);
+
   const data = {
-    name: document.getElementById("name").value,
-    price: document.getElementById("price").value,
-    concept: document.getElementById("concept").value,
-    material: document.getElementById("material").value,
-    weight: document.getElementById("weight").value,
-    size: document.getElementById("sizeInput").value.trim(),
-    series: document.getElementById("seriesSelect").value,
-    type: document.getElementById("typeSelect").value,
-    usage: document.getElementById("usageSelect").value,
-    imageUrl,
-    imageUrls: extraImageUrls, // ✅ 加入這一行，存為陣列
+    name     : document.getElementById("name").value,
+    price    : document.getElementById("price").value,
+    concept  : document.getElementById("concept").value,
+    material : document.getElementById("material").value,
+    weight   : document.getElementById("weight").value,
+    size     : document.getElementById("sizeInput").value.trim(),
+    series   : document.getElementById("seriesSelect").value,
+    type     : document.getElementById("typeSelect").value,
+    usage    : document.getElementById("usageSelect").value,
+    imageUrl : mainUrl,
+    imageUrls,
+    carousel,
     timestamp: firebase.firestore.FieldValue.serverTimestamp()
   };
 
   try {
     await db.collection("works").add(data);
-    alert("✅ 上傳成功！");
+    alert("✅ 上傳成功");
     document.getElementById("uploadForm").reset();
     handleImagePreview();
+    generateExtraImageInputs(); // 清空額外欄位與縮圖
     renderGallery();
   } catch (err) {
-    console.error("❌ 上傳失敗：", err);
+    console.error(err);
     alert("上傳失敗：" + err.message);
   }
 }
 
-// ✅ 展示所有作品
+/* ============ 展示區 ============ */
 async function renderGallery() {
-  const gallery = document.getElementById("gallery");
-  if (!gallery) return;
-
-  gallery.innerHTML = "<p>載入中...</p>";
-
+  const g = document.getElementById("gallery");
+  if (!g) return;
+  g.innerHTML = "<p>載入中…</p>";
   try {
-    const snapshot = await db.collection("works").orderBy("timestamp", "desc").get();
-    gallery.innerHTML = "";
-
-    if (snapshot.empty) {
-      gallery.innerHTML = "<p>目前尚無作品。</p>";
-      return;
-    }
-
-    snapshot.forEach(doc => {
+    const snap = await db.collection("works").orderBy("timestamp", "desc").get();
+    g.innerHTML = snap.empty ? "<p>尚無作品</p>" : "";
+    snap.forEach(doc => {
       const d = doc.data();
-      const div = document.createElement("div");
-      div.className = "gallery-card";
-      div.innerHTML = `
-        <img src="${d.imageUrl}" alt="${d.name}" class="card-img" onclick="editWork('${doc.id}')">
-        <p class="card-title" onclick="editWork('${doc.id}')">${d.name}</p>
-      `;
-      gallery.appendChild(div);
+      const card = document.createElement("div");
+      card.className = "gallery-card";
+      card.innerHTML = `
+        <img src="${d.imageUrl}" class="card-img" onclick="editWork('${doc.id}')">
+        <p class="card-title" onclick="editWork('${doc.id}')">${d.name}</p>`;
+      g.appendChild(card);
     });
-  } catch (err) {
-    console.error("❌ 讀取失敗：", err);
-    gallery.innerHTML = "<p>無法讀取作品</p>";
+  } catch (e) {
+    console.error(e);
+    g.innerHTML = "<p>讀取失敗</p>";
   }
-}
-// ✅ 編輯作品
-function editWork(id) {
-  db.collection("works").doc(id).get().then(doc => {
-    const d = doc.data();
-    const extraImages = d.imageUrls || [];
-
-    const popup = document.createElement("div");
-    popup.className = "popup";
-
-    popup.innerHTML = `
-      <div class="popup-content">
-        <span class="close" onclick="this.closest('.popup').remove()">×</span>
-        <input type="url" id="editImageUrl" value="${d.imageUrl}" placeholder="主圖片網址" style="width: 100%;">
-        <img id="editPreview" src="${d.imageUrl}" style="width: 100%; margin-bottom: 10px;">
-
-        <input type="text" id="editName" value="${d.name}" placeholder="作品名稱">
-        <input type="text" id="editPrice" value="${d.price}" placeholder="價格">
-        <textarea id="editConcept" placeholder="理念" style="width:100%; height:100px;">${d.concept || ""}</textarea>
-        <input type="text" id="editMaterial" value="${d.material}" placeholder="材質">
-        <input type="text" id="editSize" value="${d.size}" placeholder="尺寸">
-        <input type="text" id="editWeight" value="${d.weight}" placeholder="重量">
-        <input type="text" id="editSeries" value="${d.series}" placeholder="系列">
-        <input type="text" id="editType" value="${d.type}" placeholder="品項">
-        <input type="text" id="editUsage" value="${d.usage}" placeholder="用途">
-
-        <label>展示圖片：</label>
-        <div id="editExtraImageContainer"></div>
-        <button type="button" onclick="addExtraEditImageInput()">＋新增展示圖片欄位</button>
-        <br><br>
-
-        <button onclick="saveEdit('${id}')">✅ 儲存</button>
-      </div>
-    `;
-    document.body.appendChild(popup);
-
-    // ✅ 主圖預覽
-    document.getElementById("editImageUrl").addEventListener("input", () => {
-      document.getElementById("editPreview").src = document.getElementById("editImageUrl").value.trim();
-    });
-
-    // ✅ 加入原有圖片網址欄位與預覽
-    const container = document.getElementById("editExtraImageContainer");
-    extraImages.forEach(url => addExtraEditImageInput(url));
-  });
 }
 window.editWork = editWork;
 
-// ✅ 儲存編輯
-function saveEdit(id) {
-  const updated = {
-    imageUrl: document.getElementById("editImageUrl").value.trim(),
-    name: document.getElementById("editName").value,
-    price: document.getElementById("editPrice").value,
-    concept: document.getElementById("editConcept").value,
-    material: document.getElementById("editMaterial").value,
-    size: document.getElementById("editSize").value,
-    weight: document.getElementById("editWeight").value,
-    series: document.getElementById("editSeries").value,
-    type: document.getElementById("editType").value,
-    usage: document.getElementById("editUsage").value,
-    imageUrls: Array.from(document.querySelectorAll(".editExtraImageInput"))
-      .map(input => input.value.trim())
-      .filter(url => url)
-  };
-
-  db.collection("works").doc(id).update(updated).then(() => {
-    alert("✅ 已更新！");
-    document.querySelector(".popup")?.remove();
-    renderGallery();
-  });
-}
-
-// ✅ 刪除作品
-window.deleteWork = async function(id) {
-  if (confirm("確定要刪除這個作品嗎？")) {
-    await db.collection("works").doc(id).delete();
-    alert("✅ 已刪除！");
-    renderGallery();
-  }
-};
-
-// ✅ 載入下拉選單標籤
+/* ============ 標籤與選單 ============ */
 async function loadTags() {
-  const categories = ["series", "type", "usage"];
-  for (let cat of categories) {
-    const doc = await db.collection("tags").doc(cat).get();
-    const values = doc.exists ? doc.data().values || [] : [];
-    const select = document.getElementById(`${cat}Select`);
-    values.forEach(v => {
-      if (!Array.from(select.options).some(opt => opt.value === v)) {
-        const option = document.createElement("option");
-        option.value = v;
-        option.textContent = v;
-        select.appendChild(option);
-      }
+  const cats = ["series", "type", "usage"];
+  for (const c of cats) {
+    const doc = await db.collection("tags").doc(c).get();
+    const vals = doc.exists ? doc.data().values || [] : [];
+    const sel = document.getElementById(`${c}Select`);
+    vals.forEach(v => {
+      if (![...sel.options].some(o => o.value === v)) sel.add(new Option(v, v));
     });
   }
 }
-
-// ✅ 側邊選單
 function toggleMenu() {
   document.getElementById("sidebar")?.classList.toggle("open");
   document.getElementById("overlay")?.classList.toggle("open");
 }
 function toggleMenu2() {
-  const dropdown = document.querySelector(".dropdown");
-  const menu = document.querySelector(".dropdown-content");
-  const isOpen = menu?.style.display === "block";
-  if (dropdown && menu) {
-    menu.style.display = isOpen ? "none" : "block";
-    dropdown.classList.toggle("active", !isOpen);
+  const m = document.querySelector(".dropdown-content");
+  const f = m?.style.display === "block";
+  if (m) {
+    m.style.display = f ? "none" : "block";
+    document.querySelector(".dropdown")?.classList.toggle("active", !f);
   }
 }
 function closeMenu() {
