@@ -1,6 +1,10 @@
 h1{
   margin: 0;
 }
+h2{
+  text-align: left;
+  margin-left:3%;
+}
 #concept {
   display: block;
   height: fit-content;
@@ -27,6 +31,25 @@ h1{
     text-align: left;
 }
 .dropdown-btn2:hover{
+    cursor: pointer;
+    color: linear-gradient(90deg, #005bea, #00c6fb);
+    transform: scale(0.95);
+}
+.dropdown-btn-inside {
+    padding: 5px 20px;
+    background: transparent;
+    border: none;
+    text-decoration: none;
+    font-family: 'LXGW WenKai Regular', sans-serif;
+    text-align: justify;
+    font-size: 18px;
+    font-weight: 300;
+    color: black;
+    display: block;
+    transition: 0.1s;
+    text-align: left;
+}
+.dropdown-btn-inside:hover{
     cursor: pointer;
     color: linear-gradient(90deg, #005bea, #00c6fb);
     transform: scale(0.95);
@@ -84,74 +107,63 @@ h1{
   flex-direction:column;   /* 垂直排列子元素 */
   gap:4px;                 /* 每列間距（CSS flex gap）*/
 }
-
-.dropdown-content3 {
-    font-family: 'LXGW WenKai Regular', sans-serif;
-    text-align: justify;
-    font-size: 16px;
-    font-weight: 300;
-    margin: auto 40px auto 30px;
-    display: none;
-    position: static;
-    background-color: transparent;
-    overflow: hidden;
-    transition: height 0.3s ease-out;
-    max-width: 100%;
+.menu-items {
+  display: none;
 }
+.menu-items.open {
+  display: block;
+}
+.menu-items a {
+  display: block;
+
+  padding: 10px 0px;
+  color: black;
+  text-decoration: none;
+}
+
+/* 通用樣式：所有 dropdown content 區塊 */
+.dropdown-content2,
+.dropdown-content3,
 .dropdown-content4 {
-    font-family: 'LXGW WenKai Regular', sans-serif;
-    text-align: justify;
-    font-size: 16px;
-    font-weight: 300;
-    margin: auto 40px auto 30px;
-    display: none;
-    position: static;
-    background-color: transparent;
-    overflow: hidden;
-    transition: height 0.3s ease-out;
-    max-width: 100%;
+  display: none;
+  position: static;
+  background-color: transparent;
+  overflow: hidden;
+  transition: height 0.3s ease-out;
+  max-width: 100%;
+  margin: auto 40px auto 30px;
+  font-family: 'LXGW WenKai Regular', sans-serif;
+  text-align: justify;
+  font-size: 16px;
+  font-weight: 300;
 }
 
-/* 選單內的選項 */
-.dropdown-content2 a {
-    display: inline-block;
-    padding: 10px 0px;
-    color: black;
-    text-decoration: none;
+/* 展開時顯示 */
+.dropdown-content2.open,
+.dropdown-content3.open,
+.dropdown-content4.open {
+  display: block;
 }
-.dropdown-content3 a {
-    display: block;
-    padding: 10px 0px;
-    color: black;
-    text-decoration: none;
-}
+
+/* 共用選項樣式 */
+.dropdown-content2 a,
+.dropdown-content3 a,
 .dropdown-content4 a {
-    display: block;
-    padding: 10px 0px;
-    color: black;
-    text-decoration: none;
+  display: inline-block;
+  padding: 10px 0px;
+  color: black;
+  text-decoration: none;
 }
 
-/* 滑鼠移動到選項時的效果 */
-.dropdown-content2 a:hover {
-    display: inline-block;
-    white-space: nowrap;
-    margin-left: 5px;
-    cursor: pointer;
-    color: linear-gradient(90deg, #005bea, #00c6fb);
-    transform: scale(0.95);
-}
-.dropdown-content3 a:hover {
-    margin-left: 5px;
-    cursor: pointer;
-    color: linear-gradient(90deg, #005bea, #00c6fb);
-    transform: scale(0.95);
-}
+/* hover 效果（有錯誤 color 寫法已修正） */
+.dropdown-content2 a:hover,
+.dropdown-content3 a:hover,
 .dropdown-content4 a:hover {
-    margin-left: 5px;
-    cursor: pointer;
-    color: linear-gradient(90deg, #005bea, #00c6fb);
-    transform: scale(0.95);
+  white-space: nowrap;
+  margin-left: 5px;
+  cursor: pointer;
+  color: #005bea; /* 原本的 linear-gradient 是無效的，改為主色 */
+  transform: scale(0.95);
 }
 
 .container{

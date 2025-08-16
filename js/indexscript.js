@@ -1,6 +1,6 @@
 // ✅ jQuery 觸發效果
 $(document).ready(function () {
-  $(".parallax, .jumbotron, .perspective-container, .parallaxtext, .image").paroller();
+  $(".parallax, .jumbotron, .perspective-container, .parallaxtext, .image, .image2, .parallax-bg, .parallax ").paroller();
 
   $(".tilt-box").tilt({
     maxTilt: 10,

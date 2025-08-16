@@ -82,6 +82,12 @@ h2{
     position: relative;
 
 }
+.image2{
+    width: 100%;
+    height: auto;
+    no-repeat center;
+
+}
 /* -------------------- 主要容器 -------------------- */
 
 header {
@@ -134,7 +140,7 @@ header {
     height: 350px;
     display: block;
     color: black;
-    background-image: url("https://res.cloudinary.com/dyjvqds92/image/upload/v1743753780/ADSC_0396_owenjt.jpg");
+    background-image: url("https://res.cloudinary.com/dyjvqds92/image/upload/v1755339900/A04211927_y2083o2_pjzuzm.jpg");
     background-repeat: repeat;
     opacity: 50%;
     overflow: hidden;
@@ -142,15 +148,19 @@ header {
 
 .parallax-bg  {
     position: relative;
-    top: -500px;
     width: 100%;
     height: auto;
     background-size: contain;
-    transform: translateY(calc(var(--scroll-y) * var(--parallax-factor)));
-    transition: transform 0.1s ease-out;
-    z-index: 1;
+
 }
-.parallax-bg img{}
+transform: translateY(calc(var(--scroll-y) * var(--parallax-factor)));
+transition: transform 0.1s ease-out;
+z-index: 1;
+.parallax-bg img{
+  width: 100%;
+  height: auto;
+  no-repeat center;
+}
 
 /* 視差內容 */
 .parallax-content {
@@ -381,6 +391,7 @@ nav ul li a:hover {
 .containerfoot {
     border-radius: 0px;
     font-size: 13px;
+    margin:10px 0;
 }
 .container2 {
     min-height: 1px;
@@ -399,10 +410,9 @@ nav ul li a:hover {
     position: relative;
     width: 100%;
     height: auto;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     no-repeat center;
     object-fit: cover;
-    top: -200px;
     transform: translateY(calc(var(--scroll-y) * var(--parallax-factor)));
     transition: transform 0.1s ease-out;
 }
@@ -410,6 +420,7 @@ nav ul li a:hover {
 .jumbotron img{
     width: 100%;
     height: auto;
+    no-repeat center;
 }
 
 
@@ -490,6 +501,25 @@ nav ul li a:hover {
     text-align: left;
 }
 .dropdown-btn:hover{
+    cursor: pointer;
+    color: linear-gradient(90deg, #005bea, #00c6fb);
+    transform: scale(0.95);
+}
+.dropdown-btn-inside {
+    padding: 5px 20px;
+    background: transparent;
+    border: none;
+    text-decoration: none;
+    font-family: 'LXGW WenKai Regular', sans-serif;
+    text-align: justify;
+    font-size: 18px;
+    font-weight: 300;
+    color: black;
+    display: block;
+    transition: 0.1s;
+    text-align: left;
+}
+.dropdown-btn-inside:hover{
     cursor: pointer;
     color: linear-gradient(90deg, #005bea, #00c6fb);
     transform: scale(0.95);
@@ -581,7 +611,7 @@ nav ul li a:hover {
     height: 300px;
     justify-content: center;
     margin: 0 auto;
-    background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1739414629/index_main_bho0av.jpg');
+    background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1741267233/11_ftj6rq.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
