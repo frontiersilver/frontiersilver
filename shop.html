@@ -14,6 +14,7 @@
 
   <!-- ✅ CSS -->
   <link rel="stylesheet" href="css/indexstyle.css" />
+  <link rel="stylesheet" href="css/private0.css" />
 
   <!-- ✅ Firebase SDK (v8) -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -30,10 +31,12 @@
   <!-- ✅ Firebase 初始化與主程式 -->
   <script src="js/firebase-init.js" defer></script>
   <script src="js/indexscript.js" defer></script>
-  <script src="js/indexworkpreview.js" defer></script>
+  <script src="js/shop.js" defer></script>
+
 </head>
 
 <body>
+<div class="containerhead">
   <header class="containerhead">
     <div class="header-typewriter"><span id="typewriter-text"></span></div>
     <div class="btncontainer"><button class="menu-btn" onclick="toggleMenu()">☰</button></div>
@@ -41,13 +44,6 @@
     <div class="perspective-container">
       <div class="parallax-content">
         <h1 class="animated-text" id="animated-text"><a rel="index" href="index.html"></a></h1>
-        <nav>
-          <ul>
-            <li><a href="service.html">SHOPNOW</a></li>
-            <li><a href="allworks.html">ALLWORKS</a></li>
-            <li><a href="privatecontact.html">CONTACT</a></li>
-          </ul>
-        </nav>
       </div>
       <div class="parallax"   style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1755339900/A04211927_y2083o2_pjzuzm.jpg') repeat center; background-size: cover;" data-paroller-factor="-0.4">
             <!--<img class="parallax-bg" src="https://res.cloudinary.com/dyjvqds92/image/upload/v1755339900/A04211927_y2083o2_pjzuzm.jpg" alt="" /> </img>
@@ -66,58 +62,53 @@
     </div>
     <div id="overlay" class="overlay" onclick="closeMenu()"></div>
   </header>
+</div>
+<main class:" max-width: 100%;border-radius: 0px;background-color: white">
+  <section class="content">
+    <div class="content">
+      <p>
+        購買流程:<br />
+        <br />
+        1. 選擇作品<br />
+        2. 確認尺寸(如不確定戒圍請私訊詢問)<br />
+        3. 匯款並提供姓名、電話及取貨門市<br />
+        4. 開始製作<br />
+        5. 作品將在十四個工作天內出貨<br />
+        6. 收到作品後，歡迎IG限時動態分享並標記品牌IG，下次購買現折$200
+      </p>
 
-  <main class="container">
-    <div class="container2">
-      <div class="jumbotron">
-        <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1743753780/ADSC_0396_owenjt.jpg" alt="主視覺" />
-      </div>
     </div>
 
-    <section class="content">
-    <h1>NEW ARRIVALS</h1>
 
-
-      <div class="scroll-container">
-        <button class="scroll-left">←</button>
-        <div class="scroll-content" id="latestGallery">
-          <!-- Firebase 最新作品將插入這裡 -->
-        </div>
-        <button class="scroll-right">→</button>
-      </div>
-
-      <div style="height:4px; background:linear-gradient(to bottom, #ccc 0px, #ccc 1px, white 1px, white 2px, #ccc 2px, #ccc 3px, white 3px, white 4px); border:none; margin: 20px 0;"></div>
-
-      <div class="text1"><p>不屬於任何地方的人，會在邊界徘徊</p></div>
-      <div class="text1"><p>邊界——兩個世界的交匯處，靈魂與現實的分界線。</p></div>
-      <div class="text1">
-        <p>我們希望自己獨特，但不是孤獨。</p>
-      </div>
-
-      <div class="d-flex">
-        <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1743753780/ADSC_0396_owenjt.jpg') no-repeat center; background-size: cover;" data-paroller-factor="0.5"></div>
-        <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1743753780/ADSC_0396_owenjt.jpg') repeat center; background-size: cover;" data-paroller-factor="-0.4"></div>
-        <div class="image" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1743753780/ADSC_0396_owenjt.jpg') no-repeat center; background-size: cover;" data-paroller-factor="-0.2"></div>
-      </div>
-
-      <div class="text1">
-
-          <p>在這個大量生產快速汰換的世界裡，我會在緩慢流逝的時間裡慢慢雕琢，細細修磨。</p>
-          <p>讓每一個作品有意義，有靈魂，有價值。</p>
-          <p>邊界的產物，展現邊界另一端靈魂的模樣，讓我們認出彼此，讓我們的邊界互相交融，不再孤獨。</p>
-      </div>
-      <div class="tilt-box"><span data-tilt></span></div>
-      <div class="text1">
-
-      </div>
-    </section>
-
-    <div class="container2">
-        <div class="image2" style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1755339630/11_ftj6rq2_ydf5mq.jpg') repeat center; background-size: cover;" data-paroller-factor="-0.4"></div>
+    <h1>商品列表</h1>
+    <div class="shopcontain">
+          <div id="shopGrid"></div>
     </div>
-  </main>
 
-  <footer>
+
+
+
+    <div class="cart">
+
+      <h2>購物車</h2>
+      <div id="cartItems"></div>
+      <p><b>總金額：</b>$<span id="totalPrice">0</span></p>
+    </div>
+    <div class="text2">
+          <p class="containerfoot">
+            注意事項:購買前煩請詳閱，購買視同同意<br />
+            所有作品皆為純手工製作，可能存在微小差異與手工痕跡，
+            純銀的顏色與表面質感會隨時間及佩戴習慣而自然變化，是銀飾與您共同留下的歲月的痕跡。
+            皆為接單訂製，純手工製作且一人操刀，作品將在訂單成立後的14個工作天內出貨，
+            如有急件需求，售價為原價增加30%，可以私訊詢問<br />
+            如非人為瑕疵像是運送損壞、品項錯誤，則無法退換貨。下單前請確認戒圍/尺寸，不接受尺寸不合等退貨原因。
+            退換貨須保持作品全新完整<br />
+          </p>
+    </div>
+  </section>
+
+</main>
+  <footer class="color:#EEEEEE;">
     <div>
       <p class="containerfoot">
         Frontier Sliver | All Rights Reserved<br />
@@ -127,5 +118,7 @@
       </p>
     </div>
   </footer>
+
 </body>
+
 </html>

@@ -246,6 +246,56 @@ nav ul li a:hover {
 
 
 /*--------------------------- */
+#previewContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  display: none; /* 預設不顯示 */
+}
+
+#previewContainer.show {
+  display: flex;
+}
+
+.preview-image {
+  max-width: 80%;
+  max-height: 80%;
+  margin-bottom: 1rem;
+}
+
+.go-to-allworks {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background: white;
+  color: black;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.item_name {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.work-item {
+  cursor: pointer;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+
+
+.popup-inner {
+  max-width: 400px;
+}
 .content{
     max-width: 90%;
     margin: 20px auto;
@@ -373,7 +423,12 @@ nav ul li a:hover {
 
 
 .text2{
-
+  font-family: 'LXGW WenKai Regular', sans-serif;
+  font-size: 16px;
+  color: black;
+  display: block;
+  transition: 0.1s;
+  margin:10px 0;
 }
 
 

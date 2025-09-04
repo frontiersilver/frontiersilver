@@ -103,12 +103,12 @@ h2{
 }
 /* 方式 2：把父層改成 column flex，也能讓子元素直排 */
 #series-menu{
-  display:flex;
   flex-direction:column;   /* 垂直排列子元素 */
   gap:4px;                 /* 每列間距（CSS flex gap）*/
 }
 .menu-items {
   display: none;
+  padding: 10px 0;
 }
 .menu-items.open {
   display: block;
@@ -116,8 +116,10 @@ h2{
 .menu-items a {
   display: block;
 
-  padding: 10px 0px;
+  padding: 10px 12px;
   color: black;
+  font-size: 16px;
+  line-height: 1.5;
   text-decoration: none;
 }
 
@@ -143,6 +145,7 @@ h2{
 .dropdown-content3.open,
 .dropdown-content4.open {
   display: block;
+  height: auto;
 }
 
 /* 共用選項樣式 */
@@ -175,7 +178,7 @@ h2{
 .container2 {
     min-height: 1px;
     width: 100%;
-    height: 200px;
+    height: 300px;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -199,14 +202,15 @@ h2{
 .asidedrop{
     padding: 10px ;
 }
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .allWorks {
     flex-direction: column;
   }
 
   .aside {
     width: 100%;
-    max-width: none;
+    max-width: 100%;
+    background-color: #F8F8F8; /* 保證灰色延伸滿版 */
   }
 
   .insdide {

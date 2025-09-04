@@ -39,16 +39,11 @@
       <button class="close-btn" onclick="toggleMenu()">×</button>
       <a href="index.html">Frontier</a>
       <!--<a href="about.html">Frontier</a>-->
-      <div class="dropdown">
-        <button class="dropdown-btn" onclick="toggleMenu2()">All WORKS <span class="arrow"></span></button>
-        <div class="dropdown-content">
-          <a href="allworks.html">系列</a>
-          <a href="allworks.html">品項</a>
-          <a href="allworks.html">用途</a>
-        </div>
-      </div>
+      <a href="allworks.html">ALLWORKS</a>
       <a href="service.html">訂製</a>
       <a href="privatecontact.html">聯絡</a>
+      <a href="shop.html">購買</a>
+      <a href="shopsetting.html">編輯購物車</a>
       <a href="fileupload.html" id="uploadLink" style="display: none; font-weight: bold;">🔒 上傳新作品</a>
     </div>
     <div id="overlay" class="overlay" onclick="closeMenu()"></div>
@@ -67,12 +62,6 @@
       <label>系列：</label>
       <select id="seriesSelect" required>
         <option value="">請選擇系列</option>
-        <option value="獻祭-獻系列">獻祭-獻系列</option>
-        <option value="獻祭-祭系列">獻祭-祭系列</option>
-        <option value="對話系列">對話系列</option>
-        <option value="熾天使系列">熾天使系列</option>
-        <option value="鎖鏈系列">鎖鏈系列</option>
-        <option value="荒城系列">荒城系列</option>
       </select><br>
       <input type="text" id="newSeriesInput" placeholder="新增系列">
       <button type="button" onclick="addNewTag('series')">＋ 新增系列</button>
@@ -81,10 +70,6 @@
       <label>品項類型：</label>
       <select id="typeSelect" required>
         <option value="">請選擇品項</option>
-        <option value="戒指">戒指</option>
-        <option value="手鍊">手鍊</option>
-        <option value="吊墜&配鏈">吊墜&配鏈</option>
-        <option value="耳飾">耳飾</option>
       </select><br>
       <input type="text" id="newTypeInput" placeholder="新增品項">
       <button type="button" onclick="addNewTag('type')">＋ 新增品項</button>
@@ -92,17 +77,35 @@
       <label>用途建議：</label>
       <select id="usageSelect" required>
         <option value="">請選擇用途</option>
-        <option value="日常細節">日常細節</option>
-        <option value="特殊搭配">特殊搭配</option>
-        <option value="對話系列">對話系列</option>
-        <option value="送禮選擇">送禮選擇</option>
       </select><br>
       <input type="text" id="newUsageInput" placeholder="新增用途">
       <button type="button" onclick="addNewTag('usage')">＋ 新增用途</button>
+      <label>編輯 Tags</label>
+      <div id="tagEditor">
+        <select id="tagCategorySelect">
+          <option value="series">系列 (series)</option>
+          <option value="type">品項 (type)</option>
+          <option value="usage">用途 (usage)</option>
+        </select>
+        <button onclick="loadTagEditor()">載入</button>
 
+        <div id="tagEditorList" style="margin-top:15px;"></div>
+      </div>
       <label>價錢：</label>
       <input type="text" id="price" required><br>
 
+      <label>是否已售出：</label><br>
+      <input type="radio" id="soldStatusSold" name="soldStatusRadio" value="sold">
+      <label for="soldStatusSold">已售出</label>
+
+      <input type="radio" id="soldStatusUnsold" name="soldStatusRadio" value="unsold">
+      <label for="soldStatusUnsold">未售出</label>
+
+      <!-- 正式售價（only when 未售出） -->
+      <div id="officialPriceWrap">
+        <label for="officialPrice">售出價錢（購物車用）：：</label>
+        <input type="number" id="officialPrice" placeholder="請輸入正式售價">
+      </div>
       <label>作品理念：</label>
       <textarea id="concept" required></textarea><br>
 

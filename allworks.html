@@ -56,7 +56,7 @@
     <!-- ✅ CSS 檔案 -->
     <link rel="stylesheet" href="css/indexstyle.css" />
     <link rel="stylesheet" href="css/allworks.css" />
-
+    <link rel="stylesheet" href="css/allworksidebar.css" />
     <!-- ✅ Firebase CDN（v8 全域可用） -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -93,57 +93,24 @@
                 <button class="close-btn" onclick="toggleMenu()">×</button>
                 <a rel="index" href="index.html">Frontier</a>
                 <!--<a href="about.html">Frontier</a>-->
-                <div class="dropdown">
-                    <button class="dropdown-btn" onclick="toggleMenu2()">All WORKS <span class="arrow"></span> </button>
-                    <div class="dropdown-content">
-                        <a href="allworks.html">系列</a>
-                        <a href="allworks.html">品項</a>
-                        <a href="allworks.html">用途</a>
-                    </div>
-                </div>
+                <a href="allworks.html">ALLWORKS</a>
                 <a rel="service" href="service.html">訂製</a>
                 <a rel="contact" href="privatecontact.html">聯絡</a>
+                <a href="shop.html">購買</a>
 
             </div>
 
             <!-- 增加一個透明背景層（點擊時會關閉側邊欄） -->
             <div id="overlay" class="overlay" onclick="closeMenu()"></div>
             <div class="container2">
-              <div class="jumbotron">
-                <img class="parallax-bg" src="https://res.cloudinary.com/dyjvqds92/image/upload/v1748075431/A04211917-1_zni7lz.jpg" alt="test">
+              <div class="parallax"   style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1755348573/A04211962_k7hjak1_a6hfqk.jpg') repeat center; background-size: cover;" data-paroller-factor="-0.8">
               </div>
             </div>
 
         </header>
     </div>
     <div class="allWorks">
-      <div class="aside">
-        <div class="asidedrop">
-          <div class="dropdown2">
-
-            <!-- All 按鈕 -->
-            <button class="dropdown-btn2" onclick="showAllWorks()">All</button>
-
-            <!-- 系列 -->
-            <button class="dropdown-btn2" onclick="toggleAsideMenu('series-menu')">系列</button>
-            <div class="dropdown-content2">
-              <div id="series-menu" class="menu-items"></div>
-            </div>
-
-            <!-- 品項 -->
-            <button class="dropdown-btn2" onclick="toggleAsideMenu('type-menu')">品項</button>
-            <div class="dropdown-content3">
-              <div id="type-menu" class="menu-items"></div>
-            </div>
-
-            <!-- 用途 -->
-            <button class="dropdown-btn2" onclick="toggleAsideMenu('usage-menu')">用途</button>
-            <div class="dropdown-content4">
-              <div id="usage-menu" class="menu-items"></div>
-            </div>
-
-          </div>
-        </div>
+      <div  id="aside" class="aside">
 
       </div>
 
@@ -168,9 +135,7 @@
 
 
     <div class="container2">
-        <div class="jumbotron">
-          <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1743753768/ADSC_0397_dultgp.jpg" alt="test">
-        </div>
+      <div class="parallax"   style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1752659140/4_wq3pth.jpg') repeat center; background-size: cover;" data-paroller-factor="-0.6"></div>
     </div>
 
         <footer>

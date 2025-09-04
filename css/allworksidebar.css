@@ -1,0 +1,166 @@
+#aside {
+  width: 220px;
+  padding: 40px 30px;
+  font-family: 'LXGW WenKai Regular', sans-serif;
+  display: flex;
+  flex-direction: column;
+  background-color: #F8F8F8;
+}
+
+/* ALL 按鈕 */
+.aside-all-btn {
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* 分類標題（系列/品項/用途） */
+.aside-title {
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+/* 展開內容（預設收起） */
+.aside-menu-list {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 12px;
+}
+
+.aside-menu-list.open {
+  display: flex;
+}
+
+/* 每個選項 */
+.aside-menu-item {
+  font-size: 16px;
+  font-weight: 300;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Hover + active 效果（選中高亮） */
+.aside-menu-item:hover,
+.aside-all-btn:hover {
+  color: #005bea;
+}
+
+.active {
+  color: #005bea;
+  font-weight: 500;
+}
+
+
+.carousel-hover-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px; /* 控制最大寬度 */
+  margin: 0 auto;
+  padding: 0 48px; /* 給左右按鈕留空間 */
+}
+
+#carouselImg {
+  display: block;
+  width: 100%;          /* ✅ 滿寬 */
+  height: auto;         /* ✅ 等比縮放 */
+  object-fit: contain;  /* 保持圖片比例不變形 */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: zoom-in;
+  max-height: 90vh;     /* 避免過高 */
+}
+
+#prevBtn,
+#nextBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  color: #333;
+}
+
+#prevBtn {
+  left: 12px; /* 在 padding 範圍內 */
+}
+
+#nextBtn {
+  right: 12px;
+}
+
+/* 手機窄畫面可微調 */
+@media (max-width: 500px) {
+  .carousel-hover-wrapper {
+    padding: 0 32px;
+  }
+
+  #prevBtn, #nextBtn {
+    font-size: 1.5rem;
+  }
+}
+/* 每個選項
+
+#aside {
+  width: 220px;
+  padding: 40px 30px;
+  font-family: 'LXGW WenKai Regular', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background-color: white;
+}
+
+
+.aside-all-btn {
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+
+.aside-title {
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+
+.aside-menu-list {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 12px;
+}
+
+.aside-menu-list.open {
+  display: flex;
+}
+
+
+.aside-menu-item {
+  font-size: 16px;
+  font-weight: 300;
+  cursor: pointer;
+  user-select: none;
+}
+
+
+.aside-menu-item:hover,
+.aside-all-btn:hover {
+  color: #005bea;
+}
+
+.active {
+  color: #005bea;
+  font-weight: 500;
+}
+*/

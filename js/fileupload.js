@@ -36,7 +36,10 @@ function generateExtraImageInputs() {
   syncCarouselArray();
 }
 
-// ============ 縮圖輪播同步 ============
+let uploadCheckedOrder = [];  // 儲存勾選順序
+let uploadCarouselArr = [];
+let uploadCarouselIdx = 0;
+
 function syncCarouselArray() {
   const container = document.getElementById("carouselImageList");
   if (!container) return;
@@ -45,9 +48,34 @@ function syncCarouselArray() {
   const extraUrls = [...document.querySelectorAll(".extraImageInput")].map(inp => inp.value.trim()).filter(Boolean);
   const allUrls = [mainUrl, ...extraUrls].filter(Boolean);
 
-  container.innerHTML = "";
+  // ✅ 若沒有網址，不渲染
+  if (allUrls.length === 0) {
+    container.innerHTML = "";
+    const view = document.getElementById("uploadCarouselView");
+    if (view) view.style.display = "none";
+    return;
+  }
 
-  allUrls.forEach(url => {
+  // ⛔️ 避免預覽區提早出現
+  if (!document.getElementById("uploadCarouselView")) {
+    createUploadCarouselPreview();
+  }
+
+  // 剩下照你原本的邏輯來渲染縮圖與輪播
+  uploadCheckedOrder = uploadCheckedOrder.filter(url => allUrls.includes(url));
+  if (!uploadCheckedOrder.includes(mainUrl)) {
+    uploadCheckedOrder.unshift(mainUrl);
+  } else {
+    uploadCheckedOrder = [mainUrl, ...uploadCheckedOrder.filter(u => u !== mainUrl)];
+  }
+
+  const ordered = [
+    ...uploadCheckedOrder,
+    ...allUrls.filter(url => !uploadCheckedOrder.includes(url))
+  ];
+
+  container.innerHTML = "";
+  ordered.forEach(url => {
     const wrapper = document.createElement("div");
     wrapper.style = "position:relative;width:80px;height:80px;margin-right:8px";
 
@@ -59,14 +87,103 @@ function syncCarouselArray() {
     chk.type = "checkbox";
     chk.className = "carouselCheckbox";
     chk.dataset.url = url;
-    chk.checked = true;
+    chk.checked = uploadCheckedOrder.includes(url);
     chk.style = "position:absolute;top:2px;right:2px";
+
+    chk.onchange = () => {
+      if (chk.checked) {
+        if (!uploadCheckedOrder.includes(url)) {
+          if (url === mainUrl) {
+            uploadCheckedOrder.unshift(url);
+          } else {
+            uploadCheckedOrder.push(url);
+          }
+        }
+      } else {
+        uploadCheckedOrder = uploadCheckedOrder.filter(u => u !== url);
+      }
+      syncCarouselArray(); // 重新渲染順序
+    };
 
     wrapper.appendChild(img);
     wrapper.appendChild(chk);
     container.appendChild(wrapper);
   });
+
+  updateUploadCarouselPreview(); // 🖼️ 更新輪播
 }
+
+function createUploadCarouselPreview() {
+  const previewArea = document.getElementById("carouselImageList");
+  if (!previewArea || document.getElementById("uploadCarouselView")) return;
+
+  const mainUrl = document.getElementById("imageUrlInput").value.trim();
+  const extraUrls = [...document.querySelectorAll(".extraImageInput")].map(inp => inp.value.trim()).filter(Boolean);
+  const hasAnyImage = mainUrl || extraUrls.length > 0;
+
+  if (!hasAnyImage) return; // 🚫 若還沒有任何圖片網址就不要產生輪播預覽區
+
+  const hr = document.createElement("hr");
+
+  const label = document.createElement("b");
+  label.innerText = "輪播預覽：";
+
+  const wrapper = document.createElement("div");
+  wrapper.style.textAlign = "center";
+  wrapper.style.margin = "10px 0";
+
+  const prevBtn = document.createElement("button");
+  prevBtn.id = "uploadPrevBtn";
+  prevBtn.innerText = "⬅️";
+
+  const img = document.createElement("img");
+  img.id = "uploadCarouselView";
+  img.style = "max-width:80%;max-height:200px;border:1px solid #ccc;object-fit:contain;display:none;margin:auto";
+
+  const nextBtn = document.createElement("button");
+  nextBtn.id = "uploadNextBtn";
+  nextBtn.innerText = "➡️";
+
+  wrapper.appendChild(prevBtn);
+  wrapper.appendChild(img);
+  wrapper.appendChild(nextBtn);
+
+  previewArea.insertAdjacentElement("afterend", wrapper);
+  previewArea.insertAdjacentElement("afterend", label);
+  previewArea.insertAdjacentElement("afterend", hr);
+
+  document.getElementById("uploadPrevBtn").onclick = () => {
+    if (uploadCarouselArr.length === 0) return;
+    uploadCarouselIdx = (uploadCarouselIdx - 1 + uploadCarouselArr.length) % uploadCarouselArr.length;
+    document.getElementById("uploadCarouselView").src = uploadCarouselArr[uploadCarouselIdx];
+  };
+
+  document.getElementById("uploadNextBtn").onclick = () => {
+    if (uploadCarouselArr.length === 0) return;
+    uploadCarouselIdx = (uploadCarouselIdx + 1) % uploadCarouselArr.length;
+    document.getElementById("uploadCarouselView").src = uploadCarouselArr[uploadCarouselIdx];
+  };
+}
+
+function updateUploadCarouselPreview() {
+  const view = document.getElementById("uploadCarouselView");
+  if (!view) return;
+
+  const mainUrl = document.getElementById("imageUrlInput").value.trim();
+
+  const filtered = uploadCheckedOrder.filter(url => url && url !== mainUrl);
+  uploadCarouselArr = [mainUrl, ...filtered];
+
+  if (uploadCarouselArr.length > 0) {
+    uploadCarouselIdx = 0;
+    view.style.display = "inline-block";
+    view.src = uploadCarouselArr[uploadCarouselIdx];
+  } else {
+    view.style.display = "none";
+  }
+}
+
+
 
 // ============ 上傳邏輯 ============
 async function handleUpload(e) {
@@ -79,9 +196,18 @@ async function handleUpload(e) {
     .map(inp => inp.value.trim())
     .filter(Boolean);
 
-  const carousel = [...document.querySelectorAll(".carouselCheckbox")]
-    .filter(chk => chk.checked)
-    .map(chk => chk.dataset.url);
+  // ✅ 取得所有勾選順序，並確保主圖排最前
+  const filtered = uploadCheckedOrder.filter(url => url && url !== mainUrl);
+  const carousel = [mainUrl, ...filtered];
+  // 售出狀態與正式價格
+  const soldStatus = document.querySelector('input[name="soldStatusRadio"]:checked')?.value || "未指定";
+  const officialPriceInput = document.getElementById("officialPrice")?.value.trim() || "";
+
+  // 👉 若未售出，價格為必填且要是數字
+  if (soldStatus === "unsold" && (!officialPriceInput || isNaN(officialPriceInput))) {
+    alert("請輸入有效的正式售價");
+    return;
+  }
 
   const data = {
     name: document.getElementById("name").value,
@@ -93,6 +219,8 @@ async function handleUpload(e) {
     series: document.getElementById("seriesSelect").value,
     type: document.getElementById("typeSelect").value,
     usage: document.getElementById("usageSelect").value,
+    soldStatus: soldStatus,
+    officialPrice: soldStatus === "unsold" ? parseFloat(officialPriceInput) : null,
     imageUrl: mainUrl,
     imageUrls,
     carousel,
@@ -100,14 +228,27 @@ async function handleUpload(e) {
   };
 
   try {
-    await db.collection("works").add(data);
+    const docRef = await db.collection("works").add(data);
+
+    // ✅ 未售出才寫入 unsoldItems 集合
+    if (soldStatus === "unsold") {
+      await db.collection("unsoldItems").doc(docRef.id).set({
+        workId: docRef.id,
+        name: data.name,
+        imageUrl: data.imageUrl,
+        officialPrice: data.officialPrice,
+        timestamp: data.timestamp,
+      });
+    }
+
     alert("✅ 上傳成功");
     document.getElementById("uploadForm").reset();
     handleImagePreview();
     generateExtraImageInputs();
     renderGallery();
+
   } catch (err) {
-    console.error(err);
+    console.error("❌ 上傳錯誤：", err);
     alert("上傳失敗：" + err.message);
   }
 }
@@ -135,8 +276,12 @@ async function renderGallery() {
   }
 }
 
-// ============ 編輯作品（預留） ============
+let checkedOrder = []; // 🆕 紀錄勾選順序
+// ============ 編輯作品 ============
 function editWork(id) {
+  let checkedOrder = [];
+  let thumbMetaList = [];
+
   db.collection("works").doc(id).get().then(doc => {
     const d = doc.data() || {};
     const pop = document.createElement("div");
@@ -154,6 +299,13 @@ function editWork(id) {
         <input id="editMaterial" value="${d.material}" placeholder="材質">
         <input id="editSize" value="${d.size}" placeholder="尺寸">
         <input id="editWeight" value="${d.weight}" placeholder="重量">
+        <!-- 是否售出 -->
+        <label>是否已售出：</label><br>
+        <input type="radio" name="editSoldStatus" value="sold" ${d.soldStatus === 'sold' ? 'checked' : ''}> 已售出
+        <input type="radio" name="editSoldStatus" value="unsold" ${d.soldStatus === 'unsold' ? 'checked' : ''}> 未售出
+
+        <!-- 正式售價 -->
+        <input id="editOfficialPrice" value="${d.officialPrice || ''}" placeholder="正式售價（若未售出則必填）">
         <input id="editSeries" value="${d.series}" placeholder="系列">
         <input id="editType" value="${d.type}" placeholder="品項">
         <input id="editUsage" value="${d.usage}" placeholder="用途">
@@ -171,10 +323,10 @@ function editWork(id) {
           <button id="editNextBtn">➡️</button>
         </div>
 
-        <br><button onclick="saveEdit('${id}')">💾 儲存</button>
+        <br><button onclick="saveEdit('${id}')">📋 儲存</button>
       </div>`;
-    document.body.appendChild(pop);
 
+    document.body.appendChild(pop);
     document.getElementById("editImageUrl").oninput = e =>
       (document.getElementById("editPreview").src = e.target.value.trim());
 
@@ -182,65 +334,85 @@ function editWork(id) {
     const selected = new Set(d.carousel || []);
     selected.add(d.imageUrl);
 
-    const thumbBox = document.querySelector(".popup #editThumbList");
-    thumbBox.innerHTML = "";
-
-    function addThumb(url) {
-      if ([...thumbBox.querySelectorAll("img")].some(img => img.src === url)) return;
-
-      const wrap = document.createElement("div");
-      wrap.style = "position:relative;width:80px;height:80px;margin:4px;";
-      wrap.draggable = true;
-
-      wrap.ondragstart = e => {
-        e.dataTransfer.setData("text/plain", url);
-        wrap.classList.add("dragging");
-      };
-      wrap.ondragend = () => wrap.classList.remove("dragging");
-
-      const img = new Image();
-      img.src = url;
-      img.dataset.src = url;
-      img.className = "thumb-img";
-      img.style = "width:100%;height:100%;object-fit:cover;border:1px solid #999;";
-
-      const chk = document.createElement("input");
-      chk.type = "checkbox";
-      chk.checked = selected.has(url);
-      chk.style = "position:absolute;top:2px;right:2px;";
-      if (url === d.imageUrl) {
-        chk.disabled = true;
-      } else {
-        chk.onchange = syncCarouselArray;
+    // === 預載入縮圖資料 ===
+    function addThumb(url, isChecked = false) {
+      if (thumbMetaList.some(item => item.url === url)) return;
+      thumbMetaList.push({ url, checked: isChecked });
+      if (isChecked && !checkedOrder.includes(url)) {
+        checkedOrder.push(url);
       }
-
-      const del = document.createElement("button");
-      del.innerText = "🗑️";
-      del.title = "刪除圖片";
-      del.style = "position:absolute;bottom:2px;right:2px;background:none;border:none;color:red;font-size:14px;";
-      del.onclick = () => {
-        wrap.remove();
-        syncCarouselArray();
-      };
-
-      wrap.append(img, chk, del);
-      thumbBox.appendChild(wrap);
     }
 
-    addThumb(d.imageUrl);
-    urls.forEach(addThumb);
+    function renderThumbs() {
+      const thumbBox = document.querySelector(".popup #editThumbList");
+      if (!thumbBox) return;
+      thumbBox.innerHTML = "";
 
-    let carArr = Array.from(selected);
+      const ordered = [
+        ...checkedOrder.map(url => thumbMetaList.find(t => t.url === url)),
+        ...thumbMetaList.filter(t => !checkedOrder.includes(t.url))
+      ];
+
+      ordered.forEach(({ url }) => {
+        const wrap = document.createElement("div");
+        wrap.style = "position:relative;width:80px;height:80px;margin:4px;";
+        wrap.draggable = true;
+
+        const img = new Image();
+        img.src = url;
+        img.dataset.src = url;
+        img.style = "width:100%;height:100%;object-fit:cover;border:1px solid #999;";
+
+        const chk = document.createElement("input");
+        chk.type = "checkbox";
+        chk.checked = checkedOrder.includes(url);
+        chk.style = "position:absolute;top:2px;right:2px;";
+        if (url === d.imageUrl) {
+          chk.disabled = true;
+        } else {
+          chk.onchange = () => {
+            if (chk.checked) {
+              if (!checkedOrder.includes(url)) checkedOrder.push(url);
+            } else {
+              checkedOrder = checkedOrder.filter(u => u !== url);
+            }
+            renderThumbs();
+            syncCarouselArray();
+          };
+        }
+
+        const del = document.createElement("button");
+        del.innerText = "🖑️";
+        del.title = "刪除圖片";
+        del.style = "position:absolute;bottom:2px;right:2px;background:none;border:none;color:red;font-size:14px;";
+        del.onclick = () => {
+          thumbMetaList = thumbMetaList.filter(t => t.url !== url);
+          checkedOrder = checkedOrder.filter(u => u !== url);
+          renderThumbs();
+          syncCarouselArray();
+        };
+
+        wrap.append(img, chk, del);
+        thumbBox.appendChild(wrap);
+      });
+    }
+
+    addThumb(d.imageUrl, true);
+    (d.imageUrls || []).forEach(url => {
+      const isChecked = (d.carousel || []).includes(url);
+      addThumb(url, isChecked);
+    });
+
+    checkedOrder = [d.imageUrl, ...(d.carousel || []).filter(url => url && url !== d.imageUrl)];
+    renderThumbs();
+
+    let carArr = [];
     let idx = 0;
 
     function syncCarouselArray() {
-      selected.clear();
-      thumbBox.querySelectorAll("div").forEach(div => {
-        const url = div.querySelector("img").src;
-        const ck = div.querySelector("input").checked;
-        if (ck) selected.add(url);
-      });
-      carArr = Array.from(selected);
+      const imageUrl = document.getElementById("editImageUrl").value.trim();
+      const filtered = checkedOrder.filter(url => url && url !== imageUrl);
+      carArr = [imageUrl, ...filtered];
       idx = 0;
       renderView();
     }
@@ -263,18 +435,6 @@ function editWork(id) {
       renderView();
     };
 
-    thumbBox.ondragover = e => e.preventDefault();
-    thumbBox.ondrop = e => {
-      e.preventDefault();
-      const dragging = thumbBox.querySelector(".dragging");
-      if (!dragging) return;
-      const target = e.target.closest("div");
-      if (target && target !== dragging) {
-        thumbBox.insertBefore(dragging, target.nextSibling);
-      }
-      syncCarouselArray();
-    };
-
     setTimeout(syncCarouselArray, 0);
 
     window.addExtraEditImageInput = () => {
@@ -284,29 +444,56 @@ function editWork(id) {
       inp.style = "width:100%;margin-top:4px";
       inp.onblur = () => {
         const v = inp.value.trim();
-        if (v) addThumb(v);
+        if (v) {
+          addThumb(v, false);
+          renderThumbs();
+          syncCarouselArray();
+        }
         inp.remove();
       };
-      thumbBox.parentElement.insertBefore(inp, thumbBox);
+      document.querySelector(".popup #editThumbList").parentElement.insertBefore(inp, document.querySelector(".popup #editThumbList"));
       inp.focus();
     };
+    // ✅ 當選擇售出狀態變化時，控制正式售價必填
+    const soldInputs = document.querySelectorAll('input[name="editSoldStatus"]');
+    const officialPriceInput = document.getElementById("editOfficialPrice");
+
+    soldInputs.forEach(input => {
+      input.addEventListener("change", () => {
+        if (input.value === "unsold" && input.checked) {
+          officialPriceInput.required = true;
+          officialPriceInput.placeholder = "正式售價（必填）";
+        } else {
+          officialPriceInput.required = false;
+          officialPriceInput.placeholder = "正式售價（可空白）";
+        }
+      });
+    });
   });
 }
 
 function saveEdit(id) {
+  const imageUrl = document.getElementById("editImageUrl").value.trim();
+  const soldStatus = document.querySelector('input[name="editSoldStatus"]:checked')?.value || "未指定";
+  const officialPrice = document.getElementById("editOfficialPrice").value.trim();
+
+  if (soldStatus === "unsold" && !officialPrice) {
+    alert("請填寫正式售價，因為您選擇了『未售出』");
+    return;
+  }
+  const filtered = checkedOrder.filter(url => url && url !== imageUrl);
+  const carousel = [imageUrl, ...filtered]; // ✅ 主圖永遠在前
+
   const thumbList = document.getElementById("editThumbList");
   const allUrls = [];
-  const carousel = [];
 
   thumbList.querySelectorAll("div").forEach(div => {
     const url = div.querySelector("img").src;
-    const ck = div.querySelector("input").checked;
     allUrls.push(url);
-    if (ck) carousel.push(url);
   });
 
   const data = {
-    imageUrl: document.getElementById("editImageUrl").value.trim(),
+    imageUrl,
     name: document.getElementById("editName").value,
     price: document.getElementById("editPrice").value,
     concept: document.getElementById("editConcept").value,
@@ -316,6 +503,8 @@ function saveEdit(id) {
     series: document.getElementById("editSeries").value,
     type: document.getElementById("editType").value,
     usage: document.getElementById("editUsage").value,
+    soldStatus: document.querySelector('input[name="editSoldStatus"]:checked')?.value || "未指定",
+    officialPrice: document.getElementById("editOfficialPrice").value.trim(),
     imageUrls: allUrls,
     carousel
   };
@@ -391,6 +580,77 @@ async function extractTagsFromWorksToTagsCollection() {
     console.error("❌ 無法同步 Tags：", err);
   }
 }
+async function loadTagEditor() {
+  const type = document.getElementById("tagCategorySelect").value;
+  const listContainer = document.getElementById("tagEditorList");
+  listContainer.innerHTML = "<p>載入中...</p>";
+
+  try {
+    const doc = await db.collection("tags").doc(type).get();
+    const tags = doc.exists ? doc.data().values || [] : [];
+
+    listContainer.innerHTML = tags.map((tag, idx) => `
+      <div style="display:flex;gap:6px;align-items:center;margin-bottom:8px;">
+        <input type="text" value="${tag}" data-original="${tag}" style="flex:1;" />
+        <button onclick="saveTagChange('${type}', ${idx})">💾</button>
+        <button onclick="deleteTag('${type}', ${idx})">🗑️</button>
+      </div>
+    `).join("");
+  } catch (err) {
+    console.error(`❌ 載入 ${type} tags 失敗：`, err);
+    listContainer.innerHTML = "<p>載入失敗</p>";
+  }
+}
+
+async function saveTagChange(type, idx) {
+  const inputs = document.querySelectorAll("#tagEditorList input");
+  const input = inputs[idx];
+  const newValue = input.value.trim();
+  const oldValue = input.dataset.original;
+
+  if (!newValue) return alert("標籤不得為空");
+
+  const updatedValues = Array.from(inputs).map(i => i.value.trim()).filter(Boolean);
+  await db.collection("tags").doc(type).set({ values: updatedValues });
+
+  // ✅ 若有修改名稱，則同步更新作品中的標籤
+  if (oldValue !== newValue) {
+    const snapshot = await db.collection("works").where(type, "==", oldValue).get();
+    const batch = db.batch();
+    snapshot.forEach(doc => {
+      batch.update(doc.ref, { [type]: newValue });
+    });
+    await batch.commit();
+    alert(`✅ 已更新標籤，並同步 ${snapshot.size} 筆作品`);
+  } else {
+    alert("✅ 標籤已儲存");
+  }
+
+  loadTagEditor(); // 重新載入
+}
+
+async function deleteTag(type, idx) {
+  const confirmed = confirm("確定要刪除這個標籤嗎？\n（所有使用此標籤的作品該欄位會被清空）");
+  if (!confirmed) return;
+
+  const doc = await db.collection("tags").doc(type).get();
+  const tags = doc.exists ? doc.data().values || [] : [];
+
+  const deletedValue = tags[idx];
+  tags.splice(idx, 1);
+  await db.collection("tags").doc(type).set({ values: tags });
+
+  // ✅ 清空所有使用該值的作品欄位
+  const snapshot = await db.collection("works").where(type, "==", deletedValue).get();
+  const batch = db.batch();
+  snapshot.forEach(doc => {
+    batch.update(doc.ref, { [type]: "" });
+  });
+  await batch.commit();
+
+  alert(`🗑️ 已刪除標籤，並清空 ${snapshot.size} 筆作品中的該欄位`);
+  loadTagEditor();
+}
 
 // ✅ 自動執行同步（建議只在 admin 頁面）
 document.addEventListener("DOMContentLoaded", () => {
@@ -421,6 +681,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("uploadForm")?.addEventListener("submit", handleUpload);
   document.getElementById("imageUrlInput")?.addEventListener("input", handleImagePreview);
   generateExtraImageInputs();
+
   loadTags();
   renderGallery();
 });

@@ -214,7 +214,7 @@ function translateError(code) {
     "auth/invalid-email": "Email 格式錯誤",
     "auth/wrong-password": "密碼錯誤",
     "auth/user-disabled": "帳號已被停用",
-    "auth/email-already-in-use": "Email 已存在",
+    "auth/email-already-in-use": "Email 已存在或密碼錯誤",
     "auth/weak-password": "密碼太弱，需至少 6 字",
     "auth/invalid-credential": "憑證錯誤，請確認帳號密碼"
   };

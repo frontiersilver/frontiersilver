@@ -103,25 +103,18 @@
                 <button class="close-btn" onclick="toggleMenu()">×</button>
                 <a rel="index" href="index.html">Frontier</a>
                 <!--<a href="about.html">Frontier</a>-->
-                <div class="dropdown">
-                    <button class="dropdown-btn" onclick="toggleMenu2()">All WORKS <span class="arrow"></span> </button>
-                    <div class="dropdown-content">
-                        <a href="allworks.html">系列</a>
-                        <a href="allworks.html">品項</a>
-                        <a href="allworks.html">用途</a>
-                    </div>
-                </div>
+                <a href="allworks.html">ALLWORKS</a>
                 <a rel="service" href="service.html">訂製</a>
                 <a rel="contact" href="privatecontact.html">聯絡</a>
+                <a href="shop.html">購買</a>
 
             </div>
 
             <!-- 增加一個透明背景層（點擊時會關閉側邊欄） -->
             <div id="overlay" class="overlay" onclick="closeMenu()"></div>
             <div class="container2">
-              <div class="jumbotron">
-                <img class="parallax-bg" src="https://res.cloudinary.com/dyjvqds92/image/upload/v1748077960/A04211804_phgcq7.jpg" alt="test">
-              </div>
+              <div class="parallax"   style="background: url('https://res.cloudinary.com/dyjvqds92/image/upload/v1755348573/A04211948_bfgch81_ly0ccn.jpg') repeat center; background-size: cover;" data-paroller-factor="-0.4"></div>
+
             </div>
 
         </header>
@@ -132,8 +125,10 @@
         </div>
         <div class="content">
           <!-- ▶ 用來放畫布；float 讓段落自動環繞 -->
-          <div id="jaggedHolder" class="jagged-box"></div>
-
+          <!--   <div id="jaggedHolder" class="jagged-box"></div>-->
+          <div style="float: left; width:260px;height:260px;overflow:hidden;position: relative; ">
+            <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1750414494/20241215_194203_w1ik0u.jpg" style="width:100%;height:100%;object-fit:contain;">
+          </div>
           <!-- 內文示例（會自動環繞在畫布右側 & 下方） -->
           <article class="content">
             <p>溝通設計與預算，確定設計與價錢後，先支付訂金(總金額的三分之一)
@@ -192,7 +187,8 @@
     <!-- 絕對路徑 JS -->
   <script src="js/indexscript.js"></script>
   <script src="js/allworks.js"></script>
-  <script src="js/sketch.js"></script>
+  <!-- <script src="js/sketch.js"></script>-->
+
 
 </body>
 
