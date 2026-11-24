@@ -4,8 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>作品圖片上傳</title>
+  <!-- 放在所有使用 $ 的 script 之前 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   <!-- ✅ 使用 Firebase v8 CDN，全域 firebase 物件 -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -43,8 +47,9 @@
       <a href="service.html">訂製</a>
       <a href="privatecontact.html">聯絡</a>
       <a href="shop.html">購買</a>
-      <a href="shopsetting.html">編輯購物車</a>
-      <a href="fileupload.html" id="uploadLink" style="display: none; font-weight: bold;">🔒 上傳新作品</a>
+      <a href="fileupload.html" >上傳新作品</a>
+      <a href="shopsetting.html" >編輯購物車</a>
+      <a href="shoperform.html" >訂單</a>
     </div>
     <div id="overlay" class="overlay" onclick="closeMenu()"></div>
   </header>

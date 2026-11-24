@@ -81,12 +81,11 @@ function viewWork(id) {
           </div>
           <button id="nextBtn">⟩</button>
         </div>
-
+        <p>價格： ${d.price || '—'}</p>
         <p id="concept">${(d.concept || '').replace(/\\n/g, '<br>')}</p>
         <p>材質： ${d.material || '—'}</p>
         <p>尺寸： ${d.size || '—'}</p>
         <p>重量： ${d.weight || '—'}</p>
-        <p>價格： ${d.price || '—'}</p>
         <p>#${d.series || '—'}</p>
         <p>#${d.type   || '—'}</p>
         <p>#${d.usage  || '—'}</p>

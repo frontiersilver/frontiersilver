@@ -4,8 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FRONTIER SILVER 1:1諮詢</title>
+  <!-- 放在所有使用 $ 的 script 之前 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <!-- ✅ GitHub Pages 路徑修正 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   <script>
     (function () {
       const isGithubPages = window.location.hostname.includes("github.io");
@@ -87,6 +91,8 @@
                 <a rel="contact" href="privatecontact.html">聯絡</a>
                 <a href="shop.html">購買</a>
                 <a href="fileupload.html" id="uploadLink" style="display: none;">上傳新作品</a>
+                <a href="shopsetting.html" id="shopsetting" style="display: none;">編輯購物車</a>
+                <a href="shoperform.html" id="shoperform" style="display: none;">訂單</a>
             </div>
 
             <!-- 增加一個透明背景層（點擊時會關閉側邊欄） -->

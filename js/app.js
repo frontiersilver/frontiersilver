@@ -28,7 +28,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
-
+export { app, auth, db };
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("loginBtn")?.addEventListener("click", handleLoginLogout);
   document.getElementById("submitMessage")?.addEventListener("click", handleSendMessage);
@@ -39,6 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
   onAuthStateChanged(auth, async (user) => {
   const loginBtn = document.getElementById("loginBtn");
   const uploadLink = document.getElementById("uploadLink");
+  const shopsetting = document.getElementById("shopsetting");
+  const shoperform = document.getElementById("shoperform");
+
 
   if (!loginBtn) return;
 
@@ -52,10 +55,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (isAdmin) {
         console.log("✅ 管理員登入成功");
-        if (uploadLink) uploadLink.style.display = "block";
+
+        const idsToShow = ["uploadLink", "shopsetting", "shoperform"];
+        idsToShow.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.style.display = "block";
+        });
+
       } else {
-        if (uploadLink) uploadLink.style.display = "none";
         console.log("⚠️ 登入者不是管理員");
+
+        const idsToHide = ["uploadLink", "shopsetting", "shoperform"];
+        idsToHide.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.style.display = "none";
+        });
       }
     } catch (e) {
       console.error("❌ 讀取 admin 權限錯誤：", e);

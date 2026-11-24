@@ -12,7 +12,7 @@
     <title>Frontier Sliver</title>
 
         <!-- 設定作者名稱 -->
-    <meta name="author" content="CHEN">
+    <meta name="author" content="FRONTIER">
 
     <!-- 網站 favicon（瀏覽器標籤的小圖示） -->
     <link rel="icon" href="favicon.ico" type="image/index_main">
@@ -58,7 +58,8 @@
         })();
     </script>
     <!-- 先載入 jQuery -->
-
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <!-- 然後載入 paroller.js -->
     <script src="https://cdn.jsdelivr.net/npm/paroller.js@1.4.6/dist/jquery.paroller.min.js"></script>
@@ -127,7 +128,7 @@
           <!-- ▶ 用來放畫布；float 讓段落自動環繞 -->
           <!--   <div id="jaggedHolder" class="jagged-box"></div>-->
           <div style="float: left; width:260px;height:260px;overflow:hidden;position: relative; ">
-            <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1750414494/20241215_194203_w1ik0u.jpg" style="width:100%;height:100%;object-fit:contain;">
+            <img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1750414441/20241225_132320_jsqzia.jpg" style="width:100%;height:100%;object-fit:contain;">
           </div>
           <!-- 內文示例（會自動環繞在畫布右側 & 下方） -->
           <article class="content">
@@ -164,7 +165,12 @@
             </div>
           </div>
         </div>
-
+        <div class="image-grid">
+          <div class="pic"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1757046577/1_h3wgzl.jpg" alt="圖1"></div>
+          <div class="pic"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1757046164/1_ypcmmh.jpg" alt="圖2"></div>
+          <div class="pic"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1757045921/1_czeebp.jpg" alt="圖3"></div>
+          <div class="pic"><img src="https://res.cloudinary.com/dyjvqds92/image/upload/v1757045669/ADSC_0101_ekeskm.jpg" alt="圖4"></div>
+        </div>
         <div class="tex1">
           <p class="text2">＃客製商品不會向其他人販售，我會確保只有你擁有這個獨一無二的作品，這才是客製銀飾的意義。</p>
           <p class="text2">＃因為客製作品不接受任何原因的退換貨，所以過程中需要保持溝通，確保作品符合您的期待，還請留意訊息</p>

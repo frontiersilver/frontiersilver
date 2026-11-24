@@ -1,3 +1,33 @@
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* RWD 核心 */
+  gap: 10px;
+
+}
+
+.image-grid .pic {
+  aspect-ratio: 2112 / 3072; /* 根據你的圖比例設定 */
+  overflow: hidden;
+}
+
+.image-grid .pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .image-grid {
+    grid-template-columns: repeat(2, 1fr); /* 平板：2+2 格 */
+  }
+}
+
+@media (max-width: 480px) {
+  .image-grid {
+    grid-template-columns: 1fr; /* 手機：1 格 */
+  }
+}
 /* 讓畫布浮動在左邊，段落自動繞排 */
 .jagged-box{
   float: left;                       /* 只有這塊參與文字繞排 */

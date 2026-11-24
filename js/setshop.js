@@ -167,29 +167,50 @@ async function renderAllWorksBySoldStatus() {
 }
 
 // ===== 儲存修改 =====
-// ===== 儲存修改 =====
 saveBtn.addEventListener("click", async () => {
   if (!currentCard || !currentDocId) return;
 
   const newStatus = statusSelect.value;
   const newPrice = priceInput.value.trim();
+  const name = currentCard.querySelector(".title").textContent.trim();
 
   try {
-    // 🔁 先更新原本 works 集合
+    // 🔁 更新 works 集合
     await db.collection("works").doc(currentDocId).update({
       soldStatus: newStatus,
       officialPrice: newPrice
     });
 
-    // ✅ 然後同步更新到 shopStatusSync 集合
-    await db.collection("shopStatusSync").doc(currentDocId).set({
-      workId: currentDocId,
-      soldStatus: newStatus,
-      officialPrice: newPrice,
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    // ✅ 分別處理 shopStatusSync/sold 與 shopStatusSync/unsold
+    const soldRef = db.collection("shopStatusSync").doc("sold");
+    const unsoldRef = db.collection("shopStatusSync").doc("unsold");
+
+    await db.runTransaction(async (tx) => {
+      const [soldSnap, unsoldSnap] = await Promise.all([
+        tx.get(soldRef),
+        tx.get(unsoldRef)
+      ]);
+
+      const soldList = new Set((soldSnap.exists ? soldSnap.data().list : []) || []);
+      const unsoldList = new Set((unsoldSnap.exists ? unsoldSnap.data().list : []) || []);
+
+      // 移除 name
+      soldList.delete(name);
+      unsoldList.delete(name);
+
+      // 加入新狀態
+      if (newStatus === "sold") {
+        soldList.add(name);
+      } else {
+        unsoldList.add(name);
+      }
+
+      // 更新各自 doc
+      tx.set(soldRef, { list: Array.from(soldList) }, { merge: true });
+      tx.set(unsoldRef, { list: Array.from(unsoldList) }, { merge: true });
     });
 
-    // 更新 UI
+    // ✅ 更新 UI
     currentCard.querySelector(".status").textContent = newStatus;
     currentCard.querySelector(".price").textContent = `NT$ ${newPrice || '-'}`;
     modal.classList.add("hidden");

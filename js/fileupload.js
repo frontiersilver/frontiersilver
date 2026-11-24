@@ -229,6 +229,10 @@ async function handleUpload(e) {
 
   try {
     const docRef = await db.collection("works").add(data);
+    const name = data.name || docRef.id;
+    const syncRef = db.collection("shopStatusSync").doc(soldStatus);
+
+    await syncRef.set({ [name]: true }, { merge: true });
 
     // ✅ 未售出才寫入 unsoldItems 集合
     if (soldStatus === "unsold") {
@@ -481,20 +485,22 @@ function saveEdit(id) {
     alert("請填寫正式售價，因為您選擇了『未售出』");
     return;
   }
+
   const filtered = checkedOrder.filter(url => url && url !== imageUrl);
-  const carousel = [imageUrl, ...filtered]; // ✅ 主圖永遠在前
+  const carousel = [imageUrl, ...filtered];
 
   const thumbList = document.getElementById("editThumbList");
   const allUrls = [];
-
   thumbList.querySelectorAll("div").forEach(div => {
     const url = div.querySelector("img").src;
     allUrls.push(url);
   });
 
+  const name = document.getElementById("editName").value;
+
   const data = {
     imageUrl,
-    name: document.getElementById("editName").value,
+    name,
     price: document.getElementById("editPrice").value,
     concept: document.getElementById("editConcept").value,
     material: document.getElementById("editMaterial").value,
@@ -503,16 +509,47 @@ function saveEdit(id) {
     series: document.getElementById("editSeries").value,
     type: document.getElementById("editType").value,
     usage: document.getElementById("editUsage").value,
-    soldStatus: document.querySelector('input[name="editSoldStatus"]:checked')?.value || "未指定",
-    officialPrice: document.getElementById("editOfficialPrice").value.trim(),
+    soldStatus,
+    officialPrice,
     imageUrls: allUrls,
     carousel
   };
 
-  db.collection("works").doc(id).update(data).then(() => {
+  const workRef = db.collection("works").doc(id);
+  const shopStatusRef = db.collection("meta").doc("shopStatusSync");
+
+  // 先更新作品本身
+  workRef.update(data).then(() => {
+    // 接著更新 shopStatusSync
+    return shopStatusRef.get();
+  }).then(doc => {
+    const currentData = doc.exists ? doc.data() : { sold: [], unsold: [] };
+    const updatedSold = new Set(currentData.sold || []);
+    const updatedUnsold = new Set(currentData.unsold || []);
+
+    // 移除該作品名稱（無論在哪個集合中）
+    updatedSold.delete(name);
+    updatedUnsold.delete(name);
+
+    // 加入到對應的集合
+    if (soldStatus === "sold") {
+      updatedSold.add(name);
+    } else if (soldStatus === "unsold") {
+      updatedUnsold.add(name);
+    }
+
+    // 更新資料
+    return shopStatusRef.set({
+      sold: Array.from(updatedSold),
+      unsold: Array.from(updatedUnsold)
+    });
+  }).then(() => {
     alert("✅ 已更新");
     document.querySelector(".popup")?.remove();
     renderGallery();
+  }).catch(err => {
+    console.error("更新錯誤", err);
+    alert("❌ 更新失敗：" + err.message);
   });
 }
 

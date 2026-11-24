@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>作品圖片上傳</title>
+  <!-- 放在所有使用 $ 的 script 之前 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <!-- ✅ 使用 Firebase v8 CDN，全域 firebase 物件 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <!-- GitHub Pages path 修正器 -->
+  <script>
+    (function () {
+      const isGithub = window.location.hostname.includes("github.io");
+      const basePath = isGithub ? "/frontiersilver/" : "";
+      const elements = document.querySelectorAll("link[rel='stylesheet'], script[src], a[data-link]");
+      elements.forEach(el => {
+        const attr = el.tagName === "SCRIPT" || el.tagName === "LINK" ? "src" in el ? "src" : "href" : "href";
+        const original = el.getAttribute(attr);
+        if (original && !original.startsWith("http")) {
+          el.setAttribute(attr, basePath + original.replace(/^\/+/, ""));
+        }
+      });
+    })();
+  </script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/fileupload.css" />
+  <link rel="stylesheet" href="css/indexstyle.css" />
+  <script src="js/firebase-init.js" defer></script>
+  <script src="js/indexscript.js" defer></script>
+  <script src="js/shoperform.js" defer></script>
+  <script type="module" src="js/app.js"></script>
+
+</head>
+
+<body>
+  <header>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <div id="sidebar" class="sidebar">
+      <button class="close-btn" onclick="toggleMenu()">×</button>
+      <a href="index.html">Frontier</a>
+      <!--<a href="about.html">Frontier</a>-->
+      <a href="allworks.html">ALLWORKS</a>
+      <a href="service.html">訂製</a>
+      <a href="privatecontact.html">聯絡</a>
+      <a href="shop.html">購買</a>
+      <a href="fileupload.html" >上傳新作品</a>
+      <a href="shopsetting.html" >編輯購物車</a>
+      <a href="shoperform.html" >訂單</a>
+    </div>
+    <div id="overlay" class="overlay" onclick="closeMenu()"></div>
+  </header>
+
+  <main>
+    <div id="orders-container"></div>
+  </main>
+
+
+  <!-- 圖片預覽功能 -->
+
+</body>
+</html>

@@ -1,3 +1,30 @@
+#login-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+}
+.login {
+    display: table;
+    white-space: nowrap;
+    width: 100%;
+    align-content: left;
+    margin-bottom: 10px;
+}
+
+#loginBtn {
+    width: 60px;
+    height: 26px;
+    color: #EFEFEF;
+    font-family: 'LXGW WenKai Light', sans-serif;
+    background-color: black;
+    opacity: 70%;
+    border: none;
+    border-radius: 0px;
+    float: left;
+}
+
 #shopGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -9,7 +36,17 @@
     border-width: 0;
     margin: 0 auto;
 }
-
+#cartItems {
+  display: flex;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  justify-items: center;
+  align-items: start;
+  padding: 20px 0;
+  max-width: 100%;
+  border-width: 0;
+  margin: 0 auto;
+}
 .shopcontain{
   flex: 1;
   display: flex;
